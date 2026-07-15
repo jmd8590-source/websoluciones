@@ -100,7 +100,7 @@ const TRANSLATIONS = {
     contact_area_label:  'Área de servicio',
     contact_area_note:   'Servicio online en toda España',
     contact_hours_label: 'Disponibilidad',
-    contact_hours_value: 'Lun – Vie, 9:00 – 20:00',
+    contact_hours_value: 'Lun – Vie, 09:00 – 18:00',
 
     contact_form_name:    'Nombre',
     contact_form_email:   'Email',
@@ -235,7 +235,7 @@ const TRANSLATIONS = {
     contact_area_label:  'Service area',
     contact_area_note:   'Online service throughout Spain',
     contact_hours_label: 'Availability',
-    contact_hours_value: 'Mon – Fri, 9:00 – 20:00',
+    contact_hours_value: 'Mon – Fri, 09:00 – 18:00',
 
     contact_form_name:    'Name',
     contact_form_email:   'Email',
@@ -730,6 +730,24 @@ function initContactForm() {
     } else clearFieldError(messageEl);
 
     if (!isValid) return;
+
+    // Save lead to CRM (localStorage)
+    const lead = {
+      id: 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      name: nameEl.value.trim(),
+      email: emailEl.value.trim(),
+      company: document.getElementById('form-company')?.value.trim() || '',
+      phone: document.getElementById('form-phone')?.value.trim() || '',
+      message: messageEl.value.trim(),
+      status: 'nuevo',
+      notes: [],
+      source: 'web_form'
+    };
+    const existingLeads = JSON.parse(localStorage.getItem('siacm_leads') || '[]');
+    existingLeads.unshift(lead);
+    localStorage.setItem('siacm_leads', JSON.stringify(existingLeads));
 
     // Simulate submission
     submitBtn.disabled = true;

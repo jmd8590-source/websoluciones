@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CRM — Soluciones IA CM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="crm.css">
+</head>
+<body>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">
+        <img src="assets/logo.svg" alt="Logo">
+      </div>
+      <div>
+        <div class="login-logo-name">SOLUCIONES IA CM</div>
+        <div class="login-logo-tag">Panel CRM</div>
+      </div>
+    </div>
+    <h1 class="login-title">Acceso Administrador</h1>
+    <p class="login-subtitle">Introduce la contraseña para acceder al CRM</p>
+    <form class="login-form" id="login-form" novalidate>
+      <input
+        type="password"
+        id="login-password"
+        class="login-input"
+        placeholder="Contraseña"
+        autocomplete="current-password"
+        aria-label="Contraseña de administrador"
+      >
+      <div id="login-error" class="login-error" role="alert">Contraseña incorrecta. Inténtalo de nuevo.</div>
+      <button type="submit" class="login-btn">Entrar al CRM</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== CRM APP ===== -->
+<div id="crm-app">
+
+  <!-- Header -->
+  <header class="crm-header">
+    <div class="crm-header-logo">
+      <div class="crm-header-icon">
+        <img src="assets/logo.svg" alt="">
+      </div>
+      <span class="crm-header-title">Soluciones IA CM</span>
+      <span class="crm-header-badge">CRM Admin</span>
+    </div>
+    <div class="crm-header-actions">
+      <a href="index.html" class="btn-back-site" aria-label="Volver a la web">
+        ← Web pública
+      </a>
+      <button id="logout-btn" class="btn-logout" aria-label="Cerrar sesión">
+        ⏻ Salir
+      </button>
+    </div>
+  </header>
+
+  <!-- Body -->
+  <div class="crm-body">
+
+    <!-- Sidebar (stats + filters) -->
+    <aside class="crm-sidebar" role="navigation" aria-label="Filtros por estado">
+      <p class="sidebar-section-title">Resumen de Leads</p>
+      <div class="stat-card all active" data-filter="" role="button" tabindex="0" aria-pressed="true">
+        <div>
+          <div class="stat-label">Total leads</div>
+          <div class="stat-value" id="stat-all">0</div>
+        </div>
+        <span style="font-size:1.4rem;">📋</span>
+      </div>
+      <div class="sidebar-divider"></div>
+      <p class="sidebar-section-title">Por Estado</p>
+      <div class="stat-card nuevo" data-filter="nuevo" role="button" tabindex="0" aria-pressed="false">
+        <div>
+          <div class="stat-label">Nuevos</div>
+          <div class="stat-value" id="stat-nuevo">0</div>
+        </div>
+        <span style="font-size:1.2rem;">🆕</span>
+      </div>
+      <div class="stat-card contactado" data-filter="contactado" role="button" tabindex="0" aria-pressed="false">
+        <div>
+          <div class="stat-label">Contactados</div>
+          <div class="stat-value" id="stat-contactado">0</div>
+        </div>
+        <span style="font-size:1.2rem;">📞</span>
+      </div>
+      <div class="stat-card propuesta" data-filter="propuesta" role="button" tabindex="0" aria-pressed="false">
+        <div>
+          <div class="stat-label">Propuesta env.</div>
+          <div class="stat-value" id="stat-propuesta">0</div>
+        </div>
+        <span style="font-size:1.2rem;">📄</span>
+      </div>
+      <div class="stat-card ganado" data-filter="ganado" role="button" tabindex="0" aria-pressed="false">
+        <div>
+          <div class="stat-label">Ganados</div>
+          <div class="stat-value" id="stat-ganado">0</div>
+        </div>
+        <span style="font-size:1.2rem;">🏆</span>
+      </div>
+      <div class="stat-card perdido" data-filter="perdido" role="button" tabindex="0" aria-pressed="false">
+        <div>
+          <div class="stat-label">Perdidos</div>
+          <div class="stat-value" id="stat-perdido">0</div>
+        </div>
+        <span style="font-size:1.2rem;">❌</span>
+      </div>
+    </aside>
+
+    <!-- Main panel -->
+    <main class="crm-main" role="main">
+
+      <!-- Toolbar -->
+      <div class="crm-toolbar">
+        <div class="search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input
+            type="search"
+            id="crm-search"
+            class="crm-search"
+            placeholder="Buscar por nombre, email, empresa..."
+            aria-label="Buscar leads"
+          >
+        </div>
+        <select id="crm-status-filter" class="crm-select" aria-label="Filtrar por estado">
+          <option value="">Todos los estados</option>
+          <option value="nuevo">Nuevo</option>
+          <option value="contactado">Contactado</option>
+          <option value="propuesta">Propuesta enviada</option>
+          <option value="ganado">Ganado</option>
+          <option value="perdido">Perdido</option>
+        </select>
+        <button id="add-lead-btn" class="toolbar-btn primary" aria-label="Añadir lead manualmente">
+          ＋ Añadir lead
+        </button>
+        <button id="export-btn" class="toolbar-btn" aria-label="Exportar a CSV">
+          ↓ CSV
+        </button>
+      </div>
+
+      <!-- Table -->
+      <div class="table-container" role="region" aria-label="Lista de leads" aria-live="polite">
+        <table class="crm-table" id="crm-table">
+          <thead>
+            <tr>
+              <th data-col="name">Nombre <span class="sort-icon">↕</span></th>
+              <th data-col="email">Email <span class="sort-icon">↕</span></th>
+              <th data-col="company">Empresa</th>
+              <th data-col="phone">Teléfono</th>
+              <th data-col="status">Estado <span class="sort-icon">↕</span></th>
+              <th data-col="source">Origen</th>
+              <th data-col="createdAt">Fecha <span class="sort-icon">↕</span></th>
+              <th style="width:80px;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="crm-tbody">
+          </tbody>
+        </table>
+
+        <!-- Empty state -->
+        <div id="empty-state" class="empty-state" style="display:none;" role="status">
+          <div class="empty-state-icon">📭</div>
+          <p class="empty-state-title">No hay leads todavía</p>
+          <p class="empty-state-text">Los leads aparecerán aquí cuando alguien rellene el formulario de contacto o los añadas manualmente.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ===== DETAIL PANEL OVERLAY ===== -->
+<div id="panel-overlay" class="panel-overlay" aria-hidden="true"></div>
+
+<!-- ===== DETAIL PANEL ===== -->
+<aside id="detail-panel" class="detail-panel" role="complementary" aria-label="Detalle del lead" aria-hidden="true">
+  <div class="panel-header">
+    <h2 class="panel-title" id="panel-lead-name">Lead</h2>
+    <button class="panel-close" id="panel-close" aria-label="Cerrar panel">×</button>
+  </div>
+
+  <div class="panel-body">
+
+    <!-- Contact info -->
+    <div class="panel-section">
+      <p class="panel-section-title">Información de contacto</p>
+      <div class="info-grid" id="panel-info-grid">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="panel-section">
+      <p class="panel-section-title">Estado del lead</p>
+      <div class="status-select-group" id="panel-status-group" role="group" aria-label="Cambiar estado">
+        <button class="status-option" data-status="nuevo">🆕 Nuevo</button>
+        <button class="status-option" data-status="contactado">📞 Contactado</button>
+        <button class="status-option" data-status="propuesta">📄 Propuesta</button>
+        <button class="status-option" data-status="ganado">🏆 Ganado</button>
+        <button class="status-option" data-status="perdido">❌ Perdido</button>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div class="panel-section" id="panel-message-section">
+      <p class="panel-section-title">Mensaje</p>
+      <div class="info-value message" id="panel-message-text"></div>
+    </div>
+
+    <!-- Notes -->
+    <div class="panel-section">
+      <p class="panel-section-title">Notas internas</p>
+      <div class="notes-list" id="panel-notes-list">
+        <!-- Filled by JS -->
+      </div>
+      <div class="note-form">
+        <textarea
+          id="note-input"
+          class="note-input"
+          rows="2"
+          placeholder="Añadir nota..."
+          aria-label="Nueva nota"
+        ></textarea>
+        <button id="note-save" class="note-save-btn" aria-label="Guardar nota">Guardar</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="panel-footer">
+    <button id="delete-lead-btn" class="btn-delete-lead" aria-label="Eliminar lead">
+      🗑 Eliminar lead
+    </button>
+  </div>
+</aside>
+
+<!-- ===== ADD LEAD MODAL ===== -->
+<div id="modal-bg" class="modal-bg" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="add-modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-title">Añadir Lead Manualmente</h2>
+      <button class="modal-close-btn" id="modal-close" aria-label="Cerrar">×</button>
+    </div>
+    <form id="add-lead-form" novalidate>
+      <div class="modal-form-grid">
+        <div>
+          <label class="modal-label" for="ml-name">Nombre *</label>
+          <input type="text" id="ml-name" class="modal-input" placeholder="Nombre completo" required>
+        </div>
+        <div>
+          <label class="modal-label" for="ml-email">Email *</label>
+          <input type="email" id="ml-email" class="modal-input" placeholder="email@empresa.com" required>
+        </div>
+        <div>
+          <label class="modal-label" for="ml-company">Empresa</label>
+          <input type="text" id="ml-company" class="modal-input" placeholder="Nombre empresa">
+        </div>
+        <div>
+          <label class="modal-label" for="ml-phone">Teléfono</label>
+          <input type="tel" id="ml-phone" class="modal-input" placeholder="600 000 000">
+        </div>
+        <div>
+          <label class="modal-label" for="ml-status">Estado inicial</label>
+          <select id="ml-status" class="modal-select">
+            <option value="nuevo">🆕 Nuevo</option>
+            <option value="contactado">📞 Contactado</option>
+            <option value="propuesta">📄 Propuesta enviada</option>
+            <option value="ganado">🏆 Ganado</option>
+            <option value="perdido">❌ Perdido</option>
+          </select>
+        </div>
+        <div>
+          <label class="modal-label" for="ml-source">Origen</label>
+          <select id="ml-source" class="modal-select">
+            <option value="manual">Manual</option>
+            <option value="web_form">Formulario web</option>
+            <option value="referral">Referido</option>
+            <option value="social">Redes sociales</option>
+            <option value="phone">Llamada</option>
+            <option value="email">Email</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+        <div class="modal-form-full">
+          <label class="modal-label" for="ml-message">Mensaje / Notas</label>
+          <textarea id="ml-message" class="modal-input" rows="3" placeholder="Descripción del proyecto o consulta..."></textarea>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" id="modal-cancel">Cancelar</button>
+        <button type="submit" class="btn-save-lead">Guardar lead</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast" role="status" aria-live="polite">
+  <span id="toast-icon"></span>
+  <span id="toast-msg"></span>
+</div>
+
+<script src="crm.js"></script>
+</body>
+</html>

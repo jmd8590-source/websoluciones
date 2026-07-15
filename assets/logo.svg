@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 76" fill="none" role="img" aria-label="Soluciones IA CM">
+  <!-- S/5 mark — dark navy -->
+  <rect x="2"  y="2"  width="34" height="10" rx="2.5" fill="#0C2D6B"/>
+  <rect x="2"  y="2"  width="10" height="34" rx="2.5" fill="#0C2D6B"/>
+  <rect x="2"  y="28" width="34" height="10" rx="2.5" fill="#0C2D6B"/>
+  <rect x="26" y="28" width="10" height="36" rx="2.5" fill="#0C2D6B"/>
+  <rect x="2"  y="54" width="34" height="10" rx="2.5" fill="#0C2D6B"/>
+  <!-- I bar — dark navy -->
+  <rect x="50" y="20" width="10" height="54" rx="2.5" fill="#0C2D6B"/>
+  <!-- Arrow — light blue accent -->
+  <polygon points="47,19 77,8 70,34" fill="#3A8DD6"/>
+</svg>
