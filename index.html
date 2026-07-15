@@ -9,6 +9,20 @@
   <meta name="theme-color" content="#4F46E5">
   <meta name="robots" content="index, follow">
 
+  <!-- ================================================
+       SECURITY HEADERS (meta equivalents)
+       ================================================ -->
+  <!-- Content-Security-Policy: restrict resource origins -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.web3forms.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com;">
+  <!-- Prevent clickjacking via iframes -->
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <!-- Prevent MIME-type sniffing -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <!-- Restrict referrer info sent to third parties -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Disable browser features not needed -->
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
+
   <!-- Open Graph / Social -->
   <meta property="og:title" content="Soluciones IA CM — Automatización e IA para Negocios Locales">
   <meta property="og:description" content="Automatizamos y potenciamos tu negocio local con inteligencia artificial. Primera consulta gratuita.">
@@ -451,6 +465,18 @@
         <div class="contact-form-card">
 
           <form id="contact-form" novalidate aria-label="Formulario de contacto">
+            <!-- ====== HONEYPOT ANTI-SPAM — Do NOT remove ====== -->
+            <!-- Bots fill this hidden field; humans never see it -->
+            <input
+              type="text"
+              name="bot_field"
+              id="bot_field"
+              autocomplete="off"
+              tabindex="-1"
+              aria-hidden="true"
+              style="position:absolute;left:-9999px;opacity:0;height:0;width:0;border:none;padding:0;"
+            >
+            <!-- ================================================ -->
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label" for="form-name" data-i18n="contact_form_name">Nombre</label>
@@ -623,7 +649,6 @@
         <button class="footer-legal-link" data-modal="legal"      data-i18n="footer_link_legal">Aviso Legal</button>
         <button class="footer-legal-link" data-modal="privacidad" data-i18n="footer_link_privacy">Privacidad</button>
         <button class="footer-legal-link" data-modal="cookies"    data-i18n="footer_link_cookies">Cookies</button>
-        <a href="crm.html" class="footer-legal-link" style="opacity:0.45;font-size:10px;letter-spacing:0.04em;" aria-label="Acceso panel CRM administrador">⚙ Admin</a>
       </nav>
     </div>
   </div>

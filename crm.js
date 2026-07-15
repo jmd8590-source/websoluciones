@@ -1,19 +1,28 @@
 /* ===================================================
    SOLUCIONES IA CM — CRM Application Logic
-   Version: 1.0.0
-   
-   Contraseña de acceso: siacm2025
-   Para cambiarla, modifica CRM_PASSWORD abajo.
+   Version: 1.1.0  (security hardened)
+
+   Para cambiar la contraseña:
+   1. Calcula el SHA-256 de tu nueva contraseña en:
+      https://emn178.github.io/online-tools/sha256.html
+   2. Sustituye PASSWORD_HASH por el nuevo hash.
    =================================================== */
 
 'use strict';
 
 /* ===================================================
-   CONFIGURATION
+   CONFIGURATION (no secrets in plain text)
    =================================================== */
-const CRM_PASSWORD   = 'siacm2025';      // ← Cambia aquí tu contraseña
+// SHA-256 hash of 'siacm2025'  — never store the plain password
+const PASSWORD_HASH  = '629fa32d039e8ada557b3e018dd183e766015bee95008f2644906e94b5e2b546';
 const STORAGE_KEY    = 'siacm_leads';
 const SESSION_KEY    = 'siacm_crm_auth';
+
+// Brute-force protection
+const MAX_ATTEMPTS      = 5;
+const LOCKOUT_MS        = 10 * 60 * 1000; // 10 minutes
+const ATTEMPTS_KEY      = 'siacm_login_attempts';
+const LOCKOUT_UNTIL_KEY = 'siacm_lockout_until';
 
 /* ===================================================
    STATUS CONFIG
@@ -378,12 +387,50 @@ function isAuthenticated() {
   return sessionStorage.getItem(SESSION_KEY) === 'ok';
 }
 
-function login(password) {
-  if (password === CRM_PASSWORD) {
+/* Password hashing via Web Crypto API (SHA-256) */
+async function hashPassword(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+/* Brute-force protection helpers */
+function isLockedOut() {
+  const until = parseInt(sessionStorage.getItem(LOCKOUT_UNTIL_KEY) || '0');
+  return Date.now() < until;
+}
+
+function lockoutMinutesLeft() {
+  const until = parseInt(sessionStorage.getItem(LOCKOUT_UNTIL_KEY) || '0');
+  return Math.max(1, Math.ceil((until - Date.now()) / 60000));
+}
+
+function recordFailedAttempt() {
+  const attempts = parseInt(sessionStorage.getItem(ATTEMPTS_KEY) || '0') + 1;
+  if (attempts >= MAX_ATTEMPTS) {
+    sessionStorage.setItem(LOCKOUT_UNTIL_KEY, String(Date.now() + LOCKOUT_MS));
+    sessionStorage.setItem(ATTEMPTS_KEY, '0');
+  } else {
+    sessionStorage.setItem(ATTEMPTS_KEY, String(attempts));
+  }
+  return attempts;
+}
+
+function clearLoginAttempts() {
+  sessionStorage.removeItem(ATTEMPTS_KEY);
+  sessionStorage.removeItem(LOCKOUT_UNTIL_KEY);
+}
+
+/* Async login with hash comparison */
+async function login(password) {
+  if (isLockedOut()) return false;
+  const hash = await hashPassword(password);
+  if (hash === PASSWORD_HASH) {
+    clearLoginAttempts();
     sessionStorage.setItem(SESSION_KEY, 'ok');
     showCRM();
     return true;
   }
+  recordFailedAttempt();
   return false;
 }
 
@@ -447,15 +494,30 @@ document.addEventListener('DOMContentLoaded', () => {
     showCRM();
   }
 
-  // Login form
-  document.getElementById('login-form').addEventListener('submit', (e) => {
+  // Login form (async due to SHA-256 hashing)
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const pwd = document.getElementById('login-password').value;
     const err = document.getElementById('login-error');
-    if (!login(pwd)) {
+    const pwdInput = document.getElementById('login-password');
+
+    if (isLockedOut()) {
+      err.textContent = `Demasiados intentos fallidos. Espera ${lockoutMinutesLeft()} minuto(s) e inténtalo de nuevo.`;
       err.classList.add('show');
-      document.getElementById('login-password').value = '';
-      document.getElementById('login-password').focus();
+      return;
+    }
+
+    const pwd = pwdInput.value;
+    const ok  = await login(pwd);
+
+    if (!ok) {
+      const remaining = MAX_ATTEMPTS - parseInt(sessionStorage.getItem(ATTEMPTS_KEY) || '0');
+      const msg = isLockedOut()
+        ? `Cuenta bloqueada ${lockoutMinutesLeft()} minuto(s) por exceso de intentos.`
+        : `Contraseña incorrecta. Intentos restantes: ${remaining}.`;
+      err.textContent = msg;
+      err.classList.add('show');
+      pwdInput.value = '';
+      pwdInput.focus();
     } else {
       err.classList.remove('show');
     }

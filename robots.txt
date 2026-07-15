@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /crm.html
+Disallow: /crm.js
+Disallow: /crm.css
+
+Allow: /
+
+# Sitemap
+Sitemap: https://solucionesiacm.com/sitemap.xml

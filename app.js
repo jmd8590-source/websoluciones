@@ -1,10 +1,69 @@
 /* ===================================================
    SOLUCIONES IA CM — Application Script
-   Version: 1.0.0
+   Version: 1.1.0  (security + email notifications)
    Stack ready: React/Next.js, TypeScript, Tailwind, Supabase, FastAPI, Docker, Cloudflare
    =================================================== */
 
 'use strict';
+
+/* ===================================================
+   EMAIL NOTIFICATION CONFIG
+   Get your free access key at: https://web3forms.com
+   1. Enter jmd8590@gmail.com → Get Access Key
+   2. Check your inbox and copy the key
+   3. Paste it between the quotes below
+   =================================================== */
+const WEB3FORMS_KEY = ''; // ← Paste your Web3Forms access key here
+
+/* Send email notification to jmd8590@gmail.com */
+async function sendEmailNotification(lead) {
+  if (!WEB3FORMS_KEY) return; // Not configured yet
+  try {
+    await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: `[Soluciones IA CM] Nueva consulta de ${lead.name}`,
+        from_name: 'Web Soluciones IA CM',
+        replyto: lead.email,
+        name: lead.name,
+        email: lead.email,
+        message: [
+          '\ud83d\udccb NUEVA CONSULTA DESDE LA WEB',
+          '',
+          `\ud83d\udc64 Nombre:    ${lead.name}`,
+          `\ud83d\udce7 Email:     ${lead.email}`,
+          `\ud83c\udfe2 Empresa:   ${lead.company || 'No indicada'}`,
+          `\ud83d\udcde Tel\u00e9fono:  ${lead.phone || 'No indicado'}`,
+          '',
+          '\ud83d\udcac Mensaje:',
+          lead.message,
+          '',
+          `\ud83d\udd50 Recibido: ${new Date().toLocaleString('es-ES')}`,
+        ].join('\n'),
+      }),
+    });
+  } catch {
+    // Email failed silently — lead is already saved in CRM
+  }
+}
+
+/* Rate limiting: max 3 submissions per hour per browser */
+function checkRateLimit() {
+  const key  = 'siacm_form_rl';
+  const now  = Date.now();
+  const hour = 60 * 60 * 1000;
+  let   data;
+  try { data = JSON.parse(localStorage.getItem(key) || 'null'); } catch { data = null; }
+  if (!data || now - data.start > hour) {
+    localStorage.setItem(key, JSON.stringify({ count: 1, start: now }));
+    return true;
+  }
+  if (data.count >= 3) return false;
+  localStorage.setItem(key, JSON.stringify({ count: data.count + 1, start: data.start }));
+  return true;
+}
 
 /* ===================================================
    TRANSLATIONS — i18n
@@ -707,6 +766,32 @@ function initContactForm() {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    // 1. HONEYPOT CHECK — if filled, it's a bot. Silently pretend success.
+    const botField = document.getElementById('bot_field');
+    if (botField && botField.value) {
+      form.style.display = 'none';
+      success.classList.add('active');
+      return;
+    }
+
+    // 2. RATE LIMIT CHECK
+    if (!checkRateLimit()) {
+      const errMsg = currentLang === 'es'
+        ? 'Has enviado demasiados mensajes. Inténtalo en unos minutos.'
+        : 'Too many submissions. Please try again in a few minutes.';
+      const submitBtn = document.getElementById('form-submit');
+      const existing  = form.querySelector('.rate-limit-error');
+      if (!existing) {
+        const p = document.createElement('p');
+        p.className = 'rate-limit-error';
+        p.style.cssText = 'color:var(--c-error);font-size:var(--fs-sm);margin-top:8px;text-align:center;';
+        p.setAttribute('role', 'alert');
+        p.textContent = errMsg;
+        submitBtn.after(p);
+      }
+      return;
+    }
+
     const nameEl    = document.getElementById('form-name');
     const emailEl   = document.getElementById('form-email');
     const messageEl = document.getElementById('form-message');
@@ -731,33 +816,37 @@ function initContactForm() {
 
     if (!isValid) return;
 
-    // Save lead to CRM (localStorage)
+    // 3. BUILD LEAD OBJECT
     const lead = {
-      id: 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+      id:        'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      name: nameEl.value.trim(),
-      email: emailEl.value.trim(),
-      company: document.getElementById('form-company')?.value.trim() || '',
-      phone: document.getElementById('form-phone')?.value.trim() || '',
-      message: messageEl.value.trim(),
-      status: 'nuevo',
-      notes: [],
-      source: 'web_form'
+      name:      nameEl.value.trim(),
+      email:     emailEl.value.trim(),
+      company:   document.getElementById('form-company')?.value.trim() || '',
+      phone:     document.getElementById('form-phone')?.value.trim() || '',
+      message:   messageEl.value.trim(),
+      status:    'nuevo',
+      notes:     [],
+      source:    'web_form',
     };
+
+    // 4. SAVE TO CRM (localStorage)
     const existingLeads = JSON.parse(localStorage.getItem('siacm_leads') || '[]');
     existingLeads.unshift(lead);
     localStorage.setItem('siacm_leads', JSON.stringify(existingLeads));
 
-    // Simulate submission
+    // 5. SEND EMAIL NOTIFICATION (non-blocking, fails silently)
+    sendEmailNotification(lead).catch(() => {});
+
+    // 6. UI — show loading state
     submitBtn.disabled = true;
-    const originalText = submitBtn.querySelector('[data-i18n]')?.textContent;
     if (submitBtn.querySelector('[data-i18n]')) {
       submitBtn.querySelector('[data-i18n]').textContent =
         currentLang === 'es' ? 'Enviando...' : 'Sending...';
     }
 
-    await pause(1800);
+    await pause(1400);
 
     form.style.display = 'none';
     success.classList.add('active');
