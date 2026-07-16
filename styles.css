@@ -119,8 +119,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 input, textarea, select { font-family: inherit; }
 
 /* ===================================================
-   ACCESSIBILITY
+   ACCESSIBILITY — WCAG 2.2 AA Compliant
    =================================================== */
+
+/* --- Skip to main content (2.4.1) --- */
 .skip-link {
   position: fixed;
   top: -100%;
@@ -129,28 +131,215 @@ input, textarea, select { font-family: inherit; }
   background: var(--c-primary);
   color: #fff;
   padding: var(--space-3) var(--space-6);
-  border-radius: var(--r-md);
-  font-weight: 600;
+  border-radius: 0 0 var(--r-md) var(--r-md);
+  font-weight: 700;
   font-size: var(--fs-sm);
-  transition: top var(--t-fast);
+  text-decoration: underline;
+  transition: top 0.15s ease;
+  box-shadow: var(--shadow-lg);
+  white-space: nowrap;
 }
-.skip-link:focus { top: var(--space-4); }
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
 
+/* --- Focus indicator — highly visible (2.4.11 WCAG 2.2) --- */
+/* Applies only when navigating with keyboard, not mouse */
 :focus-visible {
-  outline: 2px solid var(--c-primary);
+  outline: 3px solid var(--c-primary);
   outline-offset: 3px;
   border-radius: var(--r-sm);
 }
+/* Remove outline for mouse clicks (cleaner UX) */
+:focus:not(:focus-visible) {
+  outline: none;
+}
 
+/* High-contrast focus for buttons and links on dark backgrounds */
+.btn:focus-visible,
+.nav-link:focus-visible,
+.mobile-nav-link:focus-visible,
+.footer-legal-link:focus-visible,
+.lang-toggle:focus-visible {
+  outline: 3px solid var(--c-primary);
+  outline-offset: 3px;
+}
+
+/* Special focus for form inputs */
+.form-input:focus-visible {
+  outline: 3px solid var(--c-primary);
+  outline-offset: 0;
+  border-color: var(--c-primary);
+}
+
+/* --- Visually hidden (screen-reader only) — 1.3.1 --- */
 .sr-only {
   position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
-  border: 0;
+  border-width: 0;
 }
+/* Visible on focus (for skip links etc.) */
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* --- ARIA invalid form fields (3.3.1) --- */
+.form-input[aria-invalid="true"] {
+  border-color: var(--c-error);
+  background: rgba(239, 68, 68, 0.03);
+}
+.form-input[aria-invalid="true"]:focus-visible {
+  outline-color: var(--c-error);
+}
+.field-error {
+  color: var(--c-error);
+  font-size: var(--fs-xs);
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.field-error::before {
+  content: "⚠";
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+/* Required field indicator (3.3.2) */
+.form-label[data-required]::after {
+  content: " *";
+  color: var(--c-error);
+  font-weight: 700;
+  aria-hidden: true;
+}
+
+/* --- Reduced motion (2.3.3 WCAG 2.2) --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep essential transitions at minimal duration */
+  .skip-link {
+    transition: top 0.01ms;
+  }
+
+  /* Disable scroll-driven hero animations */
+  .hero-orb-1,
+  .hero-orb-2,
+  .hero-orb-3 {
+    animation: none;
+  }
+
+  /* Disable fade-in on scroll */
+  .animate-fade-in,
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* --- High contrast mode (1.4.3, 1.4.11) --- */
+@media (prefers-contrast: high) {
+  :root {
+    --c-primary:        #3730A3;
+    --c-primary-hover:  #312E81;
+    --c-text:           #000000;
+    --c-text-secondary: #1F1F1F;
+    --c-text-muted:     #3F3F3F;
+    --c-border:         #000000;
+    --c-bg:             #FFFFFF;
+    --c-bg-secondary:   #F5F5F5;
+    --c-error:          #C00000;
+    --c-success:        #005F00;
+  }
+
+  .card,
+  .service-card,
+  .contact-form-card,
+  .auditor-card {
+    border: 2px solid var(--c-border);
+  }
+
+  .btn-primary {
+    background: var(--c-primary);
+    border: 2px solid var(--c-primary);
+  }
+
+  .btn-outline {
+    border: 2px solid currentColor;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    text-decoration: underline;
+  }
+
+  .footer-logo-name,
+  .footer-legal-link {
+    color: #fff;
+  }
+
+  /* Ensure gradient text is readable in high contrast */
+  .gradient-text {
+    -webkit-text-fill-color: var(--c-primary);
+    background: none;
+  }
+
+  .highlight {
+    -webkit-text-fill-color: var(--c-primary);
+    background: none;
+  }
+}
+
+/* --- Forced colors (Windows High Contrast mode) --- */
+@media (forced-colors: active) {
+  .btn-primary {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 2px solid ButtonText;
+    forced-color-adjust: none;
+  }
+
+  .hero-orb-1,
+  .hero-orb-2,
+  .hero-orb-3 {
+    display: none;
+  }
+
+  .logo-img,
+  .footer-logo-img {
+    forced-color-adjust: auto;
+  }
+}
+
+/* --- Text spacing overrides for readability (1.4.12) --- */
+/* Users may override these via browser/extension — this block ensures
+   our design doesn't break if they do */
+p, li, h1, h2, h3, h4, h5, h6 {
+  line-height: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+}
+
 
 /* ===================================================
    UTILITY

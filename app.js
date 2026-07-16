@@ -464,7 +464,14 @@ function initNavigation() {
         if (entry.isIntersecting) {
           const id = entry.target.id;
           navLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+            const isActive = link.getAttribute('href') === `#${id}`;
+            link.classList.toggle('active', isActive);
+            // aria-current for screen readers (WCAG 4.1.2)
+            if (isActive) {
+              link.setAttribute('aria-current', 'page');
+            } else {
+              link.removeAttribute('aria-current');
+            }
           });
         }
       });
@@ -850,6 +857,15 @@ function initContactForm() {
 
     form.style.display = 'none';
     success.classList.add('active');
+
+    // Announce success to screen readers
+    const successMsg = currentLang === 'es'
+      ? 'Mensaje enviado correctamente. Te contactaremos en menos de 24 horas.'
+      : 'Message sent successfully. We will contact you within 24 hours.';
+    srAnnounce(successMsg, 'assertive');
+
+    // Move focus to success message (keyboard users)
+    setTimeout(() => success.querySelector('h3')?.focus?.(), 100);
   });
 
   // Clear errors on input
@@ -859,25 +875,50 @@ function initContactForm() {
 }
 
 function setFieldError(input, msg) {
-  input.style.borderColor = 'var(--c-error)';
+  input.classList.add('input-error');
   input.setAttribute('aria-invalid', 'true');
-  const parent = input.parentElement;
-  let err = parent.querySelector('.field-error');
-  if (!err) {
-    err = document.createElement('p');
-    err.className = 'field-error';
-    err.style.cssText = 'color:var(--c-error);font-size:var(--fs-xs);margin-top:4px;';
-    err.setAttribute('role', 'alert');
-    parent.appendChild(err);
+
+  // Try to find the dedicated error element by ID convention first
+  const errId = input.id ? `${input.id}-error` : null;
+  let err = errId ? document.getElementById(errId) : null;
+
+  if (err) {
+    // Use the pre-existing error element (linked via aria-describedby)
+    err.textContent = msg;
+    err.style.display = 'flex';
+  } else {
+    // Fallback: create inline error element
+    const parent = input.parentElement;
+    err = parent.querySelector('.field-error');
+    if (!err) {
+      err = document.createElement('p');
+      err.className = 'field-error';
+      err.setAttribute('role', 'alert');
+      err.setAttribute('aria-live', 'assertive');
+      parent.appendChild(err);
+    }
+    err.textContent = msg;
+    err.style.display = 'flex';
   }
-  err.textContent = msg;
 }
 
 function clearFieldError(input) {
-  input.style.borderColor = '';
-  input.removeAttribute('aria-invalid');
-  input.parentElement.querySelector('.field-error')?.remove();
+  input.classList.remove('input-error');
+  input.setAttribute('aria-invalid', 'false');
+
+  const errId = input.id ? `${input.id}-error` : null;
+  const errEl = errId ? document.getElementById(errId) : null;
+  if (errEl) {
+    errEl.textContent = '';
+    errEl.style.display = 'none';
+    return;
+  }
+
+  // Fallback: inline error element
+  const inlineErr = input.parentElement?.querySelector('.field-error');
+  if (inlineErr) { inlineErr.textContent = ''; inlineErr.style.display = 'none'; }
 }
+
 
 /* ===================================================
    COOKIE BANNER
@@ -907,18 +948,18 @@ function initCookieBanner() {
    =================================================== */
 
 function initModals() {
-  // Open triggers
+  // Open triggers — store the trigger element for focus restoration
   document.querySelectorAll('[data-modal]').forEach(trigger => {
     trigger.addEventListener('click', (e) => {
       e.preventDefault();
       const id = trigger.getAttribute('data-modal');
       const overlay = document.getElementById(`modal-${id}`);
       if (!overlay) return;
-      openModal(overlay);
+      openModal(overlay, trigger);  // pass trigger for focus restore
     });
   });
 
-  // Close on backdrop / close button / ESC
+  // Close on backdrop / close button
   document.querySelectorAll('.modal-overlay').forEach(overlay => {
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) closeModal(overlay);
@@ -926,6 +967,7 @@ function initModals() {
     overlay.querySelector('.modal-close')?.addEventListener('click', () => closeModal(overlay));
   });
 
+  // ESC key closes any open modal
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       document.querySelectorAll('.modal-overlay.open').forEach(closeModal);
@@ -933,17 +975,78 @@ function initModals() {
   });
 }
 
-function openModal(overlay) {
+/* ===================================================
+   ACCESSIBILITY — FOCUS MANAGEMENT
+   =================================================== */
+
+/** Returns all focusable elements within a container */
+function getFocusable(container) {
+  return Array.from(container.querySelectorAll(
+    'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), ' +
+    'select:not([disabled]), [tabindex]:not([tabindex="-1"]), [contenteditable]'
+  )).filter(el => !el.closest('[aria-hidden="true"]') && getComputedStyle(el).display !== 'none');
+}
+
+/** Trap keyboard focus inside a container (e.g. open modal) */
+function trapFocus(container, e) {
+  const focusable = getFocusable(container);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last  = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
+/** Announce a message to screen readers via the live region */
+function srAnnounce(message, priority = 'polite') {
+  const el = document.getElementById('sr-announcer');
+  if (!el) return;
+  el.setAttribute('aria-live', priority);
+  // Clear then set — forces re-announcement even for identical text
+  el.textContent = '';
+  requestAnimationFrame(() => { el.textContent = message; });
+}
+
+// Map overlay → {trigger, trapHandler} for cleanup
+const _modalState = new WeakMap();
+
+function openModal(overlay, trigger = null) {
   overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
-  // Focus first focusable element in modal
-  const focusable = overlay.querySelector('button, [href], input, [tabindex]:not([tabindex="-1"])');
-  setTimeout(() => focusable?.focus(), 50);
+
+  // Focus first focusable element
+  const focusable = getFocusable(overlay);
+  const firstFocusable = focusable[0];
+  setTimeout(() => firstFocusable?.focus(), 60);
+
+  // Focus trap handler
+  const trapHandler = (e) => {
+    if (e.key === 'Tab') trapFocus(overlay, e);
+  };
+  overlay.addEventListener('keydown', trapHandler);
+
+  _modalState.set(overlay, { trigger: trigger || document.activeElement, trapHandler });
 }
 
 function closeModal(overlay) {
   overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+
+  // Remove focus trap
+  const state = _modalState.get(overlay);
+  if (state) {
+    overlay.removeEventListener('keydown', state.trapHandler);
+    // Return focus to trigger
+    state.trigger?.focus?.();
+    _modalState.delete(overlay);
+  }
 }
 
 /* ===================================================

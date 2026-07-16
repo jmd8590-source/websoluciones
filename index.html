@@ -102,10 +102,10 @@
 
     <!-- Desktop Navigation Links -->
     <ul class="nav-links" role="list">
-      <li><a href="#inicio"    class="nav-link active" data-i18n="nav_inicio">Inicio</a></li>
-      <li><a href="#servicios" class="nav-link"        data-i18n="nav_servicios">Servicios</a></li>
-      <li><a href="#auditor"   class="nav-link"        data-i18n="nav_auditor">Auditor Web IA</a></li>
-      <li><a href="#contacto"  class="nav-link"        data-i18n="nav_contacto">Contacto</a></li>
+      <li><a href="#inicio"    class="nav-link active" data-i18n="nav_inicio"    aria-current="page">Inicio</a></li>
+      <li><a href="#servicios" class="nav-link"        data-i18n="nav_servicios"             >Servicios</a></li>
+      <li><a href="#auditor"   class="nav-link"        data-i18n="nav_auditor"               >Auditor Web IA</a></li>
+      <li><a href="#contacto"  class="nav-link"        data-i18n="nav_contacto"              >Contacto</a></li>
     </ul>
 
     <!-- Desktop Actions -->
@@ -146,7 +146,10 @@
 <!-- ===================================================
      MAIN CONTENT
      =================================================== -->
-<main id="main">
+<main id="main" aria-label="Contenido principal">
+
+<!-- Región de anuncios en vivo para lectores de pantalla -->
+<div id="sr-announcer" aria-live="polite" aria-atomic="true" class="sr-only" role="status"></div>
 
   <!-- ===============================================
        HERO — INICIO
@@ -479,28 +482,36 @@
             <!-- ================================================ -->
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label" for="form-name" data-i18n="contact_form_name">Nombre</label>
+                <label class="form-label" for="form-name" data-i18n="contact_form_name" data-required>Nombre</label>
                 <input
                   type="text"
                   id="form-name"
                   class="form-input"
                   autocomplete="name"
+                  required
                   aria-required="true"
+                  aria-describedby="form-name-error"
+                  aria-invalid="false"
                   data-i18n-placeholder="contact_form_name"
                   placeholder="Nombre"
                 >
+                <p id="form-name-error" class="field-error" role="alert" aria-live="assertive" style="display:none;"></p>
               </div>
               <div class="form-group">
-                <label class="form-label" for="form-email" data-i18n="contact_form_email">Email</label>
+                <label class="form-label" for="form-email" data-i18n="contact_form_email" data-required>Email</label>
                 <input
                   type="email"
                   id="form-email"
                   class="form-input"
                   autocomplete="email"
+                  required
                   aria-required="true"
+                  aria-describedby="form-email-error"
+                  aria-invalid="false"
                   data-i18n-placeholder="contact_form_email"
                   placeholder="Email"
                 >
+                <p id="form-email-error" class="field-error" role="alert" aria-live="assertive" style="display:none;"></p>
               </div>
             </div>
 
@@ -530,18 +541,27 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="form-message" data-i18n="contact_form_message">Cuéntanos tu proyecto</label>
+              <label class="form-label" for="form-message" data-i18n="contact_form_message" data-required>Cuéntanos tu proyecto</label>
               <textarea
                 id="form-message"
                 class="form-input"
                 rows="5"
+                required
                 aria-required="true"
+                aria-describedby="form-message-error"
+                aria-invalid="false"
                 data-i18n-placeholder="contact_form_message"
                 placeholder="Cuéntanos tu proyecto o necesidad..."
               ></textarea>
+              <p id="form-message-error" class="field-error" role="alert" aria-live="assertive" style="display:none;"></p>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg" id="form-submit" style="width:100%;">
+            <!-- Nota para lectores de pantalla: campos obligatorios -->
+            <p class="sr-only" id="form-required-note">
+              Los campos marcados con asterisco (*) son obligatorios.
+            </p>
+
+            <button type="submit" class="btn btn-primary btn-lg" id="form-submit" style="width:100%;" aria-describedby="form-required-note">
               <span data-i18n="contact_form_submit">Enviar mensaje</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 19-7z"/>
@@ -550,9 +570,9 @@
           </form>
 
           <!-- Success message -->
-          <div id="contact-success" class="form-success" role="alert" aria-live="polite">
+          <div id="contact-success" class="form-success" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="form-success-icon" aria-hidden="true">✅</div>
-            <h3 class="form-success-title" data-i18n="contact_success_title">¡Mensaje enviado!</h3>
+            <h3 class="form-success-title" data-i18n="contact_success_title" tabindex="-1">¡Mensaje enviado!</h3>
             <p class="form-success-text" data-i18n="contact_success_text">
               Gracias por contactarnos. Te responderemos en menos de 24 horas.
             </p>
