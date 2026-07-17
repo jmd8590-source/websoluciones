@@ -307,6 +307,60 @@
   </section>
 
   <!-- ===============================================
+       TECH EPHEMERIS — Hoy en la Historia Tech
+       =============================================== -->
+  <section id="efemeride" class="section efemeride-section" aria-labelledby="ephemeris-heading">
+    <div class="container">
+      <header class="section-header animate-on-scroll">
+        <div class="section-label" data-i18n="ephemeris_label">Historia de la Informática</div>
+        <h2 class="section-title" id="ephemeris-heading" data-i18n="ephemeris_title">Hoy en la Historia Tech</h2>
+        <p class="section-subtitle" data-i18n="ephemeris_subtitle">
+          Un hecho real de la historia de la informática para cada día del año.
+        </p>
+      </header>
+
+      <div id="ephemeris-card" class="ephemeris-card animate-on-scroll delay-2" aria-live="polite" aria-atomic="true">
+        <!-- Tag: "Un día como hoy" -->
+        <div class="eph-tag-wrapper">
+          <span class="eph-pulse" aria-hidden="true"></span>
+          <span id="eph-tag" class="eph-tag">Un día como hoy</span>
+        </div>
+
+        <!-- Year badge -->
+        <div class="eph-year-badge" aria-label="Año del evento">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span id="eph-year">—</span>
+        </div>
+
+        <!-- Main content -->
+        <div class="eph-body">
+          <div class="eph-emoji" id="eph-emoji" aria-hidden="true">💡</div>
+          <div class="eph-text">
+            <h3 class="eph-title" id="eph-title">Cargando...</h3>
+            <p class="eph-desc" id="eph-desc"></p>
+          </div>
+        </div>
+
+        <!-- Bottom strip: date + source badge -->
+        <div class="eph-footer">
+          <span class="eph-date">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="eph-date"></span>
+          </span>
+          <span class="eph-source-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-i18n="ephemeris_source">Dato histórico verificado</span>
+          </span>
+        </div>
+
+        <!-- Decorative background orbs -->
+        <div class="eph-orb eph-orb-1" aria-hidden="true"></div>
+        <div class="eph-orb eph-orb-2" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===============================================
        AI WEB AUDITOR
        =============================================== -->
   <section id="auditor" class="section" aria-labelledby="auditor-title">
@@ -788,6 +842,7 @@
 </div>
 
 <!-- Application Script (deferred for performance) -->
+<script src="facts.js" defer></script>
 <script src="app.js" defer></script>
 
 </body>
