@@ -1747,3 +1747,250 @@ textarea.form-input { resize: vertical; min-height: 120px; }
   body { font-size: 12pt; }
   #inicio { min-height: auto; padding-top: 0; }
 }
+
+/* ===================================================
+   LO ÚLTIMO — Novedades IA del mes
+   =================================================== */
+
+.lo-ultimo-section {
+  background: var(--c-bg-secondary);
+  position: relative;
+  overflow: hidden;
+}
+
+.lo-ultimo-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 80% 20%, rgba(6,182,212,0.05) 0%, transparent 60%),
+              radial-gradient(ellipse 50% 40% at 10% 80%, rgba(79,70,229,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Meta badges under the subtitle */
+.lo-ultimo-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  justify-content: center;
+  margin-top: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.lo-ultimo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--c-text-muted);
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  padding: 4px var(--space-3);
+  border-radius: var(--r-full);
+}
+
+.lo-ultimo-badge--green {
+  color: var(--c-success);
+  background: rgba(16,185,129,0.06);
+  border-color: rgba(16,185,129,0.2);
+}
+
+/* Category block */
+.lo-ultimo-category {
+  margin-top: var(--space-12);
+}
+
+.lo-ultimo-cat-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--c-border-light);
+}
+
+.lo-ultimo-cat-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+/* Cards grid */
+.lo-ultimo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+.lo-ultimo-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Individual card */
+.lo-ultimo-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--c-bg);
+  border: 1px solid var(--c-border-light);
+  border-radius: var(--r-xl);
+  padding: var(--space-5);
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow var(--t-slow), transform var(--t-slow), border-color var(--t-slow);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.lo-ultimo-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--g-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-slow);
+  border-radius: 2px 2px 0 0;
+}
+
+.lo-ultimo-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-3px);
+  border-color: rgba(79,70,229,0.2);
+}
+
+.lo-ultimo-card:hover::before {
+  transform: scaleX(1);
+}
+
+.lo-ultimo-card:focus-visible {
+  outline: 3px solid var(--c-primary);
+  outline-offset: 3px;
+}
+
+/* Card header: source + tag */
+.lo-ultimo-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.lo-ultimo-source {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--c-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Category tags */
+.lo-ultimo-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.lo-ultimo-tag--purple {
+  background: rgba(124,58,237,0.1);
+  color: var(--c-secondary);
+}
+
+.lo-ultimo-tag--blue {
+  background: rgba(6,182,212,0.1);
+  color: #0891b2;
+}
+
+.lo-ultimo-tag--green {
+  background: rgba(16,185,129,0.1);
+  color: var(--c-success);
+}
+
+.lo-ultimo-tag--orange {
+  background: rgba(245,158,11,0.1);
+  color: #d97706;
+}
+
+/* Card title & description */
+.lo-ultimo-card-title {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--c-text);
+  line-height: 1.4;
+  margin-bottom: var(--space-2);
+}
+
+.lo-ultimo-card-desc {
+  font-size: var(--fs-xs);
+  color: var(--c-text-secondary);
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: var(--space-4);
+}
+
+.lo-ultimo-link {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--c-primary);
+  margin-top: auto;
+  transition: gap var(--t-fast);
+  display: inline-block;
+}
+
+.lo-ultimo-card:hover .lo-ultimo-link {
+  text-decoration: underline;
+}
+
+/* Nav badge for new item */
+.nav-link--new {
+  position: relative;
+}
+
+.nav-link--new::after {
+  content: 'NEW';
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  background: var(--c-error);
+  color: #fff;
+  font-size: 8px;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: var(--r-full);
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .lo-ultimo-grid { grid-template-columns: repeat(2, 1fr); }
+  .lo-ultimo-grid--3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .lo-ultimo-grid,
+  .lo-ultimo-grid--3 { grid-template-columns: repeat(2, 1fr); }
+  .lo-ultimo-cat-title { font-size: var(--fs-md); }
+}
+
+@media (max-width: 480px) {
+  .lo-ultimo-grid,
+  .lo-ultimo-grid--3 { grid-template-columns: 1fr; }
+  .lo-ultimo-card { padding: var(--space-4); }
+}
+
+/* ── Reduced motion ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .lo-ultimo-card { transition: none; }
+  .lo-ultimo-card::before { transition: none; }
+}

@@ -211,6 +211,17 @@ const TRANSLATIONS = {
     ephemeris_on_this_day: 'Un día como hoy',
     ephemeris_year_prefix: 'Año',
     ephemeris_source: 'Dato histórico verificado',
+
+    // Lo Último section
+    nav_lo_ultimo: 'Lo Último',
+    lo_ultimo_label: 'Actualidad',
+    lo_ultimo_title: 'Lo Último en IA',
+    lo_ultimo_subtitle: 'Las novedades más relevantes del mes en inteligencia artificial: modelos, herramientas, aprendizaje y comunidad.',
+    lo_ultimo_updated: 'Actualizado: Julio 2026',
+    lo_ultimo_verified: 'Fuentes verificadas',
+    lo_ultimo_cat_news: 'Noticias del mes',
+    lo_ultimo_cat_tools: 'Herramientas nuevas',
+    lo_ultimo_cat_learn: 'Aprendizaje y comunidad',
   },
 
   en: {
@@ -354,6 +365,17 @@ const TRANSLATIONS = {
     ephemeris_on_this_day: 'On this day',
     ephemeris_year_prefix: 'Year',
     ephemeris_source: 'Verified historical fact',
+
+    // Lo Último section
+    nav_lo_ultimo: "What's New",
+    lo_ultimo_label: 'Latest News',
+    lo_ultimo_title: "What's New in AI",
+    lo_ultimo_subtitle: 'The most relevant AI developments this month: models, tools, learning and community.',
+    lo_ultimo_updated: 'Updated: July 2026',
+    lo_ultimo_verified: 'Verified sources',
+    lo_ultimo_cat_news: 'This month\'s news',
+    lo_ultimo_cat_tools: 'New tools',
+    lo_ultimo_cat_learn: 'Learning & community',
   },
 };
 
@@ -420,6 +442,8 @@ function toggleLanguage() {
   localStorage.setItem('lang', currentLang);
   applyTranslations();
   refreshEphemeris();
+  // Re-renderizar Lo Último en el idioma seleccionado
+  if (typeof renderLoUltimo === 'function') renderLoUltimo(currentLang);
 
   // Update lang toggle aria-label
   const ariaLabel = currentLang === 'es'

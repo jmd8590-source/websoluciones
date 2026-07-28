@@ -105,6 +105,7 @@
       <li><a href="#inicio"    class="nav-link active" data-i18n="nav_inicio"    aria-current="page">Inicio</a></li>
       <li><a href="#servicios" class="nav-link"        data-i18n="nav_servicios"             >Servicios</a></li>
       <li><a href="#auditor"   class="nav-link"        data-i18n="nav_auditor"               >Auditor Web IA</a></li>
+      <li><a href="#lo-ultimo" class="nav-link nav-link--new" data-i18n="nav_lo_ultimo"      >Lo Último</a></li>
       <li><a href="#contacto"  class="nav-link"        data-i18n="nav_contacto"              >Contacto</a></li>
     </ul>
 
@@ -135,6 +136,7 @@
     <li><a href="#inicio"    class="mobile-nav-link" data-i18n="nav_inicio">Inicio</a></li>
     <li><a href="#servicios" class="mobile-nav-link" data-i18n="nav_servicios">Servicios</a></li>
     <li><a href="#auditor"   class="mobile-nav-link" data-i18n="nav_auditor">Auditor Web IA</a></li>
+    <li><a href="#lo-ultimo" class="mobile-nav-link nav-link--new" data-i18n="nav_lo_ultimo">Lo Último</a></li>
     <li><a href="#contacto"  class="mobile-nav-link" data-i18n="nav_contacto">Contacto</a></li>
   </ul>
   <div style="display:flex;gap:12px;align-items:center;">
@@ -357,6 +359,51 @@
         <div class="eph-orb eph-orb-1" aria-hidden="true"></div>
         <div class="eph-orb eph-orb-2" aria-hidden="true"></div>
       </div>
+    </div>
+  </section>
+
+  <!-- ===============================================
+       LO ÚLTIMO — Novedades IA del mes
+       Contenido gestionado por lo-ultimo.js
+       =============================================== -->
+  <section id="lo-ultimo" class="section lo-ultimo-section" aria-labelledby="lo-ultimo-heading">
+    <div class="container">
+
+      <header class="section-header animate-on-scroll">
+        <div class="section-label" data-i18n="lo_ultimo_label">Actualidad</div>
+        <h2 class="section-title" id="lo-ultimo-heading" data-i18n="lo_ultimo_title">Lo Último en IA</h2>
+        <p class="section-subtitle" data-i18n="lo_ultimo_subtitle">
+          Las novedades más relevantes del mes en inteligencia artificial: modelos, herramientas, aprendizaje y comunidad.
+        </p>
+      </header>
+
+      <!-- 📰 Noticias -->
+      <div class="lo-ultimo-category animate-on-scroll delay-1">
+        <h3 class="lo-ultimo-cat-title">
+          <span class="lo-ultimo-cat-icon" aria-hidden="true">📰</span>
+          <span data-i18n="lo_ultimo_cat_news">Noticias del mes</span>
+        </h3>
+        <div class="lo-ultimo-grid" id="lo-ultimo-news-grid" aria-live="polite"></div>
+      </div>
+
+      <!-- 🛠️ Herramientas -->
+      <div class="lo-ultimo-category animate-on-scroll delay-2">
+        <h3 class="lo-ultimo-cat-title">
+          <span class="lo-ultimo-cat-icon" aria-hidden="true">🛠️</span>
+          <span data-i18n="lo_ultimo_cat_tools">Herramientas nuevas</span>
+        </h3>
+        <div class="lo-ultimo-grid" id="lo-ultimo-tools-grid" aria-live="polite"></div>
+      </div>
+
+      <!-- 📚 Aprendizaje y comunidad -->
+      <div class="lo-ultimo-category animate-on-scroll delay-3">
+        <h3 class="lo-ultimo-cat-title">
+          <span class="lo-ultimo-cat-icon" aria-hidden="true">📚</span>
+          <span data-i18n="lo_ultimo_cat_learn">Aprendizaje y comunidad</span>
+        </h3>
+        <div class="lo-ultimo-grid lo-ultimo-grid--3" id="lo-ultimo-learn-grid" aria-live="polite"></div>
+      </div>
+
     </div>
   </section>
 
@@ -843,6 +890,7 @@
 
 <!-- Application Script (deferred for performance) -->
 <script src="facts.js" defer></script>
+<script src="lo-ultimo.js" defer></script>
 <script src="app.js" defer></script>
 
 </body>
