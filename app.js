@@ -1297,9 +1297,9 @@ function initEphemeris() {
   let desc = '';
   
   if (ev.te !== undefined) {
-    // Schema from facts.js (te: title ES, ti: title EN, tx: description ES)
+    // Schema from facts.js (te: title ES, ti: title EN, tx: description ES, txn: description EN)
     title = isEs ? ev.te : (ev.ti || ev.te);
-    desc = ev.tx;
+    desc = isEs ? ev.tx : (ev.txn || ev.tx);
   } else {
     // Fallback schema from app.js (title_es, title_en, desc_es, desc_en)
     title = isEs ? ev.title_es : ev.title_en;
