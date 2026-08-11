@@ -18,6 +18,12 @@ const PASSWORD_HASH  = '629fa32d039e8ada557b3e018dd183e766015bee95008f2644906e94
 const STORAGE_KEY    = 'siacm_leads';
 const SESSION_KEY    = 'siacm_crm_auth';
 
+/* ===================================================
+   SUPABASE DATABASE CONFIG
+   =================================================== */
+const SUPABASE_URL = 'https://dyogkkwjqrujedggpcez.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5b2dra3dqcXJ1amVkZ2dwY2V6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU5MTc5ODEsImV4cCI6MjEwMTQ5Mzk4MX0._HYFljzTtJXbOh9zy2-UhZ1UmVk-XbcjPcwOcfHhhds';
+
 // Brute-force protection
 const MAX_ATTEMPTS      = 5;
 const LOCKOUT_MS        = 10 * 60 * 1000; // 10 minutes
@@ -57,7 +63,7 @@ let sortDir       = 'desc';
 let currentLeadId = null;
 
 /* ===================================================
-   LOCAL STORAGE HELPERS
+   LOCAL & CLOUD STORAGE HELPERS
    =================================================== */
 function getLeads() {
   try {
@@ -69,27 +75,93 @@ function saveLeads(data) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-function addLead(lead) {
+async function fetchLeadsFromSupabase() {
+  if (!SUPABASE_URL || !SUPABASE_KEY) return [];
+  try {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/leads?select=*&order=createdAt.desc`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    if (!response.ok) throw new Error('Failed to fetch');
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error('Error fetching leads from Supabase:', err);
+    return null;
+  }
+}
+
+async function syncWithSupabase() {
+  const supabaseLeads = await fetchLeadsFromSupabase();
+  if (supabaseLeads) {
+    saveLeads(supabaseLeads);
+    refreshAll();
+  }
+}
+
+async function addLead(lead) {
   leads.unshift(lead);
   saveLeads(leads);
   refreshAll();
   showToast('✅', 'Lead guardado correctamente');
+
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(lead)
+    });
+  } catch (err) {
+    console.error('Error adding lead to Supabase:', err);
+  }
 }
 
-function updateLead(id, updates) {
+async function updateLead(id, updates) {
   const idx = leads.findIndex(l => l.id === id);
   if (idx === -1) return;
   leads[idx] = { ...leads[idx], ...updates, updatedAt: new Date().toISOString() };
   saveLeads(leads);
   refreshAll();
+
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/leads?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updates)
+    });
+  } catch (err) {
+    console.error('Error updating lead in Supabase:', err);
+  }
 }
 
-function deleteLead(id) {
+async function deleteLead(id) {
   leads = leads.filter(l => l.id !== id);
   saveLeads(leads);
   refreshAll();
   closePanel();
   showToast('🗑', 'Lead eliminado');
+
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/leads?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+  } catch (err) {
+    console.error('Error deleting lead from Supabase:', err);
+  }
 }
 
 /* ===================================================
@@ -446,6 +518,7 @@ function showCRM() {
   document.getElementById('crm-app').classList.add('visible');
   leads = getLeads();
   refreshAll();
+  syncWithSupabase().catch(() => {});
 }
 
 /* ===================================================
