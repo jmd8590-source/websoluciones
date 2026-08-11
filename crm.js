@@ -21,8 +21,8 @@ const SESSION_KEY    = 'siacm_crm_auth';
 /* ===================================================
    SUPABASE DATABASE CONFIG
    =================================================== */
-const SUPABASE_URL = 'https://dyogkkwjqrujedggpcez.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5b2dra3dqcXJ1amVkZ2dwY2V6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU5MTc5ODEsImV4cCI6MjEwMTQ5Mzk4MX0._HYFljzTtJXbOh9zy2-UhZ1UmVk-XbcjPcwOcfHhhds';
+const SUPABASE_URL = 'https://qotpnbshccwyrledrorl.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvdHBuYnNoY2N3eXJsZWRyb3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0NjM0MjcsImV4cCI6MjEwMjAzOTQyN30.ToLVuYZiEq4hNOTn2JcxU5GaaODFQIQ0zu2uE34QQ2M';
 
 // Brute-force protection
 const MAX_ATTEMPTS      = 5;
