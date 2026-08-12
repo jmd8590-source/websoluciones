@@ -227,7 +227,7 @@ function renderTable() {
     return `
       <tr data-id="${esc(lead.id)}" title="Clic para ver detalle" tabindex="0" role="row">
         <td><strong>${name}</strong></td>
-        <td><a href="mailto:${email}" style="color:#818CF8" onclick="event.stopPropagation()">${email}</a></td>
+        <td><a href="mailto:${email}" style="color:#818CF8" class="email-link">${email}</a></td>
         <td>${company}</td>
         <td>${phone}</td>
         <td>
@@ -239,8 +239,8 @@ function renderTable() {
         <td style="color:var(--text-muted)">${date}</td>
         <td>
           <div class="row-actions">
-            <button class="action-btn" onclick="openPanel('${esc(lead.id)}');event.stopPropagation();" title="Ver detalle">👁</button>
-            <button class="action-btn danger" onclick="confirmDelete('${esc(lead.id)}');event.stopPropagation();" title="Eliminar">🗑</button>
+            <button class="action-btn view-lead-btn" data-id="${esc(lead.id)}" title="Ver detalle">👁</button>
+            <button class="action-btn danger delete-lead-btn" data-id="${esc(lead.id)}" title="Eliminar">🗑</button>
           </div>
         </td>
       </tr>
@@ -252,6 +252,28 @@ function renderTable() {
     row.addEventListener('click', () => openPanel(row.dataset.id));
     row.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') openPanel(row.dataset.id);
+    });
+  });
+
+  // Stop propagation on email links
+  tbody.querySelectorAll('.email-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  });
+
+  // Action buttons click listeners
+  tbody.querySelectorAll('.view-lead-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openPanel(btn.dataset.id);
+    });
+  });
+
+  tbody.querySelectorAll('.delete-lead-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      confirmDelete(btn.dataset.id);
     });
   });
 }
@@ -366,9 +388,7 @@ function addNote() {
 }
 
 function confirmDelete(id) {
-  if (confirm('¿Eliminar este lead? Esta acción no se puede deshacer.')) {
-    deleteLead(id);
-  }
+  deleteLead(id);
 }
 
 /* ===================================================
