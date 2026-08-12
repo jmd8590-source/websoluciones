@@ -140,6 +140,8 @@ const TRANSLATIONS = {
     svc8_desc: 'Diseño e implementación de bases de datos y sistemas CRM para gestionar clientes, leads y datos empresariales de forma eficiente.',
     svc9_title: 'Orientación Tecnológica',
     svc9_desc: 'Te guiamos en la selección de las herramientas tecnológicas más adecuadas para tu negocio, sin tecnicismos innecesarios.',
+    svc10_title: 'Restauración de Imágenes Antiguas',
+    svc10_desc: 'Recuperamos y mejoramos fotografías antiguas y en blanco y negro mediante IA: eliminamos deterioros, restauramos detalles y añadimos color con resultados asombrosos.',
 
     // Auditor
     auditor_label: 'Herramienta gratuita',
@@ -207,6 +209,7 @@ const TRANSLATIONS = {
     footer_link_chatbot: 'Chatbot 24/7',
     footer_link_web: 'Diseño Web',
     footer_link_automation: 'Automatizaciones',
+    footer_link_image_restore: 'Restauración de Imágenes',
     footer_link_contact: 'Contacto',
     footer_link_auditor: 'Auditor Web',
     footer_link_legal: 'Aviso Legal',
@@ -294,6 +297,8 @@ const TRANSLATIONS = {
     svc8_desc: 'Design and implementation of databases and CRM systems to manage customers, leads and business data efficiently.',
     svc9_title: 'Technology Guidance',
     svc9_desc: 'We guide you in selecting the most suitable technological tools for your business, without unnecessary jargon.',
+    svc10_title: 'Old Photo Restoration',
+    svc10_desc: 'We recover and enhance old and black-and-white photographs using AI: we remove damage, restore details and add color with amazing results.',
 
     // Auditor
     auditor_label: 'Free tool',
@@ -361,6 +366,7 @@ const TRANSLATIONS = {
     footer_link_chatbot: 'Chatbot 24/7',
     footer_link_web: 'Web Design',
     footer_link_automation: 'Automations',
+    footer_link_image_restore: 'Photo Restoration',
     footer_link_contact: 'Contact',
     footer_link_auditor: 'Web Auditor',
     footer_link_legal: 'Legal Notice',
