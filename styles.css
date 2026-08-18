@@ -1439,7 +1439,10 @@ textarea.form-input { resize: vertical; min-height: 120px; }
 .animate-on-scroll.delay-6 { transition-delay: 0.48s; }
 .animate-on-scroll.delay-7 { transition-delay: 0.56s; }
 .animate-on-scroll.delay-8 { transition-delay: 0.64s; }
-.animate-on-scroll.delay-9 { transition-delay: 0.72s; }
+.animate-on-scroll.delay-9  { transition-delay: 0.72s; }
+.animate-on-scroll.delay-10 { transition-delay: 0.80s; }
+.animate-on-scroll.delay-11 { transition-delay: 0.88s; }
+
 
 /* ===================================================
    RESPONSIVE BREAKPOINTS

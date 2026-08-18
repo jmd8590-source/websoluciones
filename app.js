@@ -142,6 +142,8 @@ const TRANSLATIONS = {
     svc9_desc: 'Te guiamos en la selección de las herramientas tecnológicas más adecuadas para tu negocio, sin tecnicismos innecesarios.',
     svc10_title: 'Restauración de Imágenes Antiguas',
     svc10_desc: 'Recuperamos y mejoramos fotografías antiguas y en blanco y negro mediante IA: eliminamos deterioros, restauramos detalles y añadimos color con resultados asombrosos.',
+    svc11_title: 'Diseño de aplicaciones a medida',
+    svc11_desc: 'Se crean aplicaciones a medida en función de las necesidades del negocio, atendiendo a las necesidades que el cliente indique.',
 
     // Auditor
     auditor_label: 'Herramienta gratuita',
@@ -299,6 +301,8 @@ const TRANSLATIONS = {
     svc9_desc: 'We guide you in selecting the most suitable technological tools for your business, without unnecessary jargon.',
     svc10_title: 'Old Photo Restoration',
     svc10_desc: 'We recover and enhance old and black-and-white photographs using AI: we remove damage, restore details and add color with amazing results.',
+    svc11_title: 'Custom Application Design',
+    svc11_desc: 'Custom applications are created based on business needs, tailored to the specific requirements the client indicates.',
 
     // Auditor
     auditor_label: 'Free tool',
