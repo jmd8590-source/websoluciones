@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://solucionesiacm.com/</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://solucionesiacm.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://solucionesiacm.com/#en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://solucionesiacm.com/" />
+    <image:image>
+      <image:loc>https://solucionesiacm.com/assets/logo.svg</image:loc>
+      <image:title>Soluciones IA CM - Automatización e Inteligencia Artificial</image:title>
+      <image:caption>Consultoría, asistentes IA, chatbots 24/7 y automatización para negocios y PYMEs en Cumbres Mayores (Huelva) y España</image:caption>
+    </image:image>
+  </url>
+</urlset>

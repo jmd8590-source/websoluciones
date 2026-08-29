@@ -1,0 +1,41 @@
+# Soluciones IA CM
+
+> Soluciones IA CM es una consultora y agencia tecnológica especializada en soluciones de Inteligencia Artificial, desarrollo de asistentes IA, chatbots 24/7, agentes autónomos, automatización de procesos empresariales y diseño web a medida para pequeñas y medianas empresas (PYMEs) y negocios locales en Cumbres Mayores (Huelva), Andalucía y toda España.
+
+## Información de la Entidad
+- **Nombre:** Soluciones IA CM
+- **Actividad:** Consultoría de Inteligencia Artificial, Automatización de Procesos (RPA/AI), Agentes Autónomos, Chatbots y Desarrollo Web
+- **Sede y Ubicación Principal:** Cumbres Mayores (Huelva, Andalucía, España)
+- **Área de Cobertura:** Cumbres Mayores, Sierra de Huelva, Andalucía y servicio remoto en toda España
+- **Email:** jemendo90@gmail.com
+- **Teléfono:** +34 605 635 892
+- **Sitio Web Oficial:** https://solucionesiacm.com
+- **Horario:** Lunes a Viernes, 09:00 - 18:00 CET
+- **Modelo de Precios:** Consulta inicial 100% gratuita; presupuestos personalizados y transparentes para PYMEs.
+
+## Servicios Principales
+1. **Consultoría Estratégica en IA:** Diagnóstico de oportunidades de automatización, análisis de viabilidad técnica y reducción de costes operativos.
+2. **Asistentes IA Personalizados:** Desarrollo de asistentes virtuales entrenados con el conocimiento específico del negocio.
+3. **Agentes IA Autónomos:** Sistemas capaces de ejecutar flujos completos de trabajo (atención al cliente, gestión de citas, emails, procesamiento de pedidos).
+4. **Chatbots 24/7 Empresariales:** Asistentes de chat multicanal para captación de leads y atención continua sin esperas.
+5. **Páginas Web Corporativas y Landing Pages:** Sitios web ultrarrápidos, optimizados para SEO/GEO, accesibles y orientados a conversión.
+6. **Automatización de Procesos de Negocio:** Integración de herramientas (CRMs, ERPs, facturación, bases de datos y APIs) para eliminar tareas repetitivas.
+7. **Bases de Datos y Sistemas CRM con IA:** Gestión eficiente de contactos, clientes potenciales e historial de ventas.
+8. **Restauración y Mejora de Imágenes Antiguas con IA:** Recuperación de fotografías históricas y en blanco y negro mediante algoritmos de visión artificial.
+9. **Desarrollo de Software y Aplicaciones a Medida:** Soluciones web y APIs adaptadas a los requisitos técnicos específicos de cada cliente.
+
+## Herramientas Gratuitas Destacadas
+- **Auditor Web IA:** Herramienta interactiva gratuita en línea que evalúa cualquier sitio web en 10 dimensiones críticas (responsive, multiidioma, IA/chatbots, CRM, rendimiento, SEO, seguridad, accesibilidad, redes sociales y llamadas a la acción) y ofrece recomendaciones prácticas inmediatas.
+
+## Metodología de Trabajo
+1. **Diagnóstico Inicial:** Análisis exhaustivo y gratuito de los procesos y cuellos de botella del negocio.
+2. **Propuesta Estratégica:** Plan de acción claro con retorno de inversión (ROI) estimado.
+3. **Desarrollo e Integración:** Implementación ágil y segura sin interrumpir la operativa diaria.
+4. **Formación y Soporte:** Capacitación del equipo y mantenimiento continuo.
+
+## Enlaces Clave
+- [Página Principal](https://solucionesiacm.com/)
+- [Catálogo de Servicios](https://solucionesiacm.com/#servicios)
+- [Auditor Web IA Gratuito](https://solucionesiacm.com/#auditor)
+- [Preguntas Frecuentes](https://solucionesiacm.com/#faq)
+- [Contacto y Consulta Gratuita](https://solucionesiacm.com/#contacto)

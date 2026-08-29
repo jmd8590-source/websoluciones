@@ -3,11 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Consultoría, asistentes IA, chatbots 24/7, automatizaciones y diseño web para pequeños y medianos negocios locales en Ciudad Real y alrededores.">
-  <meta name="keywords" content="inteligencia artificial, automatización, chatbot, consultoría IA, pequeña empresa, negocio local, Ciudad Real">
+  <meta name="description" content="Consultoría, asistentes IA, chatbots 24/7, automatizaciones y diseño web para pequeños y medianos negocios locales en Cumbres Mayores (Huelva) y toda España. Primera consulta gratuita.">
+  <meta name="keywords" content="inteligencia artificial, automatización, chatbot, consultoría IA, agentes IA, pequeña empresa, negocio local, Cumbres Mayores, Huelva, Andalucía, España">
   <meta name="author" content="Soluciones IA CM">
   <meta name="theme-color" content="#4F46E5">
-  <meta name="robots" content="index, follow">
+  
+  <!-- Directivas avanzadas para rastreadores de motores de búsqueda e IA (GEO) -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+  <!-- Metadatos de Geolocalización para Búsqueda Local e IA -->
+  <meta name="geo.region" content="ES-H">
+  <meta name="geo.placename" content="Cumbres Mayores, Huelva">
+  <meta name="geo.position" content="38.0628;-6.6465">
+  <meta name="ICBM" content="38.0628, -6.6465">
 
   <!-- ================================================
        SECURITY HEADERS (meta equivalents)
@@ -24,18 +33,21 @@
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
 
   <!-- Open Graph / Social -->
+  <meta property="og:site_name" content="Soluciones IA CM">
   <meta property="og:title" content="Soluciones IA CM — Automatización e IA para Negocios Locales">
-  <meta property="og:description" content="Automatizamos y potenciamos tu negocio local con inteligencia artificial. Primera consulta gratuita.">
+  <meta property="og:description" content="Automatizamos y potenciamos tu negocio local con inteligencia artificial, chatbots 24/7 y agentes autónomos. Primera consulta gratuita.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
   <meta property="og:url" content="https://solucionesiacm.com/">
+  <meta property="og:image" content="https://solucionesiacm.com/assets/logo.svg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Soluciones IA CM — IA para Negocios Locales">
-  <meta name="twitter:description" content="IA y automatización para pequeños y medianos negocios locales.">
+  <meta name="twitter:description" content="IA, chatbots 24/7 y automatización para pequeños y medianos negocios locales en Cumbres Mayores (Huelva) y España.">
+  <meta name="twitter:image" content="https://solucionesiacm.com/assets/logo.svg">
 
-  <title>Soluciones IA CM — Automatización e IA para Negocios Locales</title>
+  <title>Soluciones IA CM — Automatización e IA para Negocios Locales | Consultoría en Cumbres Mayores (Huelva)</title>
 
   <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,25 +57,166 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=1.1.5">
+  <link rel="stylesheet" href="styles.css?v=1.1.6">
 
-  <!-- Canonical URL -->
+  <!-- Canonical & Alternates -->
   <link rel="canonical" href="https://solucionesiacm.com/">
+  <link rel="alternate" type="text/plain" href="https://solucionesiacm.com/llms.txt" title="LLMs Context Manifest">
+  <link rel="alternate" hreflang="es" href="https://solucionesiacm.com/">
+  <link rel="alternate" hreflang="en" href="https://solucionesiacm.com/#en">
+  <link rel="alternate" hreflang="x-default" href="https://solucionesiacm.com/">
 
-  <!-- Structured Data (Local Business) -->
+  <!-- Structured Data (Schema.org / JSON-LD Knowledge Graph para GEO y Google AI) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Soluciones IA CM",
-    "description": "Consultoría de IA y automatización para pequeños y medianos negocios locales",
-    "email": "jemendo90@gmail.com",
-    "telephone": "+34605635892",
-    "url": "https://solucionesiacm.com",
-    "areaServed": { "@type": "Place", "name": "Ciudad Real y alrededores" },
-    "serviceType": ["Consultoría IA", "Automatización", "Diseño Web", "Chatbot", "Agentes IA"],
-    "priceRange": "€€",
-    "sameAs": []
+    "@graph": [
+      {
+        "@type": ["LocalBusiness", "ProfessionalService"],
+        "@id": "https://solucionesiacm.com/#organization",
+        "name": "Soluciones IA CM",
+        "alternateName": "Soluciones IA Cumbres Mayores",
+        "url": "https://solucionesiacm.com/",
+        "logo": "https://solucionesiacm.com/assets/logo.svg",
+        "image": "https://solucionesiacm.com/assets/logo.svg",
+        "description": "Consultoría estratégica, asistentes de IA personalizados, chatbots 24/7, agentes autónomos, automatizaciones y diseño web para pymes y negocios locales en Cumbres Mayores (Huelva) y toda España.",
+        "telephone": "+34605635892",
+        "email": "jemendo90@gmail.com",
+        "priceRange": "€€",
+        "currenciesAccepted": "EUR",
+        "paymentAccepted": "Transferencia bancaria, Bizum, Tarjeta",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Cumbres Mayores",
+          "addressRegion": "Huelva",
+          "postalCode": "21380",
+          "addressCountry": "ES"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 38.0628,
+          "longitude": -6.6465
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        ],
+        "areaServed": [
+          { "@type": "AdministrativeArea", "name": "Cumbres Mayores" },
+          { "@type": "AdministrativeArea", "name": "Huelva" },
+          { "@type": "AdministrativeArea", "name": "Andalucía" },
+          { "@type": "Country", "name": "España" }
+        ],
+        "knowsAbout": [
+          "Inteligencia Artificial para PYMEs",
+          "Agentes de Inteligencia Artificial Autónomos",
+          "Chatbots 24/7 para Empresas",
+          "Automatización de Procesos Empresariales (RPA)",
+          "Modelos de Lenguaje (LLMs)",
+          "Sistemas CRM y Bases de Datos",
+          "Desarrollo Web de Alta Conversión",
+          "Restauración de Imágenes Antiguas con IA",
+          "Generative Engine Optimization (GEO)",
+          "Digitalización e Innovación para Negocios Locales"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Servicios de Inteligencia Artificial y Automatización",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Consultoría Estratégica en IA" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Asistentes IA Personalizados" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Agentes IA Autónomos" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Chatbot 24/7 Empresarial" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Página Web Corporativa y Landing Pages" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automatización de Procesos" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bases de Datos y CRM" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Orientación Tecnológica" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Restauración de Imágenes Antiguas con IA" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Diseño de Aplicaciones a Medida" } }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://solucionesiacm.com/#website",
+        "url": "https://solucionesiacm.com/",
+        "name": "Soluciones IA CM",
+        "publisher": { "@id": "https://solucionesiacm.com/#organization" },
+        "inLanguage": ["es-ES", "en-US"]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://solucionesiacm.com/#auditor-app",
+        "name": "Auditor Web IA",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "All modern web browsers",
+        "url": "https://solucionesiacm.com/#auditor",
+        "description": "Herramienta gratuita de auditoría web con IA para negocios locales que evalúa diseño responsive, soporte multilingüe, integraciones de chatbot, SEO, velocidad, CRM y accesibilidad.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://solucionesiacm.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Cómo ayuda Soluciones IA CM a una pequeña o mediana empresa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Soluciones IA CM ayuda a negocios locales y PYMEs automatizando tareas repetitivas (como citas, emails, facturación y atención al cliente), creando asistentes virtuales y chatbots 24/7, y desarrollando sitios web de alta velocidad y conversión. Esto permite reducir costes operativos, ahorrar más de un 50% de tiempo en tareas manuales y captar clientes sin interrupciones."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Por qué contratar consultoría de inteligencia artificial para un negocio local?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "La consultoría de IA permite a los negocios locales competir con grandes marcas sin necesidad de grandes presupuestos. Identificamos oportunidades específicas en tu sector, aplicamos tecnología probada y te acompañamos paso a paso, asegurando un retorno de inversión rápido y medible."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cuánto cuesta implementar un chatbot o una automatización?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "La primera consulta de asesoramiento y diagnóstico es 100% gratuita. Los proyectos se diseñan a medida según las necesidades de cada PYME, ofreciendo soluciones escalables y presupuestos cerrados sin costes ocultos."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué áreas geográficas cubre Soluciones IA CM?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Soluciones IA CM tiene sede en Cumbres Mayores (provincia de Huelva) y ofrece atención presencial y asesoría en toda la comarca y Andalucía, así como servicios de desarrollo e implementación remota para clientes de toda España."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cuánto tiempo se tarda en poner en marcha un asistente o chatbot de IA?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "La puesta en marcha de un chatbot o asistente virtual estándar suele completarse en un plazo de 3 a 7 días laborables. Proyectos más complejos con integraciones de CRM y agentes autónomos toman entre 2 y 3 semanas."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Es necesario tener conocimientos técnicos para utilizar las soluciones?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. En Soluciones IA CM nos encargamos de todo el proceso técnico (diseño, programación, pruebas y puesta en marcha) y entregamos herramientas intuitivas con formación sencilla y soporte continuo."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>
@@ -106,6 +259,7 @@
       <li><a href="#servicios" class="nav-link"        data-i18n="nav_servicios"             >Servicios</a></li>
       <li><a href="#auditor"   class="nav-link"        data-i18n="nav_auditor"               >Auditor Web IA</a></li>
       <li><a href="#lo-ultimo" class="nav-link nav-link--new" data-i18n="nav_lo_ultimo"      >Lo Último</a></li>
+      <li><a href="#faq"       class="nav-link"        data-i18n="nav_faq"                   >FAQ</a></li>
       <li><a href="#contacto"  class="nav-link"        data-i18n="nav_contacto"              >Contacto</a></li>
     </ul>
 
@@ -137,6 +291,7 @@
     <li><a href="#servicios" class="mobile-nav-link" data-i18n="nav_servicios">Servicios</a></li>
     <li><a href="#auditor"   class="mobile-nav-link" data-i18n="nav_auditor">Auditor Web IA</a></li>
     <li><a href="#lo-ultimo" class="mobile-nav-link nav-link--new" data-i18n="nav_lo_ultimo">Lo Último</a></li>
+    <li><a href="#faq"       class="mobile-nav-link" data-i18n="nav_faq">FAQ</a></li>
     <li><a href="#contacto"  class="mobile-nav-link" data-i18n="nav_contacto">Contacto</a></li>
   </ul>
   <div style="display:flex;gap:12px;align-items:center;">
@@ -529,6 +684,117 @@
   </section>
 
   <!-- ===============================================
+       FAQ — PREGUNTAS FRECUENTES (GEO & AI Search)
+       =============================================== -->
+  <section id="faq" class="section faq-section" aria-labelledby="faq-title" itemscope itemtype="https://schema.org/FAQPage">
+    <div class="container">
+
+      <header class="section-header animate-on-scroll">
+        <div class="section-label" data-i18n="faq_label">Preguntas frecuentes</div>
+        <h2 class="section-title" id="faq-title" data-i18n="faq_title">Resolvemos tus dudas sobre IA</h2>
+        <p class="section-subtitle" data-i18n="faq_subtitle">
+          Todo lo que necesitas saber sobre cómo la inteligencia artificial y la automatización impulsan tu empresa.
+        </p>
+      </header>
+
+      <div class="faq-accordion animate-on-scroll delay-2" role="region" aria-label="Preguntas frecuentes">
+
+        <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question" open>
+          <summary class="faq-question">
+            <span class="faq-q-text" itemprop="name" data-i18n="faq1_q">¿Cómo ayuda Soluciones IA CM a una pequeña o mediana empresa?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text" data-i18n="faq1_a">
+              Automatizamos tareas manuales repetitivas (gestión de citas, facturación, atención al cliente), creamos asistentes virtuales y chatbots 24/7 personalizados, y desarrollamos páginas web rápidas orientadas a conversión. Esto permite reducir costes operativos, ahorrar más de un 50% de tiempo y captar clientes de manera continua.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="faq-question">
+            <span class="faq-q-text" itemprop="name" data-i18n="faq2_q">¿Por qué contratar consultoría de IA para un negocio local?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text" data-i18n="faq2_a">
+              La consultoría de IA permite a los negocios locales competir con grandes marcas sin costes prohibitivos. Analizamos tu operativa concreta, seleccionamos las herramientas exactas que te aportan rentabilidad y te acompañamos en la puesta en marcha con un retorno de inversión rápido.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="faq-question">
+            <span class="faq-q-text" itemprop="name" data-i18n="faq3_q">¿Cuánto cuesta implementar un chatbot o una automatización?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text" data-i18n="faq3_a">
+              La primera consulta de diagnóstico y asesoramiento es 100% gratuita. Cada proyecto se cotiza de forma transparente y adaptada a la escala de una PYME, con presupuestos cerrados y sin cuotas ocultas.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="faq-question">
+            <span class="faq-q-text" itemprop="name" data-i18n="faq4_q">¿Qué ámbito geográfico cubre Soluciones IA CM?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text" data-i18n="faq4_a">
+              Tenemos sede en Cumbres Mayores (provincia de Huelva) y prestamos servicio directo y cercano en toda la comarca y Andalucía, además de ofrecer consultoría, diseño web y desarrollos de IA en modalidad online para empresas de toda España.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="faq-question">
+            <span class="faq-q-text" itemprop="name" data-i18n="faq5_q">¿Cuánto tiempo toma la puesta en marcha de un proyecto de IA?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text" data-i18n="faq5_a">
+              Los chatbots y asistentes virtuales estándar se configuran y despliegan en 3 a 7 días hábiles. Soluciones a medida más avanzadas (agentes autónomos, integraciones con ERP/CRM o plataformas web completas) suelen tomar entre 2 y 3 semanas.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="faq-question">
+            <span class="faq-q-text" itemprop="name" data-i18n="faq6_q">¿Se requieren conocimientos técnicos previos para empezar?</span>
+            <span class="faq-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text" data-i18n="faq6_a">
+              Para nada. Nosotros nos encargamos de todo el desarrollo, configuración técnica y pruebas. Te entregamos la solución lista para usar, con una formación práctica muy sencilla y soporte continuo.
+            </p>
+          </div>
+        </details>
+
+      </div>
+
+      <!-- FAQ CTA Mini Banner -->
+      <div class="faq-cta-box animate-on-scroll delay-3">
+        <p class="faq-cta-text" data-i18n="faq_cta_text">¿Tienes otra pregunta sobre cómo aplicar IA a tu negocio?</p>
+        <a href="#contacto" class="btn btn-primary" data-i18n="faq_cta_btn">Consulta gratuita sin compromiso</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===============================================
        CONTACT
        =============================================== -->
   <section id="contacto" class="section section--alt" aria-labelledby="contact-title">
@@ -753,6 +1019,7 @@
         <ul class="footer-links" role="list">
           <li><a href="#contacto" class="footer-link" data-i18n="footer_link_contact">Contacto</a></li>
           <li><a href="#auditor"  class="footer-link" data-i18n="footer_link_auditor">Auditor Web</a></li>
+          <li><a href="#faq"      class="footer-link" data-i18n="footer_link_faq">Preguntas Frecuentes</a></li>
           <li>
             <a href="mailto:jemendo90@gmail.com" class="footer-link" aria-label="Enviar email">
               jemendo90@gmail.com
@@ -809,7 +1076,7 @@
         <strong>Denominación:</strong> Soluciones IA CM<br>
         <strong>Email:</strong> jemendo90@gmail.com<br>
         <strong>Teléfono:</strong> 605 635 892<br>
-        <strong>Ámbito geográfico:</strong> Ciudad Real, España
+        <strong>Ámbito geográfico:</strong> Cumbres Mayores (Huelva), España
       </p>
 
       <h3>Objeto y ámbito de aplicación</h3>
@@ -822,7 +1089,7 @@
       <p>Soluciones IA CM no garantiza la ausencia de virus u otros elementos en los contenidos que puedan producir alteraciones en el sistema informático del usuario. El titular no será responsable de los daños y perjuicios de cualquier naturaleza derivados del uso del sitio web.</p>
 
       <h3>Legislación aplicable y jurisdicción</h3>
-      <p>La relación entre el titular y el usuario se rige por la normativa española vigente. Para la resolución de disputas, las partes se someten a los juzgados y tribunales de Ciudad Real, salvo que la ley disponga otra cosa.</p>
+      <p>La relación entre el titular y el usuario se rige por la normativa española vigente. Para la resolución de disputas, las partes se someten a los juzgados y tribunales de Huelva, salvo que la ley disponga otra cosa.</p>
     </div>
   </div>
 </div>

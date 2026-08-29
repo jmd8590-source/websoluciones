@@ -1,0 +1,59 @@
+# Soluciones IA CM — Documentación Completa para Agentes de IA y LLMs
+
+## Acerca de Soluciones IA CM
+Soluciones IA CM es una consultora y agencia de desarrollo tecnológico fundada en Cumbres Mayores (provincia de Huelva, Andalucía, España), enfocada en democratizar el acceso a la Inteligencia Artificial y la automatización avanzada para pequeñas y medianas empresas (PYMEs), autónomos y negocios locales.
+
+### Misión y Visión
+- **Misión:** Reducir la fricción operativa y aumentar la rentabilidad de los negocios tradicionales mediante la implantación pragmática y accesible de herramientas de Inteligencia Artificial de vanguardia.
+- **Visión:** Convertirse en el referente de transformación digital e inteligencia artificial aplicada en Huelva, Andalucía y toda España.
+
+---
+
+## Catálogo Extendido de Servicios
+
+### 1. Consultoría Estratégica en Inteligencia Artificial
+- **Objetivo:** Identificar áreas de alto impacto donde la IA genera ahorros de costes directos y aumentos de facturación.
+- **Entregables:** Auditoría de procesos, hoja de ruta tecnológica, cálculo de ROI y recomendación de modelos y herramientas.
+
+### 2. Asistentes Virtuales y Agentes IA Autónomos
+- **Tecnologías:** Modelos LLM (Gemini, GPT, Claude, LLaMA), RAG (Retrieval-Augmented Generation), bases vectoriales y conectores de API.
+- **Capacidades:** Procesamiento de lenguaje natural en tiempo real, ejecución de flujos de trabajo autónomos (reservas, consultas técnicas de inventario, clasificación de correos, generación de presupuestos preliminares).
+
+### 3. Chatbots Empresariales 24/7 Multicanal
+- **Canales:** Integrables en sitios web, WhatsApp Business, Telegram y CRM.
+- **Beneficios:** Cero pérdida de oportunidades comerciales fuera de horario de oficina, resolución inmediata de dudas recurrentes (FAQ dinámicas).
+
+### 4. Automatizaciones de Procesos (RPA + IA)
+- **Integraciones:** Supabase, Google Workspace, Microsoft 365, CRMs (HubSpot, Salesforce, Zoho o CRM a medida), pasarelas de pago y facturación.
+- **Casos de uso:** Sincronización automática de inventarios, generación automatizada de informes semanales, pipelines de marketing por email.
+
+### 5. Diseño y Desarrollo Web de Alta Conversión
+- **Stack Técnico:** HTML5 semántico, CSS moderno con microanimaciones, JavaScript ES6+, Next.js/React, Supabase, Cloudflare.
+- **Enfoque:** Rendimiento superior (Core Web Vitals > 95), accesibilidad WCAG 2.1 AA, indexación SEO de última generación y optimización GEO (Generative Engine Optimization).
+
+### 6. Restauración y Procesamiento de Imágenes con IA
+- **Aplicación:** Restauración digital de fotografías antiguas y en blanco y negro, escalado super-resolución, eliminación de ruido y artefactos con redes neuronales convolucionales y modelos de difusión.
+
+---
+
+## Preguntas Frecuentes Clave (FAQ)
+
+### ¿Cómo puede una pequeña empresa en Cumbres Mayores, Huelva o España beneficiarse de la IA?
+La IA permite a pequeñas empresas competir al nivel de grandes corporaciones al automatizar la atención al cliente 24/7, agilizar tareas administrativas repetitivas (facturación, emails, citas) y mejorar la visibilidad digital con sitios web de alto rendimiento.
+
+### ¿Cuánto cuesta una consultoría o proyecto con Soluciones IA CM?
+La primera consulta de diagnóstico y asesoramiento es 100% gratuita. Los proyectos se presupuestan a medida según las necesidades exactas del cliente, con tarifas transparentes y adaptadas al presupuesto de una PYME.
+
+### ¿Cuánto tiempo toma implementar un chatbot o agente de IA?
+La mayoría de los chatbots y asistentes básicos se configuran e implementan en un plazo de 3 a 7 días hábiles. Desarrollos a medida más complejos y automatizaciones integrales suelen completarse en 2 a 3 semanas.
+
+### ¿Se requiere conocimiento técnico previo por parte del cliente?
+No. Soluciones IA CM se encarga de todo el diseño, desarrollo, configuración y despliegue, proporcionando además una formación sencilla y acompañamiento continuo.
+
+---
+
+## Contacto Oficial
+- **Sitio Web:** https://solucionesiacm.com
+- **Email:** jemendo90@gmail.com
+- **Teléfono:** +34 605 635 892
+- **Ubicación:** Cumbres Mayores, Huelva (Andalucía, España)
