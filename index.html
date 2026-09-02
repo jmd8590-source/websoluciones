@@ -22,7 +22,7 @@
        SECURITY HEADERS (meta equivalents)
        ================================================ -->
   <!-- Content-Security-Policy: restrict resource origins -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.web3forms.com https://qotpnbshccwyrledrorl.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.chatbase.co; frame-src 'self' https://www.chatbase.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.chatbase.co https://*.chatbase.co https://api.web3forms.com https://qotpnbshccwyrledrorl.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com;">
   <!-- Prevent clickjacking via iframes -->
   <meta http-equiv="X-Frame-Options" content="DENY">
   <!-- Prevent MIME-type sniffing -->
@@ -1176,6 +1176,11 @@
 <script src="facts.js?v=1.1.5" defer></script>
 <script src="lo-ultimo.js?v=1.1.5" defer></script>
 <script src="app.js?v=1.1.5" defer></script>
+
+<!-- Chatbase AI Agent Widget -->
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="DlYvDU3Ab08HmFUV5mS7K";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
 
 </body>
 </html>
