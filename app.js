@@ -1425,10 +1425,72 @@ function refreshEphemeris() {
 }
 
 /* ===================================================
+   SECURITY & CODE / CONTENT PROTECTION
+   =================================================== */
+function initSecurityProtection() {
+  // Deshabilitar menú contextual (clic derecho)
+  document.addEventListener('contextmenu', (e) => {
+    // Permitir clic derecho solo en campos de formulario (inputs/textareas)
+    const tag = e.target.tagName.toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) {
+      return;
+    }
+    e.preventDefault();
+  }, false);
+
+  // Bloquear atajos habituales para inspeccionar y copiar código
+  document.addEventListener('keydown', (e) => {
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    const ctrlOrCmd = isMac ? e.metaKey : e.ctrlKey;
+
+    // F12 (DevTools)
+    if (e.key === 'F12' || e.keyCode === 123) {
+      e.preventDefault();
+      return false;
+    }
+
+    // Ctrl+Shift+I (DevTools), Ctrl+Shift+J (Consola), Ctrl+Shift+C (Inspeccionar elemento)
+    if (ctrlOrCmd && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      return false;
+    }
+
+    // Ctrl+U (Ver código fuente)
+    if (ctrlOrCmd && (e.key === 'u' || e.key === 'U')) {
+      e.preventDefault();
+      return false;
+    }
+
+    // Ctrl+S (Guardar página)
+    if (ctrlOrCmd && (e.key === 's' || e.key === 'S')) {
+      e.preventDefault();
+      return false;
+    }
+
+    // Ctrl+C (Copiar) fuera de inputs
+    if (ctrlOrCmd && (e.key === 'c' || e.key === 'C')) {
+      const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+      if (tag !== 'input' && tag !== 'textarea' && !e.target.isContentEditable) {
+        e.preventDefault();
+        return false;
+      }
+    }
+  }, false);
+
+  // Evitar arrastre de imágenes
+  document.addEventListener('dragstart', (e) => {
+    if (e.target.nodeName === 'IMG') {
+      e.preventDefault();
+    }
+  }, false);
+}
+
+/* ===================================================
    INIT — DOM READY
    =================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initSecurityProtection();
   applyTranslations();
   initNavigation();
   initScrollAnimations();
@@ -1439,3 +1501,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initLangToggle();
 });
+
