@@ -1,0 +1,19 @@
+# =============================================================
+# Cloudflare Pages – Redirects & Access Control
+# Block access to sensitive files and directories
+# Docs: https://developers.cloudflare.com/pages/configuration/redirects/
+# =============================================================
+
+# Block .git directory and all its contents
+/.git/*    /404.html    404
+
+# Block common sensitive files
+/.gitignore         /404.html    404
+/.gitmodules        /404.html    404
+/.env               /404.html    404
+/.env.local         /404.html    404
+/.env.production    /404.html    404
+/.htaccess          /404.html    404
+/.htpasswd          /404.html    404
+/wp-config.php      /404.html    404
+/web.config         /404.html    404
