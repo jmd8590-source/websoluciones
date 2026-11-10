@@ -1,44 +1,41 @@
 /* ===================================================
    SOLUCIONES IA CM — CRM Application Logic
-   Version: 1.1.0  (security hardened)
+   Version: 2.0.0 (Supabase Auth — server-side login)
 
-   Para cambiar la contraseña:
-   1. Calcula el SHA-256 de tu nueva contraseña en:
-      https://emn178.github.io/online-tools/sha256.html
-   2. Sustituye PASSWORD_HASH por el nuevo hash.
+   Autenticación: Supabase Auth (email + contraseña real).
+   Ya no existe ninguna contraseña ni hash en este archivo.
+   El acceso a los leads lo decide Supabase mediante Row
+   Level Security (ver supabase/rls-leads.sql): solo un
+   usuario autenticado puede leer, editar o borrar leads;
+   el formulario público solo puede insertar.
    =================================================== */
 
 'use strict';
 
 /* ===================================================
-   CONFIGURATION (no secrets in plain text)
-   =================================================== */
-// SHA-256 hash of 'siacm2025'  — never store the plain password
-const PASSWORD_HASH  = '629fa32d039e8ada557b3e018dd183e766015bee95008f2644906e94b5e2b546';
-const STORAGE_KEY    = 'siacm_leads';
-const SESSION_KEY    = 'siacm_crm_auth';
-
-/* ===================================================
-   SUPABASE DATABASE CONFIG
+   SUPABASE CONFIG
+   La "anon key" es pública por diseño (no es un secreto):
+   todo el control de acceso real vive en las políticas RLS
+   del servidor, no en esta clave.
    =================================================== */
 const SUPABASE_URL = 'https://qotpnbshccwyrledrorl.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvdHBuYnNoY2N3eXJsZWRyb3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0NjM0MjcsImV4cCI6MjEwMjAzOTQyN30.ToLVuYZiEq4hNOTn2JcxU5GaaODFQIQ0zu2uE34QQ2M';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvdHBuYnNoY2N3eXJsZWRyb3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0NjM0MjcsImV4cCI6MjEwMjAzOTQyN30.ToLVuYZiEq4hNOTn2JcxU5GaaODFQIQ0zu2uE34QQ2M';
 
-// Brute-force protection
-const MAX_ATTEMPTS      = 5;
-const LOCKOUT_MS        = 10 * 60 * 1000; // 10 minutes
-const ATTEMPTS_KEY      = 'siacm_login_attempts';
-const LOCKOUT_UNTIL_KEY = 'siacm_lockout_until';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+});
+
+const STORAGE_KEY = 'siacm_leads_cache'; // local cache only, never the source of truth
 
 /* ===================================================
    STATUS CONFIG
    =================================================== */
 const STATUS = {
-  nuevo:      { label: 'Nuevo',            emoji: '🆕', cls: 'nuevo'      },
-  contactado: { label: 'Contactado',       emoji: '📞', cls: 'contactado' },
-  propuesta:  { label: 'Propuesta env.',   emoji: '📄', cls: 'propuesta'  },
-  ganado:     { label: 'Ganado',           emoji: '🏆', cls: 'ganado'     },
-  perdido:    { label: 'Perdido',          emoji: '❌', cls: 'perdido'    },
+  nuevo:      { label: 'Nuevo',          cls: 'nuevo'      },
+  contactado: { label: 'Contactado',     cls: 'contactado' },
+  propuesta:  { label: 'Propuesta env.', cls: 'propuesta'  },
+  ganado:     { label: 'Ganado',         cls: 'ganado'     },
+  perdido:    { label: 'Perdido',        cls: 'perdido'    },
 };
 
 const SOURCE_LABELS = {
@@ -63,105 +60,66 @@ let sortDir       = 'desc';
 let currentLeadId = null;
 
 /* ===================================================
-   LOCAL & CLOUD STORAGE HELPERS
+   DATA — Supabase es la única fuente de verdad.
+   El cache local solo evita una pantalla en blanco mientras
+   carga, nunca se usa para decidir quién puede ver qué.
    =================================================== */
-function getLeads() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-  } catch { return []; }
+function getCachedLeads() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; }
+}
+function cacheLeads(data) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch { /* storage full/blocked: ignore */ }
 }
 
-function saveLeads(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
-
-async function fetchLeadsFromSupabase() {
-  if (!SUPABASE_URL || !SUPABASE_KEY) return [];
-  try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/leads?select=*&order=createdAt.desc`, {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`
-      }
-    });
-    if (!response.ok) throw new Error('Failed to fetch');
-    const data = await response.json();
-    return data;
-  } catch (err) {
-    console.error('Error fetching leads from Supabase:', err);
+async function fetchLeads() {
+  const { data, error } = await sb.from('leads').select('*').order('createdAt', { ascending: false });
+  if (error) {
+    console.error('Error al leer leads:', error.message);
+    showToast(iconWarning(), 'No se pudieron cargar los leads desde el servidor');
     return null;
   }
-}
-
-async function syncWithSupabase() {
-  const supabaseLeads = await fetchLeadsFromSupabase();
-  if (supabaseLeads) {
-    saveLeads(supabaseLeads);
-    refreshAll();
-  }
+  return data || [];
 }
 
 async function addLead(lead) {
-  leads.unshift(lead);
-  saveLeads(leads);
-  refreshAll();
-  showToast('✅', 'Lead guardado correctamente');
-
-  try {
-    await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(lead)
-    });
-  } catch (err) {
-    console.error('Error adding lead to Supabase:', err);
+  const { data, error } = await sb.from('leads').insert(lead).select().single();
+  if (error) {
+    showToast(iconWarning(), 'No se pudo guardar el lead');
+    console.error(error.message);
+    return;
   }
+  leads.unshift(data);
+  cacheLeads(leads);
+  refreshAll();
+  showToast(iconCheck(), 'Lead guardado correctamente');
 }
 
 async function updateLead(id, updates) {
-  const idx = leads.findIndex(l => l.id === id);
-  if (idx === -1) return;
-  leads[idx] = { ...leads[idx], ...updates, updatedAt: new Date().toISOString() };
-  saveLeads(leads);
-  refreshAll();
-
-  try {
-    await fetch(`${SUPABASE_URL}/rest/v1/leads?id=eq.${id}`, {
-      method: 'PATCH',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(updates)
-    });
-  } catch (err) {
-    console.error('Error updating lead in Supabase:', err);
+  const payload = { ...updates, updatedAt: new Date().toISOString() };
+  const { data, error } = await sb.from('leads').update(payload).eq('id', id).select().single();
+  if (error) {
+    showToast(iconWarning(), 'No se pudo actualizar el lead');
+    console.error(error.message);
+    return;
   }
+  const idx = leads.findIndex(l => l.id === id);
+  if (idx !== -1) leads[idx] = data;
+  cacheLeads(leads);
+  refreshAll();
 }
 
 async function deleteLead(id) {
+  const { error } = await sb.from('leads').delete().eq('id', id);
+  if (error) {
+    showToast(iconWarning(), 'No se pudo eliminar el lead');
+    console.error(error.message);
+    return;
+  }
   leads = leads.filter(l => l.id !== id);
-  saveLeads(leads);
+  cacheLeads(leads);
   refreshAll();
   closePanel();
-  showToast('🗑', 'Lead eliminado');
-
-  try {
-    await fetch(`${SUPABASE_URL}/rest/v1/leads?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`
-      }
-    });
-  } catch (err) {
-    console.error('Error deleting lead from Supabase:', err);
-  }
+  showToast(iconTrash(), 'Lead eliminado');
 }
 
 /* ===================================================
@@ -170,12 +128,10 @@ async function deleteLead(id) {
 function applyFilter() {
   let data = [...leads];
 
-  // Status filter
   if (activeFilter) {
     data = data.filter(l => l.status === activeFilter);
   }
 
-  // Search
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
     data = data.filter(l =>
@@ -186,7 +142,6 @@ function applyFilter() {
     );
   }
 
-  // Sort
   data.sort((a, b) => {
     let va = a[sortCol] || '';
     let vb = b[sortCol] || '';
@@ -199,6 +154,15 @@ function applyFilter() {
 
   filteredLeads = data;
 }
+
+/* ===================================================
+   SVG ICONS (sin emojis — consistentes con el resto del sitio)
+   =================================================== */
+function iconCheck() { return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'; }
+function iconWarning() { return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>'; }
+function iconTrash() { return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>'; }
+function iconNote() { return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg>'; }
+function iconBell() { return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>'; }
 
 /* ===================================================
    RENDER TABLE
@@ -227,7 +191,7 @@ function renderTable() {
     return `
       <tr data-id="${esc(lead.id)}" title="Clic para ver detalle" tabindex="0" role="row">
         <td><strong>${name}</strong></td>
-        <td><a href="mailto:${email}" style="color:#818CF8" class="email-link">${email}</a></td>
+        <td><a href="mailto:${email}" class="email-link">${email}</a></td>
         <td>${company}</td>
         <td>${phone}</td>
         <td>
@@ -239,15 +203,18 @@ function renderTable() {
         <td style="color:var(--text-muted)">${date}</td>
         <td>
           <div class="row-actions">
-            <button class="action-btn view-lead-btn" data-id="${esc(lead.id)}" title="Ver detalle">👁</button>
-            <button class="action-btn danger delete-lead-btn" data-id="${esc(lead.id)}" title="Eliminar">🗑</button>
+            <button class="action-btn view-lead-btn" data-id="${esc(lead.id)}" title="Ver detalle" aria-label="Ver detalle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+            <button class="action-btn danger delete-lead-btn" data-id="${esc(lead.id)}" title="Eliminar" aria-label="Eliminar lead">
+              ${iconTrash()}
+            </button>
           </div>
         </td>
       </tr>
     `;
   }).join('');
 
-  // Click row → open panel
   tbody.querySelectorAll('tr[data-id]').forEach(row => {
     row.addEventListener('click', () => openPanel(row.dataset.id));
     row.addEventListener('keydown', e => {
@@ -255,26 +222,16 @@ function renderTable() {
     });
   });
 
-  // Stop propagation on email links
   tbody.querySelectorAll('.email-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
+    link.addEventListener('click', (e) => e.stopPropagation());
   });
 
-  // Action buttons click listeners
   tbody.querySelectorAll('.view-lead-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openPanel(btn.dataset.id);
-    });
+    btn.addEventListener('click', (e) => { e.stopPropagation(); openPanel(btn.dataset.id); });
   });
 
   tbody.querySelectorAll('.delete-lead-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      confirmDelete(btn.dataset.id);
-    });
+    btn.addEventListener('click', (e) => { e.stopPropagation(); confirmDelete(btn.dataset.id); });
   });
 }
 
@@ -282,12 +239,12 @@ function renderTable() {
    STATS
    =================================================== */
 function renderStats() {
-  document.getElementById('stat-all').textContent       = leads.length;
-  document.getElementById('stat-nuevo').textContent     = leads.filter(l => l.status === 'nuevo').length;
-  document.getElementById('stat-contactado').textContent= leads.filter(l => l.status === 'contactado').length;
-  document.getElementById('stat-propuesta').textContent = leads.filter(l => l.status === 'propuesta').length;
-  document.getElementById('stat-ganado').textContent    = leads.filter(l => l.status === 'ganado').length;
-  document.getElementById('stat-perdido').textContent   = leads.filter(l => l.status === 'perdido').length;
+  document.getElementById('stat-all').textContent        = leads.length;
+  document.getElementById('stat-nuevo').textContent      = leads.filter(l => l.status === 'nuevo').length;
+  document.getElementById('stat-contactado').textContent = leads.filter(l => l.status === 'contactado').length;
+  document.getElementById('stat-propuesta').textContent  = leads.filter(l => l.status === 'propuesta').length;
+  document.getElementById('stat-ganado').textContent     = leads.filter(l => l.status === 'ganado').length;
+  document.getElementById('stat-perdido').textContent    = leads.filter(l => l.status === 'perdido').length;
 }
 
 /* ===================================================
@@ -301,11 +258,8 @@ function openPanel(id) {
   const panel   = document.getElementById('detail-panel');
   const overlay = document.getElementById('panel-overlay');
 
-  // Header title
   document.getElementById('panel-lead-name').textContent = lead.name || 'Lead';
 
-  // Info grid
-  const st  = STATUS[lead.status] || STATUS.nuevo;
   const src = SOURCE_LABELS[lead.source] || lead.source || '—';
   document.getElementById('panel-info-grid').innerHTML = `
     <div class="info-item"><div class="info-label">Nombre</div><div class="info-value">${esc(lead.name || '—')}</div></div>
@@ -316,13 +270,11 @@ function openPanel(id) {
     <div class="info-item"><div class="info-label">Fecha</div><div class="info-value">${formatDateLong(lead.createdAt)}</div></div>
   `;
 
-  // Status buttons
   document.querySelectorAll('.status-option').forEach(btn => {
     const s = btn.dataset.status;
     btn.className = 'status-option' + (s === lead.status ? ` selected-${s}` : '');
   });
 
-  // Message
   const msgSection = document.getElementById('panel-message-section');
   const msgEl      = document.getElementById('panel-message-text');
   if (lead.message) {
@@ -332,13 +284,9 @@ function openPanel(id) {
     msgSection.style.display = 'none';
   }
 
-  // Notes
   renderNotes(lead.notes || []);
-
-  // Clear note input
   document.getElementById('note-input').value = '';
 
-  // Open
   panel.classList.add('open');
   overlay.classList.add('open');
   panel.setAttribute('aria-hidden', 'false');
@@ -381,14 +329,17 @@ function addNote() {
 
   const note = { id: 'note_' + Date.now(), text, createdAt: new Date().toISOString() };
   const notes = [...(lead.notes || []), note];
-  updateLead(currentLeadId, { notes });
-  renderNotes(notes);
-  input.value = '';
-  showToast('📝', 'Nota guardada');
+  updateLead(currentLeadId, { notes }).then(() => {
+    renderNotes(notes);
+    input.value = '';
+    showToast(iconNote(), 'Nota guardada');
+  });
 }
 
 function confirmDelete(id) {
-  deleteLead(id);
+  if (window.confirm('¿Eliminar este lead de forma permanente? Esta acción no se puede deshacer.')) {
+    deleteLead(id);
+  }
 }
 
 /* ===================================================
@@ -415,11 +366,11 @@ function handleAddLead(e) {
   const name  = document.getElementById('ml-name').value.trim();
   const email = document.getElementById('ml-email').value.trim();
   if (!name || !email) {
-    showToast('⚠️', 'Nombre y email son obligatorios');
+    showToast(iconWarning(), 'Nombre y email son obligatorios');
     return;
   }
   const lead = {
-    id:        'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+    id:        'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     name,
@@ -449,103 +400,113 @@ function exportCSV() {
   ].map(v => `"${String(v || '').replace(/"/g, '""')}"`));
 
   const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
   a.href     = url;
   a.download = `leads_siacm_${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
   URL.revokeObjectURL(url);
-  showToast('📊', 'CSV exportado correctamente');
+  showToast('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>', 'CSV exportado correctamente');
 }
 
 /* ===================================================
    TOAST
    =================================================== */
 let toastTimer;
-function showToast(icon, msg) {
+function showToast(iconHtml, msg) {
   const toast = document.getElementById('toast');
-  document.getElementById('toast-icon').textContent = icon;
-  document.getElementById('toast-msg').textContent  = msg;
+  document.getElementById('toast-icon').innerHTML = iconHtml;
+  document.getElementById('toast-msg').textContent = msg;
   toast.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
 }
 
 /* ===================================================
-   AUTH
+   AUTH — Supabase Auth (email + contraseña real).
+   No hay contraseña, hash ni comprobación de sesión en
+   este archivo: todo lo valida el servidor de Supabase.
    =================================================== */
-function isAuthenticated() {
-  return sessionStorage.getItem(SESSION_KEY) === 'ok';
+function setLoginBusy(busy) {
+  const btn = document.getElementById('login-submit-btn');
+  if (btn) btn.disabled = busy;
+  document.getElementById('login-form').classList.toggle('busy', busy);
 }
 
-/* Password hashing via Web Crypto API (SHA-256) */
-async function hashPassword(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+function showLoginError(msg) {
+  const err = document.getElementById('login-error');
+  err.textContent = msg;
+  err.classList.add('show');
 }
 
-/* Brute-force protection helpers */
-function isLockedOut() {
-  const until = parseInt(sessionStorage.getItem(LOCKOUT_UNTIL_KEY) || '0');
-  return Date.now() < until;
+function clearLoginError() {
+  document.getElementById('login-error').classList.remove('show');
 }
 
-function lockoutMinutesLeft() {
-  const until = parseInt(sessionStorage.getItem(LOCKOUT_UNTIL_KEY) || '0');
-  return Math.max(1, Math.ceil((until - Date.now()) / 60000));
-}
+async function handleLoginSubmit(e) {
+  e.preventDefault();
+  clearLoginError();
+  const email = document.getElementById('login-email').value.trim();
+  const pwd   = document.getElementById('login-password').value;
+  if (!email || !pwd) { showLoginError('Introduce tu email y tu contraseña.'); return; }
 
-function recordFailedAttempt() {
-  const attempts = parseInt(sessionStorage.getItem(ATTEMPTS_KEY) || '0') + 1;
-  if (attempts >= MAX_ATTEMPTS) {
-    sessionStorage.setItem(LOCKOUT_UNTIL_KEY, String(Date.now() + LOCKOUT_MS));
-    sessionStorage.setItem(ATTEMPTS_KEY, '0');
-  } else {
-    sessionStorage.setItem(ATTEMPTS_KEY, String(attempts));
+  setLoginBusy(true);
+  const { error } = await sb.auth.signInWithPassword({ email, password: pwd });
+  setLoginBusy(false);
+
+  if (error) {
+    showLoginError('No hemos podido iniciar sesión. Comprueba el email y la contraseña.');
+    return;
   }
-  return attempts;
+  await showCRM();
 }
 
-function clearLoginAttempts() {
-  sessionStorage.removeItem(ATTEMPTS_KEY);
-  sessionStorage.removeItem(LOCKOUT_UNTIL_KEY);
-}
-
-/* Async login with hash comparison */
-async function login(password) {
-  if (isLockedOut()) return false;
-  const hash = await hashPassword(password);
-  if (hash === PASSWORD_HASH) {
-    clearLoginAttempts();
-    sessionStorage.setItem(SESSION_KEY, 'ok');
-    showCRM();
-    return true;
+async function handleForgotPassword(e) {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const msgEl = document.getElementById('forgot-msg');
+  if (!email) {
+    showLoginError('Escribe primero tu email arriba y pulsa de nuevo en "¿Olvidaste tu contraseña?".');
+    return;
   }
-  recordFailedAttempt();
-  return false;
+  clearLoginError();
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + '/crm.html',
+  });
+  msgEl.textContent = error
+    ? 'No se pudo enviar el correo de recuperación. Inténtalo de nuevo más tarde.'
+    : 'Si ese email tiene una cuenta, te hemos enviado un enlace para restablecer la contraseña.';
+  msgEl.classList.add('show');
 }
 
 function logout() {
-  sessionStorage.removeItem(SESSION_KEY);
+  sb.auth.signOut();
   document.getElementById('crm-app').classList.remove('visible');
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('login-password').value = '';
+  leads = [];
 }
 
-function showCRM() {
+async function showCRM() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('crm-app').classList.add('visible');
-  leads = getLeads();
+
+  leads = getCachedLeads();
   refreshAll();
-  syncWithSupabase().catch(() => {});
+
+  const fresh = await fetchLeads();
+  if (fresh) {
+    leads = fresh;
+    cacheLeads(leads);
+    refreshAll();
+  }
 }
 
 /* ===================================================
    REFRESH ALL
    =================================================== */
 function refreshAll() {
-  leads = getLeads(); // Always reload from storage
   applyFilter();
   renderTable();
   renderStats();
@@ -580,42 +541,23 @@ function formatDateLong(iso) {
 /* ===================================================
    INIT
    =================================================== */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
-  // --- AUTH ---
-  if (isAuthenticated()) {
-    showCRM();
+  // --- AUTH: ¿ya hay sesión activa en Supabase? ---
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    await showCRM();
   }
 
-  // Login form (async due to SHA-256 hashing)
-  document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const err = document.getElementById('login-error');
-    const pwdInput = document.getElementById('login-password');
-
-    if (isLockedOut()) {
-      err.textContent = `Demasiados intentos fallidos. Espera ${lockoutMinutesLeft()} minuto(s) e inténtalo de nuevo.`;
-      err.classList.add('show');
-      return;
-    }
-
-    const pwd = pwdInput.value;
-    const ok  = await login(pwd);
-
-    if (!ok) {
-      const remaining = MAX_ATTEMPTS - parseInt(sessionStorage.getItem(ATTEMPTS_KEY) || '0');
-      const msg = isLockedOut()
-        ? `Cuenta bloqueada ${lockoutMinutesLeft()} minuto(s) por exceso de intentos.`
-        : `Contraseña incorrecta. Intentos restantes: ${remaining}.`;
-      err.textContent = msg;
-      err.classList.add('show');
-      pwdInput.value = '';
-      pwdInput.focus();
-    } else {
-      err.classList.remove('show');
+  sb.auth.onAuthStateChange((event) => {
+    if (event === 'SIGNED_OUT') {
+      document.getElementById('crm-app').classList.remove('visible');
+      document.getElementById('login-screen').style.display = 'flex';
     }
   });
 
+  document.getElementById('login-form').addEventListener('submit', handleLoginSubmit);
+  document.getElementById('forgot-password-link').addEventListener('click', handleForgotPassword);
   document.getElementById('logout-btn').addEventListener('click', logout);
 
   // --- SEARCH ---
@@ -686,38 +628,32 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('panel-close').addEventListener('click', closePanel);
   document.getElementById('panel-overlay').addEventListener('click', closePanel);
 
-  // Status buttons in panel
   document.querySelectorAll('.status-option').forEach(btn => {
     btn.addEventListener('click', () => {
       if (!currentLeadId) return;
       const newStatus = btn.dataset.status;
-      updateLead(currentLeadId, { status: newStatus });
-
-      // Re-render status buttons
-      document.querySelectorAll('.status-option').forEach(b => {
-        const s = b.dataset.status;
-        b.className = 'status-option' + (s === newStatus ? ` selected-${s}` : '');
+      updateLead(currentLeadId, { status: newStatus }).then(() => {
+        document.querySelectorAll('.status-option').forEach(b => {
+          const s = b.dataset.status;
+          b.className = 'status-option' + (s === newStatus ? ` selected-${s}` : '');
+        });
+        showToast(iconCheck(), `Estado → ${STATUS[newStatus]?.label}`);
       });
-      showToast('✅', `Estado → ${STATUS[newStatus]?.label}`);
     });
   });
 
-  // Note save
   document.getElementById('note-save').addEventListener('click', addNote);
   document.getElementById('note-input').addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) addNote();
   });
 
-  // Delete lead from panel
   document.getElementById('delete-lead-btn').addEventListener('click', () => {
     if (!currentLeadId) return;
     confirmDelete(currentLeadId);
   });
 
-  // --- EXPORT ---
   document.getElementById('export-btn').addEventListener('click', exportCSV);
 
-  // --- ESC to close ---
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       if (document.getElementById('modal-bg').classList.contains('open')) closeModal();
@@ -725,12 +661,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Listen for new leads from the main page (same origin, different tab via storage events)
-  window.addEventListener('storage', (e) => {
-    if (e.key === STORAGE_KEY && isAuthenticated()) {
-      leads = getLeads();
-      refreshAll();
-      showToast('🔔', 'Nuevo lead recibido del formulario web');
-    }
-  });
+  // Supabase Realtime: si otra pestaña/usuario inserta un lead, lo reflejamos
+  sb.channel('leads-changes')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'leads' }, async () => {
+      const fresh = await fetchLeads();
+      if (fresh) {
+        leads = fresh;
+        cacheLeads(leads);
+        refreshAll();
+        showToast(iconBell(), 'Lista de leads actualizada');
+      }
+    })
+    .subscribe();
 });

@@ -3,6 +3,7 @@
    366 hechos reales, uno por cada día del año.
    Formato: { y:año, i:icono, te:título ES, ti:título EN, tx:texto ES, txn:texto EN }
    =================================================== */
+/* exported TECH_FACTS */
 'use strict';
 
 const TECH_FACTS = {

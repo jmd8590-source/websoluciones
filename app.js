@@ -1,9 +1,9 @@
 /* ===================================================
    SOLUCIONES IA CM — Application Script
-   Version: 1.1.0  (security + email notifications)
-   Stack ready: React/Next.js, TypeScript, Tailwind, Supabase, FastAPI, Docker, Cloudflare
+   Version: 2.0.0
+   Stack: HTML5, CSS3, JavaScript (vanilla), Supabase, Cloudflare Pages
    =================================================== */
-
+/* global TECH_FACTS, renderLoUltimo */
 'use strict';
 
 /* ===================================================
@@ -105,18 +105,18 @@ const TRANSLATIONS = {
     nav_cta: 'Solicitar Consulta',
 
     // Hero
-    hero_badge: 'Automatización con IA para empresas locales',
-    hero_title_line1: 'Transforma tu negocio',
-    hero_title_line2: 'con Inteligencia Artificial',
-    hero_subtitle: 'Soluciones y asesoría para pequeños y medianos negocios locales: automatizamos tareas, ahorramos tiempo y potenciamos tu empresa con la última tecnología.',
+    hero_badge: 'Consultoría de IA en Cumbres Mayores, Huelva',
+    hero_title_line1: 'Que tu negocio',
+    hero_title_line2: 'conteste, venda y se organice solo',
+    hero_subtitle: 'Consultoría práctica de inteligencia artificial para negocios de la Sierra de Huelva: automatizamos tareas repetitivas, respondemos a tus clientes y te devolvemos las horas que hoy pierdes en gestiones.',
     hero_cta_primary: 'Ver servicios',
     hero_cta_secondary: 'Hablar con nosotros',
-    hero_stat_1_value: '+50%',
-    hero_stat_1_label: 'Ahorro de tiempo',
-    hero_stat_2_value: '24/7',
-    hero_stat_2_label: 'Atención a clientes',
-    hero_stat_3_value: '100%',
-    hero_stat_3_label: 'Negocio local',
+    hero_stat_1_value: 'Gratuita',
+    hero_stat_1_label: 'Primera consulta, sin compromiso',
+    hero_stat_2_value: '< 24h',
+    hero_stat_2_label: 'Tiempo de respuesta',
+    hero_stat_3_value: 'Directo',
+    hero_stat_3_label: 'Trato local, sin intermediarios',
 
     // Services
     services_label: 'Nuestros servicios',
@@ -147,10 +147,10 @@ const TRANSLATIONS = {
     svc11_desc: 'Se crean aplicaciones a medida en función de las necesidades del negocio, atendiendo a las necesidades que el cliente indique.',
 
     // Auditor
-    auditor_label: 'Herramienta gratuita',
+    auditor_label: 'Herramienta insignia · gratuita',
     auditor_title: 'Auditor Web IA',
-    auditor_subtitle: 'Introduce la URL de tu web y nuestra IA analizará sus puntos fuertes y áreas de mejora en segundos.',
-    auditor_placeholder: 'https://tuweb.com',
+    auditor_subtitle: 'Pega la URL de tu negocio y analizamos en vivo su diseño, velocidad, SEO, seguridad y accesibilidad: un informe real, no una estimación genérica.',
+    auditor_placeholder: 'https://tunegocio.com',
     auditor_btn: 'Analizar web',
     auditor_label_sr: 'URL de tu sitio web',
 
@@ -169,16 +169,16 @@ const TRANSLATIONS = {
     auditor_error_url: 'Por favor, introduce una URL válida (ej: https://tuweb.com)',
 
     // Criteria names
-    crit_responsive: '📱 Diseño Responsive',
-    crit_multilingual: '🌍 Multiidioma (ES/EN)',
-    crit_chatbot: '🤖 Chatbot / Agente 24/7',
-    crit_crm: '📊 CRM y Gestión de Leads',
-    crit_performance: '⚡ Velocidad y Rendimiento',
-    crit_seo: '🔍 SEO y Posicionamiento',
-    crit_security: '🔒 Seguridad y HTTPS',
-    crit_accessibility: '♿ Accesibilidad Web',
-    crit_social: '📣 Presencia en Redes',
-    crit_cta: '🎯 Call-to-Action Efectivo',
+    crit_responsive: 'Diseño responsive',
+    crit_multilingual: 'Multiidioma (ES/EN)',
+    crit_chatbot: 'Chatbot / agente 24h',
+    crit_crm: 'CRM y gestión de leads',
+    crit_performance: 'Velocidad y rendimiento',
+    crit_seo: 'SEO y posicionamiento',
+    crit_security: 'Seguridad y HTTPS',
+    crit_accessibility: 'Accesibilidad web',
+    crit_social: 'Presencia en redes',
+    crit_cta: 'Llamada a la acción efectiva',
 
     // Contact
     contact_label: 'Contacto',
@@ -219,14 +219,14 @@ const TRANSLATIONS = {
     footer_link_legal: 'Aviso Legal',
     footer_link_privacy: 'Política de Privacidad',
     footer_link_cookies: 'Política de Cookies',
-    footer_copyright: '© 2025 Soluciones IA CM. Todos los derechos reservados.',
+    footer_copyright: '© {year} Soluciones IA CM. Todos los derechos reservados.',
 
     // FAQ (GEO & AI Search)
     faq_label: 'Preguntas frecuentes',
     faq_title: 'Resolvemos tus dudas sobre IA',
     faq_subtitle: 'Todo lo que necesitas saber sobre cómo la inteligencia artificial y la automatización impulsan tu empresa.',
     faq1_q: '¿Cómo ayuda Soluciones IA CM a una pequeña o mediana empresa?',
-    faq1_a: 'Automatizamos tareas manuales repetitivas (gestión de citas, facturación, atención al cliente), creamos asistentes virtuales y chatbots 24/7 personalizados, y desarrollamos páginas web rápidas orientadas a conversión. Esto permite reducir costes operativos, ahorrar más de un 50% de tiempo y captar clientes de manera continua.',
+    faq1_a: 'Automatizamos tareas manuales repetitivas (gestión de citas, facturación, atención al cliente), creamos asistentes virtuales y chatbots 24/7 personalizados, y desarrollamos páginas web rápidas orientadas a conversión. Esto permite reducir costes operativos, ahorrar tiempo y captar clientes de manera continua.',
     faq2_q: '¿Por qué contratar consultoría de IA para un negocio local?',
     faq2_a: 'La consultoría de IA permite a los negocios locales competir con grandes marcas sin costes prohibitivos. Analizamos tu operativa concreta, seleccionamos las herramientas exactas que te aportan rentabilidad y te acompañamos en la puesta en marcha con un retorno de inversión rápido.',
     faq3_q: '¿Cuánto cuesta implementar un chatbot o una automatización?',
@@ -241,9 +241,16 @@ const TRANSLATIONS = {
     faq_cta_btn: 'Consulta gratuita sin compromiso',
 
     // Cookie banner
-    cookie_text: 'Usamos cookies para mejorar tu experiencia. Al continuar, aceptas nuestra política de cookies.',
-    cookie_accept: 'Aceptar todas',
-    cookie_reject: 'Solo necesarias',
+    cookie_text: 'Usamos cookies técnicas, necesarias para que la web funcione, y cookies del asistente de chat, opcionales. Tú decides cuáles permites.',
+    cookie_accept: 'Aceptar todo',
+    cookie_reject: 'Rechazar',
+    cookie_settings: 'Configurar',
+    cookie_prefs_title: 'Preferencias de cookies',
+    cookie_pref_necessary_name: 'Cookies técnicas',
+    cookie_pref_necessary_desc: 'Imprescindibles para que la web funcione correctamente. Siempre activas.',
+    cookie_pref_chat_name: 'Asistente de chat (Chatbase)',
+    cookie_pref_chat_desc: 'Activa el chat de atención al cliente. Si lo rechazas, el widget de chat no se carga.',
+    cookie_prefs_save: 'Guardar preferencias',
 
     // Modals
     modal_legal_title: 'Aviso Legal',
@@ -285,18 +292,18 @@ const TRANSLATIONS = {
     nav_cta: 'Book Consultation',
 
     // Hero
-    hero_badge: 'AI Automation for local businesses',
-    hero_title_line1: 'Transform your business',
-    hero_title_line2: 'with Artificial Intelligence',
-    hero_subtitle: 'Solutions and consulting for local small and medium businesses: we automate tasks, save time and empower your business with the latest technology.',
+    hero_badge: 'AI consulting in Cumbres Mayores, Huelva',
+    hero_title_line1: 'Let your business',
+    hero_title_line2: 'answer, sell and organise itself',
+    hero_subtitle: 'Practical AI consulting for businesses in the Sierra de Huelva: we automate repetitive tasks, respond to your customers and give you back the hours you lose on admin today.',
     hero_cta_primary: 'View services',
     hero_cta_secondary: 'Talk to us',
-    hero_stat_1_value: '+50%',
-    hero_stat_1_label: 'Time saved',
-    hero_stat_2_value: '24/7',
-    hero_stat_2_label: 'Customer support',
-    hero_stat_3_value: '100%',
-    hero_stat_3_label: 'Local business',
+    hero_stat_1_value: 'Free',
+    hero_stat_1_label: 'First consultation, no obligation',
+    hero_stat_2_value: '< 24h',
+    hero_stat_2_label: 'Response time',
+    hero_stat_3_value: 'Direct',
+    hero_stat_3_label: 'Local service, no middlemen',
 
     // Services
     services_label: 'Our services',
@@ -327,10 +334,10 @@ const TRANSLATIONS = {
     svc11_desc: 'Custom applications are created based on business needs, tailored to the specific requirements the client indicates.',
 
     // Auditor
-    auditor_label: 'Free tool',
+    auditor_label: 'Flagship tool · free',
     auditor_title: 'AI Web Auditor',
-    auditor_subtitle: 'Enter your website URL and our AI will analyze its strengths and areas for improvement in seconds.',
-    auditor_placeholder: 'https://yourwebsite.com',
+    auditor_subtitle: 'Paste your business URL and we analyze its design, speed, SEO, security and accessibility live: a real report, not a generic estimate.',
+    auditor_placeholder: 'https://yourbusiness.com',
     auditor_btn: 'Analyze website',
     auditor_label_sr: 'Your website URL',
 
@@ -349,16 +356,16 @@ const TRANSLATIONS = {
     auditor_error_url: 'Please enter a valid URL (e.g., https://yourwebsite.com)',
 
     // Criteria names
-    crit_responsive: '📱 Responsive Design',
-    crit_multilingual: '🌍 Multilingual (ES/EN)',
-    crit_chatbot: '🤖 24/7 Chatbot / Agent',
-    crit_crm: '📊 CRM & Lead Management',
-    crit_performance: '⚡ Speed & Performance',
-    crit_seo: '🔍 SEO & Search Ranking',
-    crit_security: '🔒 Security & HTTPS',
-    crit_accessibility: '♿ Web Accessibility',
-    crit_social: '📣 Social Media Presence',
-    crit_cta: '🎯 Effective Call-to-Action',
+    crit_responsive: 'Responsive design',
+    crit_multilingual: 'Multilingual (ES/EN)',
+    crit_chatbot: '24/7 Chatbot / Agent',
+    crit_crm: 'CRM & lead management',
+    crit_performance: 'Speed & performance',
+    crit_seo: 'SEO & search ranking',
+    crit_security: 'Security & HTTPS',
+    crit_accessibility: 'Web accessibility',
+    crit_social: 'Social media presence',
+    crit_cta: 'Effective call-to-action',
 
     // Contact
     contact_label: 'Contact',
@@ -399,14 +406,14 @@ const TRANSLATIONS = {
     footer_link_legal: 'Legal Notice',
     footer_link_privacy: 'Privacy Policy',
     footer_link_cookies: 'Cookie Policy',
-    footer_copyright: '© 2025 Soluciones IA CM. All rights reserved.',
+    footer_copyright: '© {year} Soluciones IA CM. All rights reserved.',
 
     // FAQ (GEO & AI Search)
     faq_label: 'Frequently Asked Questions',
     faq_title: 'Answers to your AI questions',
     faq_subtitle: 'Everything you need to know about how AI and automation drive your business.',
     faq1_q: 'How does Soluciones IA CM help small and medium businesses?',
-    faq1_a: 'We automate repetitive manual tasks (appointment scheduling, invoicing, customer support), create custom 24/7 virtual assistants and chatbots, and develop high-speed conversion-focused websites. This reduces operational costs, saves over 50% of time, and continuously captures clients.',
+    faq1_a: 'We automate repetitive manual tasks (appointment scheduling, invoicing, customer support), create custom 24/7 virtual assistants and chatbots, and develop high-speed conversion-focused websites. This reduces operational costs, saves time, and continuously captures clients.',
     faq2_q: 'Why hire AI consulting for a local business?',
     faq2_a: 'AI consulting allows local businesses to compete with big brands without prohibitive costs. We analyze your specific operations, select the exact tools that drive profitability, and guide you through implementation for a fast return on investment.',
     faq3_q: 'How much does it cost to implement a chatbot or automation?',
@@ -421,9 +428,16 @@ const TRANSLATIONS = {
     faq_cta_btn: 'Free consultation with no obligation',
 
     // Cookie banner
-    cookie_text: 'We use cookies to improve your experience. By continuing, you accept our cookie policy.',
+    cookie_text: 'We use technical cookies, required for the site to work, and optional chat-assistant cookies. You choose which ones you allow.',
     cookie_accept: 'Accept all',
-    cookie_reject: 'Necessary only',
+    cookie_reject: 'Reject',
+    cookie_settings: 'Customise',
+    cookie_prefs_title: 'Cookie preferences',
+    cookie_pref_necessary_name: 'Technical cookies',
+    cookie_pref_necessary_desc: 'Required for the site to work correctly. Always active.',
+    cookie_pref_chat_name: 'Chat assistant (Chatbase)',
+    cookie_pref_chat_desc: 'Enables the customer chat widget. If you decline, the chat widget is never loaded.',
+    cookie_prefs_save: 'Save preferences',
 
     // Modals
     modal_legal_title: 'Legal Notice',
@@ -474,7 +488,7 @@ function applyTranslations() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     const val = t(key);
-    if (val && val !== key) el.textContent = val;
+    if (val && val !== key) el.textContent = val.replace('{year}', new Date().getFullYear());
   });
 
   // Translate placeholder attributes
@@ -535,19 +549,23 @@ function toggleLanguage() {
    NAVIGATION
    =================================================== */
 
-const MENU_ICON = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
-const CLOSE_ICON = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
-
 function initNavigation() {
   const header = document.getElementById('header');
   const menuToggle = document.getElementById('menu-toggle');
   const mobileNav = document.getElementById('mobile-nav');
 
   // Scrolled header effect
+  const progressBar = document.getElementById('scroll-progress');
   const onScroll = () => {
     header.classList.toggle('scrolled', window.scrollY > 24);
+    if (progressBar) {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0;
+      progressBar.style.width = pct + '%';
+    }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
   onScroll(); // Apply on load
 
   // Mobile menu toggle
@@ -556,7 +574,10 @@ function initNavigation() {
       const isOpen = mobileNav.classList.contains('open');
       mobileNav.classList.toggle('open', !isOpen);
       menuToggle.setAttribute('aria-expanded', String(!isOpen));
-      menuToggle.innerHTML = isOpen ? MENU_ICON : CLOSE_ICON;
+      menuToggle.setAttribute('aria-label', isOpen ? 'Abrir menú' : 'Cerrar menú');
+      // El icono (hamburguesa ↔ aspa) lo intercambia el CSS según
+      // aria-expanded: nunca se reemplaza el contenido del botón aquí,
+      // para no desprender el nodo que originó este mismo evento.
     });
 
     // Close on link click
@@ -605,7 +626,7 @@ function closeMobileMenu() {
   if (mobileNav) { mobileNav.classList.remove('open'); }
   if (menuToggle) {
     menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.innerHTML = MENU_ICON;
+    menuToggle.setAttribute('aria-label', 'Abrir menú');
   }
 }
 
@@ -772,45 +793,67 @@ const AUDIT_NOTES = {
   },
 };
 
+/**
+ * Pide el análisis real al servidor (Cloudflare Pages Function).
+ * Nunca falla silenciosamente: si no hay respuesta válida, lanza para
+ * que runAudit() recurra al resultado de ejemplo y lo diga claramente.
+ */
+async function fetchLiveAudit(url) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 11000);
+  try {
+    const res = await fetch(`/api/audit?url=${encodeURIComponent(url)}`, { signal: controller.signal });
+    const data = await res.json();
+    if (!res.ok || !data.ok) throw new Error(data.message || 'audit_failed');
+    return data;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 async function runAudit(url) {
   const loading = document.getElementById('auditor-loading');
   const results = document.getElementById('auditor-results');
   const steps = Array.from(document.querySelectorAll('.auditor-step'));
 
-  // Show loading
   loading.classList.add('active');
   results.classList.remove('active');
+  steps.forEach(s => s.classList.remove('done', 'active'));
 
-  // Animate steps sequentially
+  // El análisis real corre en paralelo a la animación de pasos, no en serie:
+  // así no esperamos más de lo necesario ni se queda corta si el sitio tarda.
+  const livePromise = fetchLiveAudit(url).catch(() => null);
+
   for (let i = 0; i < steps.length; i++) {
-    await pause(600 + i * 420);
     steps.forEach((s, idx) => {
       s.classList.toggle('active', idx === i);
       if (idx < i) s.classList.add('done');
     });
+    await pause(i < steps.length - 1 ? 520 : 150);
   }
-  await pause(400);
   steps.forEach(s => { s.classList.remove('active'); s.classList.add('done'); });
-  await pause(300);
 
-  // Compute scores
-  const scores = generateScores(url);
-  const overall = Math.round(
-    Object.values(scores).reduce((a, b) => a + b, 0) / Object.keys(scores).length
-  );
+  // Si el análisis real aún no ha terminado, esperamos un poco más (con límite)
+  const live = await Promise.race([livePromise, pause(9000).then(() => null)]);
 
-  // Render
-  renderResults(url, scores, overall);
+  let scores, overall, isLive;
+  if (live) {
+    scores = live.scores;
+    overall = live.overall;
+    isLive = true;
+  } else {
+    scores = generateScores(url);
+    overall = Math.round(Object.values(scores).reduce((a, b) => a + b, 0) / Object.keys(scores).length);
+    isLive = false;
+  }
 
-  // Swap states
+  renderResults(url, scores, overall, isLive);
+
   loading.classList.remove('active');
   results.classList.add('active');
-
-  // Reset steps for next run
   await pause(200);
   steps.forEach(s => s.classList.remove('done', 'active'));
 
-  // Animate bars after DOM update
   requestAnimationFrame(() => {
     setTimeout(() => {
       document.querySelectorAll('.criterion-bar').forEach(bar => {
@@ -819,11 +862,22 @@ async function runAudit(url) {
     }, 100);
   });
 
-  // Scroll to results
   results.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function renderResults(url, scores, overall) {
+/** Cuenta de 0 hasta `target` en `durationMs`, con una curva de deceleración */
+function animateCountUp(el, target, durationMs = 1100) {
+  const start = performance.now();
+  function tick(now) {
+    const p = Math.min(1, (now - start) / durationMs);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(eased * target) + '/100';
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function renderResults(url, scores, overall, isLive) {
   // URL display
   const urlEl = document.getElementById('auditor-result-url');
   if (urlEl) {
@@ -831,18 +885,34 @@ function renderResults(url, scores, overall) {
     catch { urlEl.textContent = url; }
   }
 
-  // Overall score
+  // Overall score (con animación de recuento)
   const scoreEl = document.getElementById('auditor-overall-score');
-  if (scoreEl) scoreEl.textContent = overall + '/100';
+  if (scoreEl) animateCountUp(scoreEl, overall);
 
   // Score label (descriptive)
-  const labelEl = document.getElementById('auditor-score-label');
+  const labelEl = document.getElementById('auditor-score-heading');
   if (labelEl) {
     const labels = {
-      es: overall >= 70 ? '✅ Buen estado general' : overall >= 48 ? '⚠️ Necesita mejoras importantes' : '❌ Requiere atención urgente',
-      en: overall >= 70 ? '✅ Good overall condition' : overall >= 48 ? '⚠️ Needs important improvements' : '❌ Requires urgent attention',
+      es: overall >= 70 ? 'Buen estado general' : overall >= 48 ? 'Necesita mejoras importantes' : 'Requiere atención urgente',
+      en: overall >= 70 ? 'Good overall condition' : overall >= 48 ? 'Needs important improvements' : 'Requires urgent attention',
     };
     labelEl.textContent = labels[currentLang];
+  }
+
+  // Fuente del resultado: honestidad ante todo — nunca disfrazamos un
+  // resultado de ejemplo como si fuera un análisis real.
+  const sourceEl = document.getElementById('auditor-score-source');
+  if (sourceEl) {
+    const sourceLabels = {
+      es: isLive
+        ? 'Análisis en vivo de esta URL'
+        : 'Resultado de ejemplo — no hemos podido analizar esa web ahora mismo',
+      en: isLive
+        ? 'Live analysis of this URL'
+        : 'Example result — we could not analyze that site right now',
+    };
+    sourceEl.textContent = sourceLabels[currentLang];
+    sourceEl.classList.toggle('is-demo', !isLive);
   }
 
   // Render criteria cards
@@ -1045,23 +1115,88 @@ function clearFieldError(input) {
    COOKIE BANNER
    =================================================== */
 
+const COOKIE_PREFS_KEY = 'siacm_cookie_prefs';
+
+/** Loads the Chatbase widget script — only ever called after real consent */
+function loadChatbaseWidget() {
+  if (document.getElementById('chatbase-embed-script')) return; // already loaded
+  window.chatbase = (...args) => {
+    if (!window.chatbase.q) window.chatbase.q = [];
+    window.chatbase.q.push(args);
+  };
+  window.chatbase = new Proxy(window.chatbase, {
+    get(target, prop) {
+      if (prop === 'q') return target.q;
+      return (...args) => target(prop, ...args);
+    }
+  });
+  const script = document.createElement('script');
+  script.id = 'chatbase-embed-script';
+  script.src = 'https://www.chatbase.co/embed.min.js';
+  script.setAttribute('chatbotId', 'DlYvDU3Ab08HmFUV5mS7K');
+  script.domain = 'www.chatbase.co';
+  document.body.appendChild(script);
+}
+
+function getCookiePrefs() {
+  try { return JSON.parse(localStorage.getItem(COOKIE_PREFS_KEY) || 'null'); } catch { return null; }
+}
+
+function applyCookiePrefs(prefs) {
+  localStorage.setItem(COOKIE_PREFS_KEY, JSON.stringify(prefs));
+  if (prefs.chat) loadChatbaseWidget();
+}
+
 function initCookieBanner() {
-  const banner = document.getElementById('cookie-banner');
+  const banner   = document.getElementById('cookie-banner');
   const acceptBtn = document.getElementById('cookie-accept');
   const rejectBtn = document.getElementById('cookie-reject');
+  const settingsBtn = document.getElementById('cookie-settings');
+  const prefsModal  = document.getElementById('cookie-prefs-modal');
+  const prefsChat   = document.getElementById('cookie-pref-chat');
+  const prefsSaveBtn = document.getElementById('cookie-prefs-save');
+  const prefsCloseBtn = document.getElementById('cookie-prefs-close');
   if (!banner) return;
 
-  if (localStorage.getItem('cookies-accepted')) return;
+  const existing = getCookiePrefs();
+  if (existing) {
+    // Ya hay una decisión previa: respetarla (y cargar el chat si se aceptó)
+    if (existing.chat) loadChatbaseWidget();
+    return;
+  }
 
-  setTimeout(() => banner.classList.add('show'), 2000);
+  setTimeout(() => banner.classList.add('show'), 1500);
 
-  const dismiss = (val) => {
-    localStorage.setItem('cookies-accepted', val);
-    banner.classList.remove('show');
-  };
+  const dismiss = () => banner.classList.remove('show');
 
-  acceptBtn?.addEventListener('click', () => dismiss('all'));
-  rejectBtn?.addEventListener('click', () => dismiss('necessary'));
+  acceptBtn?.addEventListener('click', () => {
+    applyCookiePrefs({ necessary: true, chat: true });
+    dismiss();
+  });
+
+  rejectBtn?.addEventListener('click', () => {
+    applyCookiePrefs({ necessary: true, chat: false });
+    dismiss();
+  });
+
+  settingsBtn?.addEventListener('click', () => {
+    if (prefsModal) {
+      prefsModal.classList.add('open');
+      prefsModal.setAttribute('aria-hidden', 'false');
+    }
+  });
+
+  prefsCloseBtn?.addEventListener('click', () => {
+    prefsModal?.classList.remove('open');
+    prefsModal?.setAttribute('aria-hidden', 'true');
+  });
+
+  prefsSaveBtn?.addEventListener('click', () => {
+    applyCookiePrefs({ necessary: true, chat: !!prefsChat?.checked });
+    prefsModal?.classList.remove('open');
+    prefsModal?.setAttribute('aria-hidden', 'true');
+    dismiss();
+  });
 }
 
 /* ===================================================
@@ -1181,151 +1316,6 @@ function initLangToggle() {
 }
 
 /* ===================================================
-   TECH EPHEMERIS — Historia de la Informática
-   Base de datos de ~220 eventos reales y verificados.
-   Fuentes: Wikipedia, Computer History Museum, IEEE.
-   =================================================== */
-
-const TECH_EVENTS = {
-  // ── ENERO ──────────────────────────────────────────
-  '01-01': { year: 1983, emoji: '🌐', title_es: 'Nace el Internet moderno', title_en: 'The modern Internet is born', desc_es: 'ARPANET adopta los protocolos TCP/IP, sentando las bases del Internet tal como lo conocemos hoy.', desc_en: 'ARPANET adopts TCP/IP protocols, laying the foundations of the Internet as we know it today.' },
-  '01-03': { year: 2009, emoji: '₿', title_es: 'El bloque génesis de Bitcoin', title_en: 'Bitcoin Genesis Block', desc_es: 'Satoshi Nakamoto mina el primer bloque de la cadena de bloques de Bitcoin, dando inicio a las criptomonedas.', desc_en: 'Satoshi Nakamoto mines the first block of the Bitcoin blockchain, launching the era of cryptocurrencies.' },
-  '01-04': { year: 1972, emoji: '🧮', title_es: 'Primera calculadora científica de bolsillo', title_en: 'First scientific pocket calculator', desc_es: 'Hewlett-Packard presenta la HP-35, la primera calculadora científica de bolsillo, que sustituye a la regla de cálculo.', desc_en: 'Hewlett-Packard introduces the HP-35, the first scientific pocket calculator, replacing the slide rule.' },
-  '01-07': { year: 1979, emoji: '🦾', title_es: 'Primer robot industrial letal', title_en: 'First industrial robot fatality', desc_es: 'Robert Williams fallece en una planta de Ford en Michigan, convirtiéndose en la primera persona documentada en morir por un robot industrial.', desc_en: 'Robert Williams dies at a Ford plant in Michigan, becoming the first documented person killed by an industrial robot.' },
-  '01-09': { year: 2007, emoji: '📱', title_es: 'Steve Jobs anuncia el iPhone', title_en: 'Steve Jobs announces the iPhone', desc_es: 'En la conferencia Macworld, Steve Jobs presenta el primer iPhone, revolucionando la industria de los teléfonos móviles para siempre.', desc_en: 'At the Macworld Conference, Steve Jobs presents the first iPhone, revolutionizing the mobile phone industry forever.' },
-  '01-13': { year: 2015, emoji: '🚫', title_es: 'Fin de soporte de Internet Explorer 8, 9 y 10', title_en: 'End of support for Internet Explorer 8, 9 and 10', desc_es: 'Microsoft finaliza el soporte extendido de las versiones 8, 9 y 10 de Internet Explorer, animando a los usuarios a migrar a versiones modernas.', desc_en: 'Microsoft ends extended support for Internet Explorer 8, 9 and 10, urging users to migrate to modern versions.' },
-  '01-14': { year: 2020, emoji: '🪟', title_es: 'Fin de soporte de Windows 7', title_en: 'End of support for Windows 7', desc_es: 'Microsoft termina el soporte extendido de Windows 7, un sistema operativo lanzado en 2009 que se convirtió en uno de los más usados de la historia.', desc_en: 'Microsoft ends extended support for Windows 7, an OS launched in 2009 that became one of the most widely used in history.' },
-  '01-15': { year: 2001, emoji: '📖', title_es: 'Nace Wikipedia', title_en: 'Wikipedia launches', desc_es: 'Jimmy Wales y Larry Sanger lanzan Wikipedia, la enciclopedia libre en línea que se convertirá en el mayor repositorio de conocimiento de la historia.', desc_en: 'Jimmy Wales and Larry Sanger launch Wikipedia, the free online encyclopedia that becomes the largest knowledge repository in history.' },
-  '01-17': { year: 1991, emoji: '💻', title_es: 'Primera guerra guiada por computadora', title_en: 'First computer-guided war', desc_es: 'Comienza la Operación Tormenta del Desierto, la primera guerra en la que se usan bombas inteligentes guiadas por computadora a gran escala.', desc_en: 'Operation Desert Storm begins, the first war to use computer-guided smart bombs on a large scale.' },
-  '01-19': { year: 1983, emoji: '🖥️', title_es: 'Apple Lisa: primera GUI comercial', title_en: 'Apple Lisa: first commercial GUI', desc_es: 'Apple lanza el Lisa, el primer ordenador personal comercial con interfaz gráfica de usuario (GUI), a un precio de 9.995 dólares.', desc_en: 'Apple launches the Lisa, the first commercially available personal computer with a graphical user interface (GUI), priced at $9,995.' },
-  '01-22': { year: 1984, emoji: '📺', title_es: 'El anuncio 1984 de Apple en la Super Bowl', title_en: 'Apple\'s 1984 Super Bowl commercial', desc_es: 'Apple emite el icónico anuncio «1984» durante la Super Bowl XVIII, dirigido por Ridley Scott, presentando el Macintosh al mundo.', desc_en: 'Apple airs its iconic «1984» commercial during Super Bowl XVIII, directed by Ridley Scott, introducing the Macintosh to the world.' },
-  '01-24': { year: 1984, emoji: '🖱️', title_es: 'Presentación del Apple Macintosh', title_en: 'Apple Macintosh introduced', desc_es: 'Steve Jobs presenta el primer Macintosh, el primer ordenador personal de masa con ratón e interfaz gráfica de usuario, con el célebre «Hello».', desc_en: 'Steve Jobs introduces the first Macintosh, the first mass-market PC with a mouse and graphical user interface, with the famous «Hello».' },
-  '01-29': { year: 1999, emoji: '🐧', title_es: 'IBM invierte en Linux', title_en: 'IBM invests in Linux', desc_es: 'IBM anuncia una inversión de 1.000 millones de dólares en Linux, marcando un punto de inflexión en la aceptación empresarial del software de código abierto.', desc_en: 'IBM announces a $1 billion investment in Linux, marking a turning point in enterprise acceptance of open-source software.' },
-
-  // ── FEBRERO ────────────────────────────────────────
-  '02-04': { year: 2004, emoji: '👤', title_es: 'Nace Facebook', title_en: 'Facebook launches', desc_es: 'Mark Zuckerberg lanza «TheFacebook» desde su habitación en Harvard. En menos de un mes, la mitad del campus ya está registrado.', desc_en: 'Mark Zuckerberg launches «TheFacebook» from his Harvard dorm room. Within a month, half the campus has registered.' },
-  '02-06': { year: 1959, emoji: '🔬', title_es: 'Patente del circuito integrado', title_en: 'Integrated circuit patent filed', desc_es: 'Jack Kilby de Texas Instruments presenta la solicitud de patente del primer circuito integrado (microchip), el invento que hace posible la electrónica moderna.', desc_en: 'Jack Kilby of Texas Instruments files the patent application for the first integrated circuit (microchip), the invention enabling modern electronics.' },
-  '02-07': { year: 2000, emoji: '⚔️', title_es: 'Primeros grandes ataques DDoS', title_en: 'First major DDoS attacks', desc_es: 'Ciberataques masivos de denegación de servicio (DDoS) derriban páginas como Yahoo!, Amazon, eBay y CNN, alertando al mundo sobre la vulnerabilidad de Internet.', desc_en: 'Massive DDoS attacks take down sites like Yahoo!, Amazon, eBay and CNN, alerting the world to the vulnerability of the Internet.' },
-  '02-08': { year: 1996, emoji: '📜', title_es: 'Declaración de Independencia del Ciberespacio', title_en: 'Declaration of Independence of Cyberspace', desc_es: 'John Perry Barlow publica su célebre «Declaración de Independencia del Ciberespacio», pidiendo un Internet libre de regulaciones gubernamentales.', desc_en: 'John Perry Barlow publishes his famous «Declaration of the Independence of Cyberspace», calling for an Internet free from government regulation.' },
-  '02-09': { year: 1983, emoji: '📊', title_es: 'Lotus 1-2-3 conquista el IBM PC', title_en: 'Lotus 1-2-3 conquers the IBM PC', desc_es: 'Se lanza Lotus 1-2-3, la hoja de cálculo que se convierte en la primera «killer app» del IBM PC y dispara las ventas de ordenadores personales.', desc_en: 'Lotus 1-2-3 launches, becoming the first «killer app» of the IBM PC and driving a surge in personal computer sales.' },
-  '02-10': { year: 1996, emoji: '♟️', title_es: 'Deep Blue vence a Kasparov por primera vez', title_en: 'Deep Blue beats Kasparov for the first time', desc_es: 'La computadora de IBM Deep Blue vence al campeón mundial de ajedrez Garry Kasparov en la Partida 1 de su primer gran enfrentamiento.', desc_en: 'IBM\'s Deep Blue computer defeats world chess champion Garry Kasparov in Game 1 of their first major match.' },
-  '02-11': { year: 2011, emoji: '🎮', title_es: 'IBM Watson gana en Jeopardy!', title_en: 'IBM Watson wins at Jeopardy!', desc_es: 'IBM Watson derrota a los campeones Ken Jennings y Brad Rutter en el concurso Jeopardy!, demostrando la capacidad de la IA para el procesamiento del lenguaje natural.', desc_en: 'IBM Watson defeats champions Ken Jennings and Brad Rutter on Jeopardy!, demonstrating AI\'s capability in natural language processing.' },
-  '02-14': { year: 1946, emoji: '🤯', title_es: 'Presentación pública de ENIAC', title_en: 'ENIAC publicly unveiled', desc_es: 'ENIAC, el primer ordenador electrónico de propósito general, es presentado al mundo en la Universidad de Pensilvania. Ocupa 167 m² y pesa 30 toneladas.', desc_en: 'ENIAC, the first general-purpose electronic computer, is unveiled to the world at the University of Pennsylvania. It covers 167 m² and weighs 30 tons.' },
-  '02-15': { year: 2005, emoji: '▶️', title_es: 'Se activa el dominio YouTube.com', title_en: 'YouTube.com domain activated', desc_es: 'Chad Hurley, Steve Chen y Jawed Karim activan el dominio YouTube.com. Unos meses después, subirán el primer vídeo de la historia de la plataforma.', desc_en: 'Chad Hurley, Steve Chen and Jawed Karim activate the YouTube.com domain. Months later, they will upload the first ever video to the platform.' },
-  '02-18': { year: 2007, emoji: '🎬', title_es: 'Netflix lanza su servicio de streaming', title_en: 'Netflix launches its streaming service', desc_es: 'Netflix comienza a ofrecer vídeo bajo demanda por streaming, un modelo de negocio que transformará para siempre la industria del entretenimiento.', desc_en: 'Netflix begins offering video on demand via streaming, a business model that will forever transform the entertainment industry.' },
-  '02-20': { year: 1962, emoji: '🚀', title_es: 'John Glenn orbita la Tierra con ayuda de IBM', title_en: 'John Glenn orbits Earth with IBM\'s help', desc_es: 'John Glenn se convierte en el primer estadounidense en orbitar la Tierra. Las computadoras IBM en tierra rastrean y calculan su trayectoria en tiempo real.', desc_en: 'John Glenn becomes the first American to orbit the Earth. IBM computers on the ground track and calculate his trajectory in real time.' },
-  '02-24': { year: 1955, emoji: '🍎', title_es: 'Nace Steve Jobs', title_en: 'Steve Jobs is born', desc_es: 'Steve Jobs nace en San Francisco, California. Cofundador de Apple y visionario del diseño tecnológico, cambiaría el mundo de la informática para siempre.', desc_en: 'Steve Jobs is born in San Francisco, California. Co-founder of Apple and visionary of technology design, he would change the world of computing forever.' },
-
-  // ── MARZO ──────────────────────────────────────────
-  '03-01': { year: 1985, emoji: '🌍', title_es: 'Primer dominio .com de la historia', title_en: 'World\'s first .com domain', desc_es: 'Symbolics.com se convierte en el primer dominio .com registrado de la historia, abriendo la era de los nombres de dominio en Internet.', desc_en: 'Symbolics.com becomes the world\'s first registered .com domain, opening the era of Internet domain names.' },
-  '03-06': { year: 1992, emoji: '🦠', title_es: 'El virus Michelangelo ataca', title_en: 'Michelangelo virus strikes', desc_es: 'El virus Michelangelo se activa en el cumpleaños del artista del Renacimiento, afectando a miles de ordenadores y creando la primera alarma mundial de malware.', desc_en: 'The Michelangelo virus activates on the Renaissance artist\'s birthday, infecting thousands of computers and creating the first global malware panic.' },
-  '03-07': { year: 1876, emoji: '📞', title_es: 'Bell patenta el teléfono', title_en: 'Bell patents the telephone', desc_es: 'Alexander Graham Bell recibe la patente del teléfono, n.º 174.465, el invento que allanará el camino hacia las telecomunicaciones modernas.', desc_en: 'Alexander Graham Bell receives patent No. 174,465 for the telephone, the invention that paves the way for modern telecommunications.' },
-  '03-10': { year: 1876, emoji: '🗣️', title_es: 'Primera llamada telefónica de la historia', title_en: 'World\'s first telephone call', desc_es: 'Alexander Graham Bell hace la primera llamada telefónica de la historia a su asistente: «Mr. Watson, come here — I want to see you.»', desc_en: 'Alexander Graham Bell makes the world\'s first telephone call to his assistant: «Mr. Watson, come here — I want to see you.»' },
-  '03-12': { year: 1989, emoji: '🕸️', title_es: 'Berners-Lee propone la World Wide Web', title_en: 'Berners-Lee proposes the World Wide Web', desc_es: 'Tim Berners-Lee entrega en el CERN su propuesta «Information Management: A Proposal», el documento fundacional de la World Wide Web.', desc_en: 'Tim Berners-Lee submits «Information Management: A Proposal» to CERN, the founding document of the World Wide Web.' },
-  '03-15': { year: 1985, emoji: '.🌐', title_es: 'Primer dominio .com registrado oficialmente', title_en: 'First .com domain officially registered', desc_es: 'Symbolics, Inc. registra oficialmente symbolics.com a través del DNS, convirtiéndose en el primer registro formal del sistema de nombres de dominio.', desc_en: 'Symbolics, Inc. officially registers symbolics.com through DNS, becoming the first formal registration in the domain name system.' },
-  '03-21': { year: 2006, emoji: '🐦', title_es: 'Primer tuit de la historia', title_en: 'World\'s first tweet', desc_es: 'Jack Dorsey publica el primer tuit de la historia: «just setting up my twttr», inaugurando la red social que cambiará la comunicación global.', desc_en: 'Jack Dorsey posts the world\'s first tweet: «just setting up my twttr», launching the social network that will change global communication.' },
-  '03-22': { year: 2016, emoji: '🤖', title_es: 'Tay, la IA que aprendió a insultar', title_en: 'Tay, the AI that learned to insult', desc_es: 'Microsoft lanza Tay, un chatbot de IA en Twitter que en menos de 24 horas es desconectado tras aprender a publicar mensajes ofensivos de los propios usuarios.', desc_en: 'Microsoft launches Tay, an AI chatbot on Twitter that is shut down in less than 24 hours after learning to post offensive messages from users.' },
-  '03-25': { year: 1995, emoji: '📝', title_es: 'Nace el primer wiki del mundo', title_en: 'World\'s first wiki born', desc_es: 'Ward Cunningham lanza WikiWikiWeb, el primer wiki de la historia, una web que cualquiera puede editar, inspirando lo que más tarde sería Wikipedia.', desc_en: 'Ward Cunningham launches WikiWikiWeb, the world\'s first wiki, a website anyone can edit, inspiring what would later become Wikipedia.' },
-  '03-31': { year: 1987, emoji: '🖥️', title_es: 'IBM lanza el PS/2', title_en: 'IBM launches the PS/2', desc_es: 'IBM presenta la familia de ordenadores PS/2, que introduce el conector PS/2 para ratón y teclado, el puerto VGA y el bus MCA.', desc_en: 'IBM introduces the PS/2 family of computers, which introduces the PS/2 connector for mouse and keyboard, the VGA port, and the MCA bus.' },
-
-  // ── ABRIL ──────────────────────────────────────────
-  '04-01': { year: 1976, emoji: '🍎', title_es: 'Fundación de Apple Computer', title_en: 'Apple Computer founded', desc_es: 'Steve Jobs, Steve Wozniak y Ronald Wayne fundan Apple Computer Company en el garaje familiar de Jobs en Los Altos, California.', desc_en: 'Steve Jobs, Steve Wozniak, and Ronald Wayne found Apple Computer Company in Jobs\' family garage in Los Altos, California.' },
-  '04-03': { year: 1973, emoji: '📡', title_es: 'Primera llamada con teléfono móvil', title_en: 'First mobile phone call', desc_es: 'Martin Cooper de Motorola realiza la primera llamada con un teléfono móvil portátil prototipo, llamando a su rival en AT&T Bell Labs.', desc_en: 'Motorola\'s Martin Cooper makes the first call on a handheld mobile phone prototype, calling his rival at AT&T Bell Labs.' },
-  '04-04': { year: 1975, emoji: '🪟', title_es: 'Fundación de Microsoft', title_en: 'Microsoft founded', desc_es: 'Bill Gates y Paul Allen fundan Microsoft en Albuquerque, Nuevo México, con el objetivo de crear software para microcomputadoras.', desc_en: 'Bill Gates and Paul Allen found Microsoft in Albuquerque, New Mexico, with the goal of creating software for microcomputers.' },
-  '04-05': { year: 2004, emoji: '📧', title_es: 'Google lanza Gmail', title_en: 'Google launches Gmail', desc_es: 'Google anuncia Gmail el 1 de abril, ofreciendo 1 GB de almacenamiento gratuito, 500 veces más que los competidores. Muchos creyeron que era una broma.', desc_en: 'Google announces Gmail on April 1st, offering 1 GB of free storage — 500 times more than competitors. Many thought it was an April Fool\'s joke.' },
-  '04-07': { year: 1964, emoji: '🖥️', title_es: 'IBM anuncia el System/360', title_en: 'IBM announces the System/360', desc_es: 'IBM presenta la familia System/360, la primera línea de ordenadores con una arquitectura compartida que revoluciona el concepto de compatibilidad informática.', desc_en: 'IBM presents the System/360 family, the first line of computers with a shared architecture, revolutionizing the concept of computing compatibility.' },
-  '04-08': { year: 2014, emoji: '💀', title_es: 'Fin de soporte de Windows XP', title_en: 'End of support for Windows XP', desc_es: 'Microsoft finaliza el soporte de Windows XP tras 12 años. Millones de ordenadores siguen usándolo en todo el mundo, incluidos cajeros automáticos y hospitales.', desc_en: 'Microsoft ends support for Windows XP after 12 years. Millions of computers worldwide still run it, including ATMs and hospitals.' },
-  '04-11': { year: 1976, emoji: '💰', title_es: 'Se vende el primer Apple I', title_en: 'First Apple I sold', desc_es: 'El primer Apple I es vendido a la tienda Byte Shop por 666,66 dólares. Steve Wozniak lo diseñó entero él solo en casa.', desc_en: 'The first Apple I is sold to the Byte Shop for $666.66. Steve Wozniak designed the entire computer on his own at home.' },
-  '04-19': { year: 1965, emoji: '📈', title_es: 'La Ley de Moore', title_en: 'Moore\'s Law', desc_es: 'Gordon Moore publica en Electronics Magazine el artículo que da origen a la «Ley de Moore»: el número de transistores en un chip se dobla cada año.', desc_en: 'Gordon Moore publishes the article in Electronics Magazine that originates «Moore\'s Law»: the number of transistors on a chip doubles each year.' },
-  '04-22': { year: 1993, emoji: '🌐', title_es: 'Se publica el navegador Mosaic', title_en: 'Mosaic browser released', desc_es: 'Se lanza NCSA Mosaic 1.0, el primer navegador web gráfico multiplataforma, que hace la Web accesible al gran público por primera vez.', desc_en: 'NCSA Mosaic 1.0 is released, the first cross-platform graphical web browser, making the Web accessible to the general public for the first time.' },
-  '04-27': { year: 2007, emoji: '⚔️', title_es: 'Primera ciberguerra estatal', title_en: 'First state-level cyberwar', desc_es: 'Estonia sufre ataques cibernéticos masivos que paralizan bancos, medios y el gobierno, considerado el primer caso de ciberguerra contra un Estado nación.', desc_en: 'Estonia suffers massive cyberattacks that paralyze banks, media and government, considered the first case of cyberwar against a nation state.' },
-  '04-30': { year: 1993, emoji: '🆓', title_es: 'La Web se hace libre', title_en: 'The Web becomes free', desc_es: 'El CERN anuncia que la tecnología World Wide Web es libre y gratuita para cualquier persona, decisión que impulsa la explosión de Internet.', desc_en: 'CERN announces that the World Wide Web technology is free and open for anyone to use, a decision that fuels the explosion of the Internet.' },
-
-  // ── MAYO ───────────────────────────────────────────
-  '05-01': { year: 1964, emoji: '⌨️', title_es: 'BASIC ejecuta su primera instrucción', title_en: 'BASIC runs its first instruction', desc_es: 'El lenguaje de programación BASIC se ejecuta por primera vez en un ordenador General Electric en Dartmouth, democratizando la programación para no expertos.', desc_en: 'The BASIC programming language runs for the first time on a General Electric computer at Dartmouth, democratizing programming for non-experts.' },
-  '05-03': { year: 1978, emoji: '📩', title_es: 'El primer spam de la historia', title_en: 'The world\'s first spam email', desc_es: 'Gary Thuerk de Digital Equipment Corporation envía el primer correo basura masivo por ARPANET a 393 destinatarios, inaugurando una plaga que dura hasta hoy.', desc_en: 'Gary Thuerk of Digital Equipment Corporation sends the first mass spam email over ARPANET to 393 recipients, starting a plague that continues to this day.' },
-  '05-11': { year: 1997, emoji: '♟️', title_es: 'Deep Blue vence a Kasparov en el partido decisivo', title_en: 'Deep Blue defeats Kasparov in the decisive game', desc_es: 'IBM Deep Blue gana la Partida 6 y la partida completa contra Kasparov, siendo el primer ordenador en vencer a un campeón mundial de ajedrez en condiciones estándar.', desc_en: 'IBM Deep Blue wins Game 6 and the overall match against Kasparov, becoming the first computer to defeat a reigning world chess champion under standard conditions.' },
-  '05-22': { year: 1990, emoji: '🪟', title_es: 'Windows 3.0 revoluciona el PC', title_en: 'Windows 3.0 revolutionizes the PC', desc_es: 'Microsoft lanza Windows 3.0, la primera versión verdaderamente exitosa de Windows, que hace la interfaz gráfica accesible a millones de usuarios de PC.', desc_en: 'Microsoft releases Windows 3.0, the first truly successful version of Windows, making the graphical interface accessible to millions of PC users.' },
-  '05-23': { year: 1995, emoji: '☕', title_es: 'Java se presenta al mundo', title_en: 'Java is presented to the world', desc_es: 'Sun Microsystems presenta públicamente el lenguaje de programación Java, con su promesa de «Write once, run anywhere» (escríbelo una vez, ejecútalo en cualquier lugar).', desc_en: 'Sun Microsystems publicly presents the Java programming language, with its promise of «Write once, run anywhere».' },
-  '05-24': { year: 1844, emoji: '⚡', title_es: 'Primer mensaje por telégrafo eléctrico', title_en: 'First electric telegraph message', desc_es: 'Samuel Morse envía el primer mensaje telegráfico oficial: «What hath God wrought» (¿Qué ha creado Dios?), abriendo la era de las telecomunicaciones.', desc_en: 'Samuel Morse sends the first official telegraph message: «What hath God wrought», opening the era of telecommunications.' },
-  '05-31': { year: 2010, emoji: '👑', title_es: 'Apple supera a Microsoft en capitalización', title_en: 'Apple surpasses Microsoft in market cap', desc_es: 'Apple supera a Microsoft como la empresa tecnológica más valiosa del mundo por capitalización bursátil, un hito impensable tan solo una década antes.', desc_en: 'Apple surpasses Microsoft as the world\'s most valuable technology company by market capitalization, an unthinkable milestone just a decade before.' },
-
-  // ── JUNIO ──────────────────────────────────────────
-  '06-01': { year: 1980, emoji: '📡', title_es: 'Nace CNN, la primera cadena de noticias 24h', title_en: 'CNN born, first 24-hour news network', desc_es: 'Ted Turner lanza CNN, el primer canal de noticias por cable las 24 horas, pionero de la información en tiempo real que hoy domina Internet.', desc_en: 'Ted Turner launches CNN, the first 24-hour cable news channel, pioneering real-time information that now dominates the Internet.' },
-  '06-07': { year: 1954, emoji: '🧠', title_es: 'Muere Alan Turing, padre de la informática', title_en: 'Alan Turing, father of computing, dies', desc_es: 'Alan Turing, creador de los fundamentos teóricos de la computación y la inteligencia artificial, fallece en Wilmslow, England, a los 41 años.', desc_en: 'Alan Turing, creator of the theoretical foundations of computing and artificial intelligence, dies in Wilmslow, England, at age 41.' },
-  '06-08': { year: 2011, emoji: '🌍', title_es: 'Día Mundial del IPv6', title_en: 'World IPv6 Day', desc_es: 'Miles de sitios web y operadores de red participan en el Día Mundial del IPv6, la primera prueba global a gran escala del protocolo de Internet de nueva generación.', desc_en: 'Thousands of websites and network operators participate in World IPv6 Day, the first large-scale global test of the next-generation Internet protocol.' },
-  '06-21': { year: 1948, emoji: '💾', title_es: 'Primer programa almacenado en memoria', title_en: 'First stored-program computer runs', desc_es: 'La «Manchester Baby» (SSEM) ejecuta el primer programa almacenado en memoria de la historia, un hito que define la arquitectura de todos los ordenadores modernos.', desc_en: 'The «Manchester Baby» (SSEM) runs the world\'s first stored-program in memory, a milestone defining the architecture of all modern computers.' },
-  '06-23': { year: 1912, emoji: '🎂', title_es: 'Nace Alan Turing', title_en: 'Alan Turing is born', desc_es: 'Alan Mathison Turing nace en Londres. Matemático y lógico, será el fundador de la informática teórica, la criptografía moderna y la inteligencia artificial.', desc_en: 'Alan Mathison Turing is born in London. Mathematician and logician, he will become the founder of theoretical computer science, modern cryptography, and AI.' },
-  '06-26': { year: 1974, emoji: '🛒', title_es: 'Primera vez que se escanea un código de barras', title_en: 'First barcode scanned at checkout', desc_es: 'Un paquete de chicles Wrigley\'s es el primer producto escaneado con un código de barras en el supermercado Marsh de Troy, Ohio, comenzando la era del comercio digital.', desc_en: 'A pack of Wrigley\'s gum becomes the first product scanned with a barcode at the Marsh supermarket in Troy, Ohio, beginning the digital commerce era.' },
-  '06-29': { year: 2007, emoji: '📱', title_es: 'El iPhone llega a las tiendas', title_en: 'iPhone goes on sale', desc_es: 'El primer iPhone de Apple sale a la venta en los EE. UU. Miles de personas hacen cola durante días para conseguir el dispositivo que redefinirá la telefonía.', desc_en: 'The first Apple iPhone goes on sale in the US. Thousands of people queue for days to get the device that will redefine mobile telephony.' },
-
-  // ── JULIO ──────────────────────────────────────────
-  '07-04': { year: 1997, emoji: '🔴', title_es: 'Mars Pathfinder aterriza en Marte', title_en: 'Mars Pathfinder lands on Mars', desc_es: 'La sonda Mars Pathfinder de la NASA aterriza en Marte. El rover Sojourner, controlado por computadora, realiza los primeros análisis geológicos del suelo marciano.', desc_en: 'NASA\'s Mars Pathfinder lands on Mars. The computer-controlled Sojourner rover conducts the first geological analyses of Martian soil.' },
-  '07-08': { year: 2011, emoji: '🚀', title_es: 'Último vuelo del transbordador espacial', title_en: 'Final Space Shuttle mission launches', desc_es: 'El transbordador Atlantis despega con la misión STS-135, la última de la historia del programa del transbordador espacial estadounidense, que usó avanzados sistemas de computación.', desc_en: 'Shuttle Atlantis lifts off on mission STS-135, the last in the history of the US Space Shuttle program, which relied on advanced computing systems.' },
-  '07-11': { year: 1962, emoji: '📡', title_es: 'Telstar 1: primera retransmisión televisiva transatlántica', title_en: 'Telstar 1: first transatlantic TV relay', desc_es: 'El satélite Telstar 1 retransmite la primera señal de televisión en directo cruzando el Atlántico, revolucionando las comunicaciones globales.', desc_en: 'The Telstar 1 satellite relays the first live television signal across the Atlantic, revolutionizing global communications.' },
-  '07-15': { year: 2006, emoji: '🐦', title_es: 'Twitter abre sus puertas al público', title_en: 'Twitter opens to the public', desc_es: 'Twitter se lanza oficialmente al público general. Nació de una sesión de brainstorming en el consejo de Odeo, la empresa donde trabajan sus fundadores.', desc_en: 'Twitter officially launches to the general public. It was born from a brainstorming session at the Odeo board, the company where its founders work.' },
-  '07-17': { year: 1975, emoji: '🤝', title_es: 'Primer acoplamiento espacial EE.UU.-URSS', title_en: 'First US-USSR space docking', desc_es: 'Las naves Apollo y Soyuz se acoplan en órbita en el proyecto Apollo-Soyuz, el primer vuelo espacial conjunto entre las dos superpotencias, coordinado por computadoras.', desc_en: 'Apollo and Soyuz spacecraft dock in orbit in the Apollo-Soyuz project, the first joint spaceflight between the two superpowers, coordinated by computers.' },
-  '07-18': { year: 1968, emoji: '💡', title_es: 'Fundación de Intel', title_en: 'Intel founded', desc_es: 'Gordon Moore y Robert Noyce fundan Intel Corporation en Mountain View, California. Años después, sus microprocesadores estarán en prácticamente todos los ordenadores del mundo.', desc_en: 'Gordon Moore and Robert Noyce found Intel Corporation in Mountain View, California. Years later, their microprocessors will be in virtually every computer in the world.' },
-  '07-20': { year: 1969, emoji: '🌕', title_es: 'La computadora que llevó al hombre a la Luna', title_en: 'The computer that took man to the Moon', desc_es: 'El Apolo 11 aluniza. La computadora de guía del Apolo (AGC) tiene 4 KB de RAM y 32 KB de ROM, pero es suficiente para uno de los mayores logros de la humanidad.', desc_en: 'Apollo 11 lands on the Moon. The Apollo Guidance Computer (AGC) has 4 KB of RAM and 32 KB of ROM, yet suffices for one of humanity\'s greatest achievements.' },
-  '07-23': { year: 1973, emoji: '🔌', title_es: 'Invención del Ethernet', title_en: 'Ethernet invented', desc_es: 'Robert Metcalfe escribe un memo interno en Xerox PARC describiendo el concepto de Ethernet, la tecnología de red local que conectará el mundo.', desc_en: 'Robert Metcalfe writes an internal memo at Xerox PARC describing the concept of Ethernet, the local network technology that will connect the world.' },
-  '07-26': { year: 2000, emoji: '🔑', title_es: 'Patente del USB Flash Drive (pendrive)', title_en: 'USB Flash Drive (pen drive) patented', desc_es: 'Dov Moran de M-Systems patenta el USB Flash Drive, el dispositivo de almacenamiento portátil que reemplazará definitivamente al disquete.', desc_en: 'Dov Moran of M-Systems patents the USB Flash Drive, the portable storage device that will definitively replace the floppy disk.' },
-  '07-29': { year: 1969, emoji: '📨', title_es: 'El primer mensaje por ARPANET', title_en: 'First ARPANET message', desc_es: 'Se transmiten los primeros datos por ARPANET entre UCLA y el SRI International. El sistema se cuelga tras las dos primeras letras «lo» del «login».', desc_en: 'The first data is transmitted over ARPANET between UCLA and SRI International. The system crashes after the first two letters «lo» of «login».' },
-
-  // ── AGOSTO ─────────────────────────────────────────
-  '08-06': { year: 1991, emoji: '🌐', title_es: 'La WWW se abre al mundo', title_en: 'The WWW opens to the world', desc_es: 'Tim Berners-Lee publica el primer resumen público del proyecto World Wide Web, haciendo la tecnología accesible a cualquier persona fuera del CERN.', desc_en: 'Tim Berners-Lee publishes the first public summary of the World Wide Web project, making the technology available to anyone outside CERN.' },
-  '08-07': { year: 1944, emoji: '🔧', title_es: 'Inauguración del Harvard Mark I', title_en: 'Harvard Mark I dedicated', desc_es: 'IBM dedica oficialmente el Harvard Mark I en la Universidad de Harvard. Mide 16 metros de largo y puede realizar tres adiciones por segundo.', desc_en: 'IBM officially dedicates the Harvard Mark I at Harvard University. It measures 16 meters long and can perform three additions per second.' },
-  '08-09': { year: 1995, emoji: '💰', title_es: 'La OPV de Netscape desata el boom .com', title_en: 'Netscape\'s IPO triggers the dot-com boom', desc_es: 'Netscape sale a bolsa: sus acciones abren a 14 dólares y cierran el día a 28, en lo que se considera el pistoletazo de salida de la burbuja puntocom.', desc_en: 'Netscape goes public: its shares open at $14 and close the day at $28, widely seen as the starting gun of the dot-com bubble.' },
-  '08-12': { year: 1981, emoji: '💻', title_es: 'Nace el PC de IBM', title_en: 'The IBM PC is born', desc_es: 'IBM lanza el IBM PC (Modelo 5150), el primer ordenador personal de la marca. Su arquitectura abierta sentará los estándares que dominarán la informática durante décadas.', desc_en: 'IBM launches the IBM PC (Model 5150), the brand\'s first personal computer. Its open architecture sets standards that will dominate computing for decades.' },
-  '08-14': { year: 1982, emoji: '🎮', title_es: 'Commodore 64, el ordenador más vendido de la historia', title_en: 'Commodore 64, best-selling computer ever', desc_es: 'Se lanza el Commodore 64, que llegará a vender entre 12 y 17 millones de unidades, convirtiéndolo en el modelo de ordenador doméstico más vendido de todos los tiempos.', desc_en: 'The Commodore 64 launches; it will go on to sell between 12 and 17 million units, making it the best-selling home computer model of all time.' },
-  '08-22': { year: 1989, emoji: '💬', title_es: 'Nace el IRC (chat en tiempo real)', title_en: 'IRC (real-time chat) is born', desc_es: 'Jarkko Oikarinen crea el protocolo IRC (Internet Relay Chat) en Finlandia, el precursor de todos los sistemas de mensajería instantánea y chats modernos.', desc_en: 'Jarkko Oikarinen creates the IRC (Internet Relay Chat) protocol in Finland, the precursor to all modern instant messaging systems and chats.' },
-  '08-23': { year: 1999, emoji: '🎵', title_es: 'Nace Napster', title_en: 'Napster launches', desc_es: 'Napster, el revolucionario servicio de intercambio de música P2P, es lanzado por Shawn Fanning y Sean Parker, desafiando a la industria discográfica.', desc_en: 'Napster, the revolutionary P2P music sharing service, is launched by Shawn Fanning and Sean Parker, challenging the music recording industry.' },
-  '08-24': { year: 1995, emoji: '🪟', title_es: 'Windows 95 vende 7 millones en 5 semanas', title_en: 'Windows 95 sells 7 million in 5 weeks', desc_es: 'Microsoft lanza Windows 95 con una campaña masiva. Start Me Up de The Rolling Stones suena en todo el mundo para presentar el nuevo menú Inicio.', desc_en: 'Microsoft launches Windows 95 with a massive campaign. The Rolling Stones\' Start Me Up plays worldwide to introduce the new Start menu.' },
-  '08-25': { year: 1991, emoji: '🐧', title_es: 'Linus Torvalds anuncia Linux', title_en: 'Linus Torvalds announces Linux', desc_es: 'Linus Torvalds publica un mensaje en el grupo de noticias Minix: «Estoy haciendo un sistema operativo (gratuito), solo un hobby...». Así nace Linux.', desc_en: 'Linus Torvalds posts to the Minix newsgroup: «I\'m doing a (free) operating system, just a hobby...». This is how Linux is born.' },
-
-  // ── SEPTIEMBRE ─────────────────────────────────────
-  '09-04': { year: 1998, emoji: '🔍', title_es: 'Fundación de Google', title_en: 'Google founded', desc_es: 'Larry Page y Sergey Brin fundan Google Inc. en Menlo Park, California. Comenzaron como proyecto de investigación en Stanford con el nombre «BackRub».', desc_en: 'Larry Page and Sergey Brin found Google Inc. in Menlo Park, California. They started as a Stanford research project called «BackRub».' },
-  '09-05': { year: 1977, emoji: '🌌', title_es: 'Lanzamiento de Voyager 1', title_en: 'Voyager 1 launched', desc_es: 'La NASA lanza la sonda Voyager 1. Sus computadoras tienen 69 KB de memoria. Hoy sigue activa, siendo el objeto hecho por el hombre más lejano de la Tierra.', desc_en: 'NASA launches the Voyager 1 probe. Its computers have 69 KB of memory. It remains active today as the most distant human-made object from Earth.' },
-  '09-09': { year: 1945, emoji: '🦟', title_es: 'Se encuentra el primer «bug» informático real', title_en: 'The first real computer «bug» found', desc_es: 'Grace Hopper y su equipo encuentran una polilla real atrapada en un relé del Harvard Mark II. La pegan en el libro de registro con la nota «First actual case of bug being found».', desc_en: 'Grace Hopper and her team find a real moth trapped in a relay of the Harvard Mark II. They tape it to the logbook with the note «First actual case of bug being found».' },
-  '09-12': { year: 1958, emoji: '🔬', title_es: 'Jack Kilby demuestra el primer circuito integrado', title_en: 'Jack Kilby demonstrates the first integrated circuit', desc_es: 'Jack Kilby de Texas Instruments demuestra el primer circuito integrado funcional, el microchip que hará posible toda la electrónica moderna.', desc_en: 'Jack Kilby of Texas Instruments demonstrates the first working integrated circuit, the microchip that makes all modern electronics possible.' },
-  '09-14': { year: 2011, emoji: '🔥', title_es: 'Amazon lanza el Kindle Fire', title_en: 'Amazon launches the Kindle Fire', desc_es: 'Amazon lanza el Kindle Fire, su primera tablet de consumo, a 199 dólares, compitiendo directamente con el iPad y popularizando las tablets de bajo coste.', desc_en: 'Amazon launches the Kindle Fire, its first consumer tablet, at $199, directly competing with the iPad and popularizing low-cost tablets.' },
-  '09-24': { year: 2008, emoji: '🌍', title_es: 'Lanzamiento oficial de Google Chrome', title_en: 'Google Chrome officially launches', desc_es: 'Google lanza Chrome, su navegador web, que en pocos años se convertirá en el más utilizado del mundo, desbancando a Internet Explorer y Firefox.', desc_en: 'Google launches Chrome, its web browser, which within a few years becomes the most widely used in the world, overtaking Internet Explorer and Firefox.' },
-  '09-25': { year: 1983, emoji: '🐂', title_es: 'Stallman anuncia el Proyecto GNU', title_en: 'Stallman announces the GNU Project', desc_es: 'Richard Stallman anuncia el Proyecto GNU para crear un sistema operativo libre compatible con Unix, semilla del movimiento del software libre y de código abierto.', desc_en: 'Richard Stallman announces the GNU Project to create a free Unix-compatible operating system, the seed of the free and open-source software movement.' },
-  '09-29': { year: 1954, emoji: '⚛️', title_es: 'Fundación del CERN', title_en: 'CERN founded', desc_es: 'Se establece el CERN (Organización Europea para la Investigación Nuclear) en Ginebra. Décadas después, en sus laboratorios nacerá la World Wide Web.', desc_en: 'CERN (European Organization for Nuclear Research) is established in Geneva. Decades later, the World Wide Web will be born in its laboratories.' },
-
-  // ── OCTUBRE ────────────────────────────────────────
-  '10-04': { year: 1957, emoji: '🛰️', title_es: 'El Sputnik 1 inaugura la era espacial y tecnológica', title_en: 'Sputnik 1 inaugurates the space and tech era', desc_es: 'La URSS lanza el Sputnik 1, el primer satélite artificial de la Tierra. Su señal de radio desafía al mundo y desencadena la carrera espacial y tecnológica.', desc_en: 'The USSR launches Sputnik 1, Earth\'s first artificial satellite. Its radio signal challenges the world and triggers the space and technological race.' },
-  '10-06': { year: 2011, emoji: '🍎', title_es: 'Fallece Steve Jobs', title_en: 'Steve Jobs passes away', desc_es: 'Steve Jobs, cofundador de Apple, director de Pixar y uno de los mayores visionarios de la tecnología, fallece a los 56 años. «One more thing...»', desc_en: 'Steve Jobs, co-founder of Apple, head of Pixar and one of the greatest technology visionaries, passes away at age 56. «One more thing...»' },
-  '10-09': { year: 2006, emoji: '▶️', title_es: 'Google compra YouTube por 1.650 millones', title_en: 'Google buys YouTube for $1.65 billion', desc_es: 'Google adquiere YouTube, fundado solo 20 meses antes, por 1.650 millones de dólares en acciones. Hoy es la segunda web más visitada del mundo.', desc_en: 'Google acquires YouTube, founded only 20 months earlier, for $1.65 billion in stock. Today it is the second most visited website in the world.' },
-  '10-13': { year: 1983, emoji: '📱', title_es: 'Primera venta de un teléfono móvil comercial', title_en: 'First commercial mobile phone goes on sale', desc_es: 'El Motorola DynaTAC 8000X, primer teléfono móvil portátil del mercado, sale a la venta por 3.995 dólares. Pesaba 800 gramos y tenía 30 minutos de batería.', desc_en: 'The Motorola DynaTAC 8000X, the first portable mobile phone on the market, goes on sale for $3,995. It weighed 800 grams and had 30 minutes of battery.' },
-  '10-17': { year: 1979, emoji: '📊', title_es: 'VisiCalc: la primera hoja de cálculo', title_en: 'VisiCalc: the first spreadsheet', desc_es: 'VisiCalc, la primera hoja de cálculo de la historia, sale a la venta para el Apple II. Fue la primera «killer app» que impulsó la venta masiva de ordenadores personales.', desc_en: 'VisiCalc, the world\'s first spreadsheet, goes on sale for the Apple II. It was the first «killer app» that drove mass sales of personal computers.' },
-  '10-21': { year: 2001, emoji: '🎵', title_es: 'Apple lanza el iPod', title_en: 'Apple launches the iPod', desc_es: 'Steve Jobs presenta el iPod, «1.000 canciones en tu bolsillo». Revoluciona el mercado musical y sienta las bases para la futura tienda iTunes y el iPhone.', desc_en: 'Steve Jobs presents the iPod, «1,000 songs in your pocket». It revolutionizes the music market and lays the groundwork for the future iTunes Store and iPhone.' },
-  '10-25': { year: 2001, emoji: '🪟', title_es: 'Lanzamiento de Windows XP', title_en: 'Windows XP launches', desc_es: 'Microsoft lanza Windows XP, que se convierte en el sistema operativo más popular de la historia durante más de una década, con más de 400 millones de copias instaladas.', desc_en: 'Microsoft launches Windows XP, which becomes the most popular operating system in history for over a decade, with more than 400 million copies installed.' },
-  '10-29': { year: 1969, emoji: '📟', title_es: 'El primer mensaje de Internet', title_en: 'The first Internet message', desc_es: 'Se envía el primer mensaje por ARPANET de UCLA a Stanford: intentaban escribir «login» pero el sistema se colgó después de «lo». Así comenzó Internet.', desc_en: 'The first ARPANET message is sent from UCLA to Stanford: they tried to type «login» but the system crashed after «lo». This is how the Internet began.' },
-
-  // ── NOVIEMBRE ──────────────────────────────────────
-  '11-02': { year: 1988, emoji: '🐛', title_es: 'El Gusano Morris, primer gusano de Internet', title_en: 'The Morris Worm, first Internet worm', desc_es: 'Robert Morris lanza el primer gusano de Internet, infectando ~6.000 ordenadores (el 10% de la red). Es el primer caso documentado de malware de propagación automática.', desc_en: 'Robert Morris releases the first Internet worm, infecting ~6,000 computers (10% of the network). It is the first documented case of self-propagating malware.' },
-  '11-04': { year: 1952, emoji: '🗳️', title_es: 'UNIVAC predice el ganador electoral en TV', title_en: 'UNIVAC predicts election winner on TV', desc_es: 'El ordenador UNIVAC I predice correctamente la victoria de Eisenhower en las elecciones presidenciales de EE.UU., siendo la primera vez que una computadora aparece en televisión.', desc_en: 'The UNIVAC I computer correctly predicts Eisenhower\'s victory in the US presidential election, the first time a computer appears on television.' },
-  '11-10': { year: 1983, emoji: '🪟', title_es: 'Bill Gates presenta Windows por primera vez', title_en: 'Bill Gates demonstrates Windows for the first time', desc_es: 'Bill Gates presenta Windows al mundo en el Plaza Hotel de Nueva York, describiendo una interfaz gráfica que hará la informática accesible a todos.', desc_en: 'Bill Gates presents Windows to the world at the Plaza Hotel in New York, describing a graphical interface that will make computing accessible to everyone.' },
-  '11-12': { year: 1990, emoji: '🌐', title_es: 'Berners-Lee formaliza la propuesta de la WWW', title_en: 'Berners-Lee formalizes the WWW proposal', desc_es: 'Tim Berners-Lee presenta la propuesta formal del sistema de información global WorldWideWeb y el protocolo HTTP, la base de comunicación de la web actual.', desc_en: 'Tim Berners-Lee presents the formal proposal of the WorldWideWeb global information system and the HTTP protocol, the base of today\'s web communication.' },
-  '11-15': { year: 1971, emoji: '⚙️', title_es: 'Intel lanza el primer microprocesador del mundo', title_en: 'Intel launches the world\'s first microprocessor', desc_es: 'Intel presenta el 4004, el primer microprocesador comercial de un solo chip. Tenía 2.300 transistores y una potencia equivalente al ENIAC, en un circuito integrado diminuto.', desc_en: 'Intel unveils the 4004, the world\'s first commercial single-chip microprocessor. It had 2,300 transistors and the power equivalent to ENIAC, in a tiny integrated circuit.' },
-  '11-17': { year: 1970, emoji: '🖱️', title_es: 'Patente del ratón de computadora', title_en: 'Computer mouse patent granted', desc_es: 'Douglas Engelbart recibe la patente n.º 3.541.541 por el «Indicador de posición X-Y para sistema de visualización», más conocido como el ratón de ordenador.', desc_en: 'Douglas Engelbart receives patent No. 3,541,541 for the «X-Y Position Indicator for a Display System», better known as the computer mouse.' },
-  '11-20': { year: 1985, emoji: '🪟', title_es: 'Lanzamiento de Microsoft Windows 1.0', title_en: 'Microsoft Windows 1.0 released', desc_es: 'Microsoft lanza Windows 1.0, su primera interfaz gráfica para PC compatible con IBM. No tiene solapamiento de ventanas y recibe críticas por ser lento y limitado.', desc_en: 'Microsoft releases Windows 1.0, its first graphical interface for IBM-compatible PCs. It lacks overlapping windows and is criticized for being slow and limited.' },
-  '11-21': { year: 1969, emoji: '🔗', title_es: 'El primer enlace permanente de ARPANET', title_en: 'First permanent ARPANET link', desc_es: 'Se establece el primer enlace permanente de ARPANET entre la UCLA y el Stanford Research Institute, el embrión de lo que será Internet.', desc_en: 'The first permanent ARPANET link is established between UCLA and Stanford Research Institute, the embryo of what will become the Internet.' },
-  '11-30': { year: 2022, emoji: '🤖', title_es: 'Nace ChatGPT', title_en: 'ChatGPT is born', desc_es: 'OpenAI lanza ChatGPT, que alcanza 1 millón de usuarios en solo 5 días y 100 millones en 2 meses, el crecimiento más rápido de cualquier aplicación de la historia.', desc_en: 'OpenAI launches ChatGPT, which reaches 1 million users in just 5 days and 100 million in 2 months, the fastest growth of any application in history.' },
-
-  // ── DICIEMBRE ──────────────────────────────────────
-  '12-03': { year: 1992, emoji: '💬', title_es: 'Primer SMS de la historia', title_en: 'World\'s first SMS text message', desc_es: 'Neil Papworth envía el primer SMS de la historia al teléfono de Richard Jarvis de Vodafone: «Merry Christmas». El mensaje viajó desde un PC, pues los móviles aún no tenían teclado.', desc_en: 'Neil Papworth sends the world\'s first SMS to Richard Jarvis\' Vodafone phone: «Merry Christmas». The message was sent from a PC, as mobiles had no keyboard yet.' },
-  '12-09': { year: 1968, emoji: '🖥️', title_es: 'La Madre de Todas las Demos', title_en: 'The Mother of All Demos', desc_es: 'Douglas Engelbart presenta en Stanford el ratón, el hipertexto, las ventanas, la videoconferencia y la edición colaborativa en una sola demo de 90 minutos. 40 años antes de que existieran.', desc_en: 'Douglas Engelbart presents at Stanford the mouse, hypertext, windows, video conferencing and collaborative editing in a single 90-minute demo. 40 years before they existed.' },
-  '12-12': { year: 1980, emoji: '💹', title_es: 'Apple sale a bolsa, millonarios de un día', title_en: 'Apple goes public, creating millionaires overnight', desc_es: 'Apple Computer sale a bolsa, creando más millonarios instantáneos que ningún otro acontecimiento en la historia de Silicon Valley hasta ese momento.', desc_en: 'Apple Computer goes public, creating more instant millionaires than any other event in Silicon Valley history up to that point.' },
-  '12-17': { year: 1903, emoji: '✈️', title_es: 'El primer vuelo motorizado de la historia', title_en: 'First powered flight in history', desc_es: 'Orville Wright realiza el primer vuelo motorizado y controlado de la historia en Kitty Hawk, 12 segundos que inaugura la ingeniería aeronáutica moderna.', desc_en: 'Orville Wright makes the first powered and controlled flight in history at Kitty Hawk, 12 seconds that inaugurates modern aeronautical engineering.' },
-  '12-23': { year: 1947, emoji: '💡', title_es: 'Invención del transistor', title_en: 'Transistor invented', desc_es: 'William Shockley, John Bardeen y Walter Brattain demuestran el transistor en Bell Labs. Este componente reemplazará las válvulas de vacío y hará posible toda la electrónica digital moderna.', desc_en: 'William Shockley, John Bardeen and Walter Brattain demonstrate the transistor at Bell Labs. It will replace vacuum tubes and make all modern digital electronics possible.' },
-  '12-25': { year: 1990, emoji: '🌐', title_es: 'Primera comunicación HTTP exitosa', title_en: 'First successful HTTP communication', desc_es: 'Tim Berners-Lee prueba con éxito la comunicación HTTP entre un servidor y un navegador, completando los cimientos de la World Wide Web.', desc_en: 'Tim Berners-Lee successfully tests HTTP communication between a server and a browser, completing the foundations of the World Wide Web.' },
-  '12-26': { year: 1982, emoji: '🏆', title_es: 'TIME nombra al ordenador «Máquina del año»', title_en: 'TIME names the computer «Machine of the Year»', desc_es: 'La revista TIME nombra al ordenador personal «Máquina del año» de 1982, en lugar de una persona, reconociendo por primera vez el impacto transformador de la informática.', desc_en: 'TIME magazine names the personal computer «Machine of the Year» for 1982 instead of a person, first acknowledging the transformative impact of computing.' },
-  '12-28': { year: 1969, emoji: '🐧', title_es: 'Nace Linus Torvalds, creador de Linux', title_en: 'Linus Torvalds, creator of Linux, is born', desc_es: 'Linus Benedict Torvalds nace en Helsinki, Finlandia. En 1991 creará el núcleo Linux, el sistema operativo de código abierto que hoy alimenta Internet, Android y la supercomputación.', desc_en: 'Linus Benedict Torvalds is born in Helsinki, Finland. In 1991 he will create the Linux kernel, the open-source OS that today powers the Internet, Android and supercomputing.' },
-  '12-29': { year: 1959, emoji: '⚛️', title_es: 'Feynman imagina los ordenadores del futuro', title_en: 'Feynman imagines the computers of the future', desc_es: 'Richard Feynman imparte su famosa conferencia «There\'s Plenty of Room at the Bottom» en Caltech, anticipando la nanotecnología y los límites físicos de la miniaturización.', desc_en: 'Richard Feynman delivers his famous lecture «There\'s Plenty of Room at the Bottom» at Caltech, anticipating nanotechnology and the physical limits of miniaturization.' },
-};
-
-/* ===================================================
    INIT EPHEMERIS — Efeméride del día
    =================================================== */
 
@@ -1333,8 +1323,7 @@ function initEphemeris() {
   const card = document.getElementById('ephemeris-card');
   if (!card) return;
 
-  // Use TECH_FACTS if defined (which has 366 entries), otherwise fall back to TECH_EVENTS
-  const db = (typeof TECH_FACTS !== 'undefined') ? TECH_FACTS : TECH_EVENTS;
+  const db = TECH_FACTS;
 
   // Build sorted list of all available keys
   const allKeys = Object.keys(db).sort();
@@ -1400,14 +1389,13 @@ function initEphemeris() {
 
   // Render
   const yearEl  = card.querySelector('#eph-year');
-  const emojiEl = card.querySelector('#eph-emoji');
   const titleEl = card.querySelector('#eph-title');
   const descEl  = card.querySelector('#eph-desc');
   const dateEl  = card.querySelector('#eph-date');
   const tagEl   = card.querySelector('#eph-tag');
+  void emoji; // el icono del día ya no se usa: un icono fijo sustituye al emoji por día
 
   if (yearEl)  yearEl.textContent  = year;
-  if (emojiEl) emojiEl.textContent = emoji;
   if (titleEl) titleEl.textContent = title;
   if (descEl)  descEl.textContent  = desc;
   if (dateEl)  dateEl.textContent  = dateLabel;
@@ -1489,7 +1477,37 @@ function initSecurityProtection() {
    INIT — DOM READY
    =================================================== */
 
+/* ===================================================
+   THEME — Modo claro / oscuro
+   =================================================== */
+const THEME_KEY = 'siacm_theme';
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-toggle').forEach(btn => {
+    btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    btn.setAttribute('aria-label', theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+  });
+}
+
+function initThemeToggle() {
+  let saved = null;
+  try { saved = localStorage.getItem(THEME_KEY); } catch { /* storage blocked */ }
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(saved || (prefersDark ? 'dark' : 'light'));
+
+  document.querySelectorAll('.theme-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      try { localStorage.setItem(THEME_KEY, next); } catch { /* storage blocked */ }
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
   initSecurityProtection();
   applyTranslations();
   initNavigation();

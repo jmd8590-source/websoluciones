@@ -6,7 +6,8 @@
   <meta name="description" content="Consultoría, asistentes IA, chatbots 24/7, automatizaciones y diseño web para pequeños y medianos negocios locales en Cumbres Mayores (Huelva) y toda España. Primera consulta gratuita.">
   <meta name="keywords" content="inteligencia artificial, automatización, chatbot, consultoría IA, agentes IA, pequeña empresa, negocio local, Cumbres Mayores, Huelva, Andalucía, España">
   <meta name="author" content="Soluciones IA CM">
-  <meta name="theme-color" content="#4F46E5">
+  <meta name="theme-color" content="#2F4F3E" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#16201A" media="(prefers-color-scheme: dark)">
   
   <!-- Directivas avanzadas para rastreadores de motores de búsqueda e IA (GEO) -->
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -23,8 +24,9 @@
        ================================================ -->
   <!-- Content-Security-Policy: restrict resource origins -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.chatbase.co; frame-src 'self' https://www.chatbase.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.chatbase.co https://*.chatbase.co https://api.web3forms.com https://qotpnbshccwyrledrorl.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com;">
-  <!-- Prevent clickjacking via iframes -->
-  <meta http-equiv="X-Frame-Options" content="DENY">
+  <!-- X-Frame-Options no es válido como <meta>: los navegadores lo ignoran y
+       solo avisan por consola. La protección real anticlickjacking contra
+       clickjacking va en _headers, como cabecera HTTP real, en producción. -->
   <!-- Prevent MIME-type sniffing -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <!-- Restrict referrer info sent to third parties -->
@@ -49,15 +51,18 @@
 
   <title>Soluciones IA CM — Automatización e IA para Negocios Locales | Consultoría en Cumbres Mayores (Huelva)</title>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+
   <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Google Fonts: Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Google Fonts: Fraunces (titulares, con personalidad) + Public Sans (texto) -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,500;1,9..144,600&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=1.1.6">
+  <link rel="stylesheet" href="styles.css?v=2.0.0">
 
   <!-- Canonical & Alternates -->
   <link rel="canonical" href="https://solucionesiacm.com/">
@@ -171,7 +176,7 @@
             "name": "¿Cómo ayuda Soluciones IA CM a una pequeña o mediana empresa?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Soluciones IA CM ayuda a negocios locales y PYMEs automatizando tareas repetitivas (como citas, emails, facturación y atención al cliente), creando asistentes virtuales y chatbots 24/7, y desarrollando sitios web de alta velocidad y conversión. Esto permite reducir costes operativos, ahorrar más de un 50% de tiempo en tareas manuales y captar clientes sin interrupciones."
+              "text": "Soluciones IA CM ayuda a negocios locales y PYMEs automatizando tareas repetitivas (como citas, emails, facturación y atención al cliente), creando asistentes virtuales y chatbots 24/7, y desarrollando sitios web de alta velocidad y conversión. Esto permite reducir costes operativos, ahorrar tiempo en tareas manuales y captar clientes sin interrupciones."
             }
           },
           {
@@ -222,6 +227,9 @@
 </head>
 <body class="protect-content">
 
+<!-- Scroll progress indicator -->
+<div id="scroll-progress" aria-hidden="true"></div>
+
 <!-- Skip to main content (Accessibility) -->
 <a href="#main" class="skip-link">Saltar al contenido principal</a>
 
@@ -230,11 +238,46 @@
      =================================================== -->
 <div id="cookie-banner" role="alert" aria-live="polite" aria-atomic="true">
   <p class="cookie-text" data-i18n="cookie_text">
-    Usamos cookies para mejorar tu experiencia. Al continuar, aceptas nuestra política de cookies.
+    Usamos cookies técnicas, necesarias para que la web funcione, y cookies del asistente de chat, opcionales. Tú decides cuáles permites.
   </p>
   <div class="cookie-actions">
-    <button id="cookie-accept" class="btn-cookie-accept" data-i18n="cookie_accept">Aceptar</button>
-    <button id="cookie-reject" class="btn-cookie-reject" data-i18n="cookie_reject">Solo necesarias</button>
+    <button id="cookie-reject" class="btn-cookie-reject" data-i18n="cookie_reject">Rechazar</button>
+    <button id="cookie-settings" class="btn-cookie-settings" data-i18n="cookie_settings">Configurar</button>
+    <button id="cookie-accept" class="btn-cookie-accept" data-i18n="cookie_accept">Aceptar todo</button>
+  </div>
+</div>
+
+<!-- Cookie preferences modal (granular consent) -->
+<div id="cookie-prefs-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="cookie-prefs-title" aria-hidden="true">
+  <div class="modal" tabindex="-1">
+    <div class="modal-header">
+      <h2 class="modal-title" id="cookie-prefs-title" data-i18n="cookie_prefs_title">Preferencias de cookies</h2>
+      <button class="modal-close" id="cookie-prefs-close" aria-label="Cerrar preferencias de cookies">×</button>
+    </div>
+    <div class="modal-content">
+      <div class="cookie-pref-row">
+        <div>
+          <p class="cookie-pref-name" data-i18n="cookie_pref_necessary_name">Cookies técnicas</p>
+          <p class="cookie-pref-desc" data-i18n="cookie_pref_necessary_desc">Imprescindibles para que la web funcione correctamente. Siempre activas.</p>
+        </div>
+        <span class="cookie-pref-locked" aria-label="Siempre activas">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </span>
+      </div>
+      <div class="cookie-pref-row">
+        <div>
+          <p class="cookie-pref-name" data-i18n="cookie_pref_chat_name">Asistente de chat (Chatbase)</p>
+          <p class="cookie-pref-desc" data-i18n="cookie_pref_chat_desc">Activa el chat de atención al cliente. Si lo rechazas, el widget de chat no se carga.</p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="cookie-pref-chat">
+          <span class="switch-track"><span class="switch-thumb"></span></span>
+        </label>
+      </div>
+      <div class="modal-actions-row">
+        <button id="cookie-prefs-save" class="btn btn-primary" data-i18n="cookie_prefs_save">Guardar preferencias</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -256,15 +299,19 @@
     <!-- Desktop Navigation Links -->
     <ul class="nav-links" role="list">
       <li><a href="#inicio"    class="nav-link active" data-i18n="nav_inicio"    aria-current="page">Inicio</a></li>
+      <li><a href="#auditor"   class="nav-link nav-link--new" data-i18n="nav_auditor"        >Auditor Web IA</a></li>
       <li><a href="#servicios" class="nav-link"        data-i18n="nav_servicios"             >Servicios</a></li>
-      <li><a href="#auditor"   class="nav-link"        data-i18n="nav_auditor"               >Auditor Web IA</a></li>
-      <li><a href="#lo-ultimo" class="nav-link nav-link--new" data-i18n="nav_lo_ultimo"      >Lo Último</a></li>
+      <li><a href="#lo-ultimo" class="nav-link"        data-i18n="nav_lo_ultimo"             >Lo Último</a></li>
       <li><a href="#faq"       class="nav-link"        data-i18n="nav_faq"                   >FAQ</a></li>
       <li><a href="#contacto"  class="nav-link"        data-i18n="nav_contacto"              >Contacto</a></li>
     </ul>
 
     <!-- Desktop Actions -->
     <div class="nav-actions">
+      <button class="theme-toggle" aria-label="Cambiar a modo oscuro" aria-pressed="false">
+        <svg class="theme-icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="theme-icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+      </button>
       <button id="lang-toggle" class="lang-toggle" aria-label="Cambiar idioma a inglés">EN</button>
       <a href="#contacto" class="btn btn-primary nav-cta" data-i18n="nav_cta">Solicitar Consulta</a>
       <button
@@ -274,10 +321,14 @@
         aria-expanded="false"
         aria-controls="mobile-nav"
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <svg class="menu-icon-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <line x1="3" y1="6"  x2="21" y2="6"/>
           <line x1="3" y1="12" x2="21" y2="12"/>
           <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg class="menu-icon-close" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
       </button>
     </div>
@@ -288,13 +339,17 @@
 <nav id="mobile-nav" class="mobile-nav" aria-label="Menú móvil">
   <ul class="mobile-nav-links" role="list">
     <li><a href="#inicio"    class="mobile-nav-link" data-i18n="nav_inicio">Inicio</a></li>
+    <li><a href="#auditor"   class="mobile-nav-link nav-link--new" data-i18n="nav_auditor">Auditor Web IA</a></li>
     <li><a href="#servicios" class="mobile-nav-link" data-i18n="nav_servicios">Servicios</a></li>
-    <li><a href="#auditor"   class="mobile-nav-link" data-i18n="nav_auditor">Auditor Web IA</a></li>
-    <li><a href="#lo-ultimo" class="mobile-nav-link nav-link--new" data-i18n="nav_lo_ultimo">Lo Último</a></li>
+    <li><a href="#lo-ultimo" class="mobile-nav-link" data-i18n="nav_lo_ultimo">Lo Último</a></li>
     <li><a href="#faq"       class="mobile-nav-link" data-i18n="nav_faq">FAQ</a></li>
     <li><a href="#contacto"  class="mobile-nav-link" data-i18n="nav_contacto">Contacto</a></li>
   </ul>
-  <div style="display:flex;gap:12px;align-items:center;">
+  <div class="mobile-nav-actions">
+    <button class="theme-toggle" aria-label="Cambiar a modo oscuro" aria-pressed="false">
+      <svg class="theme-icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="theme-icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+    </button>
     <button id="lang-toggle-mobile" class="lang-toggle" aria-label="Cambiar idioma">EN</button>
     <a href="#contacto" class="btn btn-primary" style="flex:1;justify-content:center;" data-i18n="nav_cta">Solicitar Consulta</a>
   </div>
@@ -354,19 +409,129 @@
         <!-- Key stats -->
         <div class="hero-stats" role="list" aria-label="Estadísticas clave">
           <div class="hero-stat" role="listitem">
-            <div class="hero-stat-value" data-i18n="hero_stat_1_value">+50%</div>
-            <div class="hero-stat-label" data-i18n="hero_stat_1_label">Ahorro de tiempo</div>
+            <div class="hero-stat-value" data-i18n="hero_stat_1_value">Gratuita</div>
+            <div class="hero-stat-label" data-i18n="hero_stat_1_label">Primera consulta, sin compromiso</div>
           </div>
           <div class="hero-stat" role="listitem">
-            <div class="hero-stat-value" data-i18n="hero_stat_2_value">24/7</div>
-            <div class="hero-stat-label" data-i18n="hero_stat_2_label">Atención a clientes</div>
+            <div class="hero-stat-value" data-i18n="hero_stat_2_value">&lt; 24h</div>
+            <div class="hero-stat-label" data-i18n="hero_stat_2_label">Tiempo de respuesta</div>
           </div>
           <div class="hero-stat" role="listitem">
-            <div class="hero-stat-value" data-i18n="hero_stat_3_value">100%</div>
-            <div class="hero-stat-label" data-i18n="hero_stat_3_label">Negocio local</div>
+            <div class="hero-stat-value" data-i18n="hero_stat_3_value">Directo</div>
+            <div class="hero-stat-label" data-i18n="hero_stat_3_label">Trato local, sin intermediarios</div>
           </div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ===============================================
+       AI WEB AUDITOR — herramienta insignia
+       =============================================== -->
+  <section id="auditor" class="section section--featured" aria-labelledby="auditor-title">
+    <div class="auditor-bg" aria-hidden="true"></div>
+    <div class="container">
+
+      <header class="section-header animate-on-scroll">
+        <div class="section-label section-label--featured">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18 5.5 22 7 14.5 2 9.5 9 9 12 2"/></svg>
+          <span data-i18n="auditor_label">Herramienta insignia · gratuita</span>
+        </div>
+        <h2 class="section-title" id="auditor-title" data-i18n="auditor_title">Auditor Web IA</h2>
+        <p class="section-subtitle" data-i18n="auditor_subtitle">
+          Pega la URL de tu negocio y analizamos en vivo su diseño, velocidad, SEO, seguridad y accesibilidad: un informe real, no una estimación genérica.
+        </p>
+      </header>
+
+      <div class="auditor-container animate-on-scroll delay-2">
+
+        <!-- Audit form -->
+        <form id="auditor-form" class="auditor-form" role="search" novalidate>
+          <div class="auditor-input-wrapper">
+            <span class="auditor-input-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+            <label for="auditor-url" class="sr-only" data-i18n="auditor_label_sr">URL de tu sitio web</label>
+            <input
+              type="url"
+              id="auditor-url"
+              name="url"
+              class="auditor-input"
+              data-i18n-placeholder="auditor_placeholder"
+              placeholder="https://tunegocio.com"
+              autocomplete="url"
+              inputmode="url"
+              aria-describedby="auditor-hint"
+              aria-required="true"
+            >
+          </div>
+          <button type="submit" id="auditor-submit" class="btn btn-primary btn-lg">
+            <span data-i18n="auditor_btn">Analizar web</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </button>
+        </form>
+        <p id="auditor-hint" class="sr-only">Introduce la URL completa de tu sitio web para obtener un análisis gratuito</p>
+
+        <!-- Loading state -->
+        <div id="auditor-loading" class="auditor-loading" aria-live="polite" aria-label="Analizando tu web...">
+          <div class="auditor-spinner" role="progressbar" aria-label="Analizando..."></div>
+          <div class="auditor-steps" role="list">
+            <div class="auditor-step" role="listitem">
+              <span class="auditor-step-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+              <span data-i18n="auditor_step1">Accediendo a la página web...</span>
+            </div>
+            <div class="auditor-step" role="listitem">
+              <span class="auditor-step-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></span>
+              <span data-i18n="auditor_step2">Analizando diseño responsive...</span>
+            </div>
+            <div class="auditor-step" role="listitem">
+              <span class="auditor-step-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+              <span data-i18n="auditor_step3">Evaluando idiomas disponibles...</span>
+            </div>
+            <div class="auditor-step" role="listitem">
+              <span class="auditor-step-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg></span>
+              <span data-i18n="auditor_step4">Comprobando agentes y chatbots...</span>
+            </div>
+            <div class="auditor-step" role="listitem">
+              <span class="auditor-step-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+              <span data-i18n="auditor_step5">Analizando SEO y rendimiento...</span>
+            </div>
+            <div class="auditor-step" role="listitem">
+              <span class="auditor-step-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg></span>
+              <span data-i18n="auditor_step6">Generando informe completo...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div id="auditor-results" class="auditor-results" aria-live="polite">
+
+          <!-- Overall score card -->
+          <div class="auditor-score-card" role="region" aria-labelledby="auditor-score-heading">
+            <p class="auditor-score-url" id="auditor-result-url" aria-label="URL analizada"></p>
+            <div class="auditor-score-value" id="auditor-overall-score" aria-labelledby="auditor-score-heading">—</div>
+            <p class="auditor-score-label" id="auditor-score-heading">Puntuación global</p>
+            <p class="auditor-score-source" id="auditor-score-source"></p>
+          </div>
+
+          <!-- Criteria cards (filled by JS) -->
+          <div id="auditor-criteria" class="auditor-criteria-grid" role="list" aria-label="Criterios evaluados"></div>
+
+          <!-- Post-audit CTA -->
+          <div class="auditor-cta" role="complementary">
+            <h3 class="auditor-cta-title" data-i18n="auditor_cta_title">¿Quieres mejorar estos resultados?</h3>
+            <p class="auditor-cta-subtitle" data-i18n="auditor_cta_subtitle">
+              Nuestro equipo puede ayudarte a implementar todas las mejoras. Primera consulta gratuita.
+            </p>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+              <a href="#contacto" class="btn btn-primary" data-i18n="auditor_cta_btn">Solicitar consulta gratuita</a>
+              <button id="auditor-new-btn" class="btn btn-secondary" data-i18n="auditor_btn_new">Analizar otra web</button>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </section>
@@ -388,7 +553,7 @@
       <div class="services-grid" role="list" aria-label="Lista de servicios">
 
         <article class="service-card animate-on-scroll delay-1" role="listitem">
-          <div class="service-icon" aria-hidden="true">🔍</div>
+          <div class="service-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
           <h3 class="service-title" data-i18n="svc1_title">Consultoría Estratégica</h3>
           <p class="service-description" data-i18n="svc1_desc">
             Analizamos las necesidades reales de tu empresa y diseñamos un plan de acción personalizado para optimizar tiempo y recursos.
@@ -396,7 +561,7 @@
         </article>
 
         <article class="service-card animate-on-scroll delay-2" role="listitem">
-          <div class="service-icon" aria-hidden="true">🧠</div>
+          <div class="service-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2a2.5 2.5 0 0 0-2.5 2.5v.5a2.5 2.5 0 0 0-2 2.45V8a2.5 2.5 0 0 0-1 4.9v.1a2.5 2.5 0 0 0 1.5 2.29V17a2.5 2.5 0 0 0 2.5 2.5h.5A2.5 2.5 0 0 0 11 22a2.5 2.5 0 0 0 2.5-2.5v-15A2.5 2.5 0 0 0 11 2h-1.5Z"/><path d="M14.5 2A2.5 2.5 0 0 1 17 4.5v.5a2.5 2.5 0 0 1 2 2.45V8a2.5 2.5 0 0 1 1 4.9v.1a2.5 2.5 0 0 1-1.5 2.29V17a2.5 2.5 0 0 1-2.5 2.5H15a2.5 2.5 0 0 1-2 2"/></svg></div>
           <h3 class="service-title" data-i18n="svc2_title">Asistentes IA Personalizados</h3>
           <p class="service-description" data-i18n="svc2_desc">
             Desarrollamos asistentes de inteligencia artificial adaptados a tu sector y flujo de trabajo, disponibles las 24 horas.
@@ -404,7 +569,7 @@
         </article>
 
         <article class="service-card animate-on-scroll delay-3" role="listitem">
-          <div class="service-icon" aria-hidden="true">🤖</div>
+          <div class="service-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><path d="M3 15h-1M22 15h-1"/></svg></div>
           <h3 class="service-title" data-i18n="svc3_title">Agentes IA Autónomos</h3>
           <p class="service-description" data-i18n="svc3_desc">
             Creamos agentes que ejecutan tareas complejas de forma autónoma: responder emails, gestionar citas, procesar pedidos y más.
@@ -412,7 +577,7 @@
         </article>
 
         <article class="service-card animate-on-scroll delay-4" role="listitem">
-          <div class="service-icon" aria-hidden="true">💬</div>
+          <div class="service-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><circle cx="12" cy="11" r="1"/></svg></div>
           <h3 class="service-title" data-i18n="svc4_title">Chatbot 24/7 Empresarial</h3>
           <p class="service-description" data-i18n="svc4_desc">
             Chatbot inteligente que responde preguntas sobre tu empresa a cualquier hora, sin perder ningún cliente potencial.
@@ -420,7 +585,7 @@
         </article>
 
         <article class="service-card animate-on-scroll delay-5" role="listitem">
-          <div class="service-icon" aria-hidden="true">🌐</div>
+          <div class="service-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
           <h3 class="service-title" data-i18n="svc5_title">Página Web Corporativa</h3>
           <p class="service-description" data-i18n="svc5_desc">
             Diseño y desarrollo de sitios web profesionales, modernos, rápidos y optimizados para SEO y conversión.
@@ -428,7 +593,7 @@
         </article>
 
         <article class="service-card animate-on-scroll delay-6" role="listitem">
-          <div class="service-icon" aria-hidden="true">🚀</div>
+          <div class="service-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
           <h3 class="service-title" data-i18n="svc6_title">Landing Pages de Alto Impacto</h3>
           <p class="service-description" data-i18n="svc6_desc">
             Páginas de aterrizaje diseñadas para convertir visitantes en clientes, con diseño premium y optimización continua.
@@ -436,7 +601,7 @@
         </article>
 
         <article class="service-card animate-on-scroll delay-7" role="listitem">
-          <div class="service-icon" aria-hidden="true">⚡</div>
+          <div class="service-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
           <h3 class="service-title" data-i18n="svc7_title">Automatización de Procesos</h3>
           <p class="service-description" data-i18n="svc7_desc">
             Automatizamos tareas repetitivas: facturación, seguimiento de clientes, publicaciones en redes, notificaciones y mucho más.
@@ -444,7 +609,7 @@
         </article>
 
         <article class="service-card animate-on-scroll delay-8" role="listitem">
-          <div class="service-icon" aria-hidden="true">📊</div>
+          <div class="service-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
           <h3 class="service-title" data-i18n="svc8_title">Bases de Datos y CRM</h3>
           <p class="service-description" data-i18n="svc8_desc">
             Diseño e implementación de bases de datos y sistemas CRM para gestionar clientes, leads y datos empresariales de forma eficiente.
@@ -452,7 +617,7 @@
         </article>
 
         <article class="service-card animate-on-scroll delay-9" role="listitem">
-          <div class="service-icon" aria-hidden="true">🧭</div>
+          <div class="service-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
           <h3 class="service-title" data-i18n="svc9_title">Orientación Tecnológica</h3>
           <p class="service-description" data-i18n="svc9_desc">
             Te guiamos en la selección de las herramientas tecnológicas más adecuadas para tu negocio, sin tecnicismos innecesarios.
@@ -460,7 +625,7 @@
         </article>
 
         <article class="service-card animate-on-scroll delay-10" role="listitem">
-          <div class="service-icon" aria-hidden="true">🖼️</div>
+          <div class="service-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div>
           <h3 class="service-title" data-i18n="svc10_title">Restauración de Imágenes Antiguas</h3>
           <p class="service-description" data-i18n="svc10_desc">
             Recuperamos y mejoramos fotografías antiguas y en blanco y negro mediante IA: eliminamos deterioros, restauramos detalles y añadimos color con resultados asombrosos.
@@ -468,7 +633,7 @@
         </article>
 
         <article class="service-card animate-on-scroll delay-11" role="listitem">
-          <div class="service-icon" aria-hidden="true">🛠️</div>
+          <div class="service-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
           <h3 class="service-title" data-i18n="svc11_title">Diseño de aplicaciones a medida</h3>
           <p class="service-description" data-i18n="svc11_desc">
             Se crean aplicaciones a medida en función de las necesidades del negocio, atendiendo a las necesidades que el cliente indique.
@@ -507,7 +672,7 @@
 
         <!-- Main content -->
         <div class="eph-body">
-          <div class="eph-emoji" id="eph-emoji" aria-hidden="true">💡</div>
+          <div class="eph-emoji" id="eph-emoji" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="6" height="6"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></div>
           <div class="eph-text">
             <h3 class="eph-title" id="eph-title">Cargando...</h3>
             <p class="eph-desc" id="eph-desc"></p>
@@ -548,28 +713,28 @@
         </p>
       </header>
 
-      <!-- 📰 Noticias -->
+      <!-- Noticias -->
       <div class="lo-ultimo-category animate-on-scroll delay-1">
         <h3 class="lo-ultimo-cat-title">
-          <span class="lo-ultimo-cat-icon" aria-hidden="true">📰</span>
+          <span class="lo-ultimo-cat-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="14" x2="14" y2="14"/><line x1="4" y1="18" x2="14" y2="18"/><line x1="17" y1="14" x2="17" y2="18"/></svg></span>
           <span data-i18n="lo_ultimo_cat_news">Noticias del mes</span>
         </h3>
         <div class="lo-ultimo-grid" id="lo-ultimo-news-grid" aria-live="polite"></div>
       </div>
 
-      <!-- 🛠️ Herramientas -->
+      <!-- Herramientas -->
       <div class="lo-ultimo-category animate-on-scroll delay-2">
         <h3 class="lo-ultimo-cat-title">
-          <span class="lo-ultimo-cat-icon" aria-hidden="true">🛠️</span>
+          <span class="lo-ultimo-cat-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
           <span data-i18n="lo_ultimo_cat_tools">Herramientas nuevas</span>
         </h3>
         <div class="lo-ultimo-grid" id="lo-ultimo-tools-grid" aria-live="polite"></div>
       </div>
 
-      <!-- 📚 Aprendizaje y comunidad -->
+      <!-- Aprendizaje y comunidad -->
       <div class="lo-ultimo-category animate-on-scroll delay-3">
         <h3 class="lo-ultimo-cat-title">
-          <span class="lo-ultimo-cat-icon" aria-hidden="true">📚</span>
+          <span class="lo-ultimo-cat-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
           <span data-i18n="lo_ultimo_cat_learn">Aprendizaje y comunidad</span>
         </h3>
         <div class="lo-ultimo-grid lo-ultimo-grid--3" id="lo-ultimo-learn-grid" aria-live="polite"></div>
@@ -581,108 +746,6 @@
   <!-- ===============================================
        AI WEB AUDITOR
        =============================================== -->
-  <section id="auditor" class="section" aria-labelledby="auditor-title">
-    <div class="container">
-
-      <header class="section-header animate-on-scroll">
-        <div class="section-label" data-i18n="auditor_label">Herramienta gratuita</div>
-        <h2 class="section-title" id="auditor-title" data-i18n="auditor_title">Auditor Web IA</h2>
-        <p class="section-subtitle" data-i18n="auditor_subtitle">
-          Introduce la URL de tu web y nuestra IA analizará sus puntos fuertes y áreas de mejora en segundos.
-        </p>
-      </header>
-
-      <div class="auditor-container animate-on-scroll delay-2">
-
-        <!-- Audit form -->
-        <form id="auditor-form" class="auditor-form" role="search" novalidate>
-          <div class="auditor-input-wrapper">
-            <span class="auditor-input-icon" aria-hidden="true">🔗</span>
-            <label for="auditor-url" class="sr-only" data-i18n="auditor_label_sr">URL de tu sitio web</label>
-            <input
-              type="url"
-              id="auditor-url"
-              name="url"
-              class="auditor-input"
-              data-i18n-placeholder="auditor_placeholder"
-              placeholder="https://tuweb.com"
-              autocomplete="url"
-              inputmode="url"
-              aria-describedby="auditor-hint"
-              aria-required="true"
-            >
-          </div>
-          <button type="submit" id="auditor-submit" class="btn btn-primary btn-lg">
-            <span data-i18n="auditor_btn">Analizar web</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-              <circle cx="11" cy="11" r="8"/>
-              <path d="m21 21-4.35-4.35"/>
-            </svg>
-          </button>
-        </form>
-        <p id="auditor-hint" class="sr-only">Introduce la URL completa de tu sitio web para obtener un análisis gratuito de IA</p>
-
-        <!-- Loading state -->
-        <div id="auditor-loading" class="auditor-loading" aria-live="polite" aria-label="Analizando tu web...">
-          <div class="auditor-spinner" role="progressbar" aria-label="Analizando..."></div>
-          <div class="auditor-steps" role="list">
-            <div class="auditor-step" role="listitem">
-              <span class="auditor-step-icon" aria-hidden="true">🌐</span>
-              <span data-i18n="auditor_step1">Accediendo a la página web...</span>
-            </div>
-            <div class="auditor-step" role="listitem">
-              <span class="auditor-step-icon" aria-hidden="true">📱</span>
-              <span data-i18n="auditor_step2">Analizando diseño responsive...</span>
-            </div>
-            <div class="auditor-step" role="listitem">
-              <span class="auditor-step-icon" aria-hidden="true">🌍</span>
-              <span data-i18n="auditor_step3">Evaluando idiomas disponibles...</span>
-            </div>
-            <div class="auditor-step" role="listitem">
-              <span class="auditor-step-icon" aria-hidden="true">🤖</span>
-              <span data-i18n="auditor_step4">Comprobando agentes y chatbots...</span>
-            </div>
-            <div class="auditor-step" role="listitem">
-              <span class="auditor-step-icon" aria-hidden="true">🔍</span>
-              <span data-i18n="auditor_step5">Analizando SEO y rendimiento...</span>
-            </div>
-            <div class="auditor-step" role="listitem">
-              <span class="auditor-step-icon" aria-hidden="true">📋</span>
-              <span data-i18n="auditor_step6">Generando informe completo...</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Results -->
-        <div id="auditor-results" class="auditor-results" aria-live="polite">
-
-          <!-- Overall score card -->
-          <div class="auditor-score-card" role="region" aria-labelledby="auditor-score-heading">
-            <p class="auditor-score-url" id="auditor-result-url" aria-label="URL analizada"></p>
-            <div class="auditor-score-value" id="auditor-overall-score" aria-labelledby="auditor-score-heading">—</div>
-            <p class="auditor-score-label" id="auditor-score-label" id="auditor-score-heading">Puntuación global</p>
-          </div>
-
-          <!-- Criteria cards (filled by JS) -->
-          <div id="auditor-criteria" class="auditor-criteria-grid" role="list" aria-label="Criterios evaluados"></div>
-
-          <!-- Post-audit CTA -->
-          <div class="auditor-cta" role="complementary">
-            <h3 class="auditor-cta-title" data-i18n="auditor_cta_title">¿Quieres mejorar estos resultados?</h3>
-            <p class="auditor-cta-subtitle" data-i18n="auditor_cta_subtitle">
-              Nuestro equipo puede ayudarte a implementar todas las mejoras. Primera consulta gratuita.
-            </p>
-            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-              <a href="#contacto" class="btn btn-primary" data-i18n="auditor_cta_btn">Solicitar consulta gratuita</a>
-              <button id="auditor-new-btn" class="btn btn-secondary" data-i18n="auditor_btn_new">Analizar otra web</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===============================================
        FAQ — PREGUNTAS FRECUENTES (GEO & AI Search)
        =============================================== -->
@@ -708,7 +771,7 @@
           </summary>
           <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
             <p itemprop="text" data-i18n="faq1_a">
-              Automatizamos tareas manuales repetitivas (gestión de citas, facturación, atención al cliente), creamos asistentes virtuales y chatbots 24/7 personalizados, y desarrollamos páginas web rápidas orientadas a conversión. Esto permite reducir costes operativos, ahorrar más de un 50% de tiempo y captar clientes de manera continua.
+              Automatizamos tareas manuales repetitivas (gestión de citas, facturación, atención al cliente), creamos asistentes virtuales y chatbots 24/7 personalizados, y desarrollamos páginas web rápidas orientadas a conversión. Esto permite reducir costes operativos, ahorrar tiempo y captar clientes de manera continua.
             </p>
           </div>
         </details>
@@ -814,7 +877,7 @@
         <div class="contact-info" role="complementary" aria-label="Información de contacto">
 
           <div class="contact-item">
-            <div class="contact-item-icon" aria-hidden="true">✉️</div>
+            <div class="contact-item-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></div>
             <div>
               <p class="contact-item-label" data-i18n="contact_email_label">Email</p>
               <p class="contact-item-value">
@@ -824,7 +887,7 @@
           </div>
 
           <div class="contact-item">
-            <div class="contact-item-icon" aria-hidden="true">📞</div>
+            <div class="contact-item-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
             <div>
               <p class="contact-item-label" data-i18n="contact_phone_label">Teléfono</p>
               <p class="contact-item-value">
@@ -836,7 +899,7 @@
 
 
           <div class="contact-item">
-            <div class="contact-item-icon" aria-hidden="true">🕐</div>
+            <div class="contact-item-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
             <div>
               <p class="contact-item-label" data-i18n="contact_hours_label">Disponibilidad</p>
               <p class="contact-item-value" style="color:var(--c-text)" data-i18n="contact_hours_value">
@@ -954,7 +1017,7 @@
 
           <!-- Success message -->
           <div id="contact-success" class="form-success" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="form-success-icon" aria-hidden="true">✅</div>
+            <div class="form-success-icon" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg></div>
             <h3 class="form-success-title" data-i18n="contact_success_title" tabindex="-1">¡Mensaje enviado!</h3>
             <p class="form-success-text" data-i18n="contact_success_text">
               Gracias por contactarnos. Te responderemos en menos de 24 horas.
@@ -989,13 +1052,11 @@
         <div class="footer-tech">
           <p class="footer-tech-label" data-i18n="footer_tech_label">Arquitectura tecnológica</p>
           <div class="footer-tech-stack" role="list" aria-label="Tecnologías utilizadas">
-            <span class="footer-tech-badge" role="listitem">Next.js</span>
-            <span class="footer-tech-badge" role="listitem">TypeScript</span>
-            <span class="footer-tech-badge" role="listitem">Tailwind</span>
+            <span class="footer-tech-badge" role="listitem">HTML5</span>
+            <span class="footer-tech-badge" role="listitem">CSS3</span>
+            <span class="footer-tech-badge" role="listitem">JavaScript</span>
             <span class="footer-tech-badge" role="listitem">Supabase</span>
-            <span class="footer-tech-badge" role="listitem">FastAPI</span>
-            <span class="footer-tech-badge" role="listitem">Docker</span>
-            <span class="footer-tech-badge" role="listitem">Cloudflare</span>
+            <span class="footer-tech-badge" role="listitem">Cloudflare Pages</span>
           </div>
         </div>
       </div>
@@ -1147,14 +1208,19 @@
       <p>Una cookie es un archivo que se descarga en su dispositivo al acceder a determinadas páginas web. Las cookies permiten almacenar y recuperar información sobre sus hábitos de navegación.</p>
 
       <h3>Cookies que utilizamos</h3>
-      <p><strong>Cookies técnicas (necesarias):</strong> Imprescindibles para el funcionamiento del sitio. No requieren consentimiento.</p>
-      <p><strong>Cookies de preferencias (opcionales):</strong> Almacenan las preferencias del usuario para personalizar la experiencia.</p>
+      <p><strong>Cookies técnicas (necesarias):</strong> Imprescindibles para el funcionamiento del sitio (idioma, modo claro/oscuro, recordar tu elección de cookies). No requieren consentimiento.</p>
+      <p><strong>Cookies del asistente de chat (opcionales):</strong> Chatbase, nuestro proveedor de chat, instala una cookie propia (<code>chatbase_anon_id</code>) solo si aceptas esta categoría en el panel "Configurar" del aviso de cookies. Si la rechazas, el widget de chat no se carga en absoluto.</p>
 
       <h3>Listado de cookies propias</h3>
       <p>
-        • <code>lang</code> — Preferencia de idioma (ES/EN). Duración: 1 año. Tipo: preferencia.<br>
-        • <code>cookies-accepted</code> — Registro de aceptación de cookies. Duración: 1 año. Tipo: técnica.
+        • <code>siacm_theme</code> — Preferencia de modo claro/oscuro. Duración: persistente. Tipo: técnica.<br>
+        • <code>lang</code> — Preferencia de idioma (ES/EN). Duración: 1 año. Tipo: técnica.<br>
+        • <code>siacm_cookie_prefs</code> — Registro de tu elección de cookies (qué aceptaste y qué no). Duración: persistente. Tipo: técnica.<br>
+        • <code>chatbase_anon_id</code> (de terceros, chatbase.co) — Identifica tu sesión de chat. Solo se instala si aceptas la categoría "Asistente de chat". Tipo: funcional/terceros.
       </p>
+
+      <h3>Puedes cambiar de opinión cuando quieras</h3>
+      <p>Pulsa en "Política de Cookies" desde el pie de página, o borra las cookies del sitio desde tu navegador, para que el aviso de cookies vuelva a aparecer y puedas elegir de nuevo.</p>
 
       <h3>Gestión y desactivación</h3>
       <p>Puede configurar o deshabilitar las cookies a través de la configuración de su navegador. Tenga en cuenta que deshabilitar ciertas cookies puede afectar al funcionamiento del sitio.</p>
@@ -1173,14 +1239,12 @@
 </div>
 
 <!-- Application Script (deferred for performance) -->
-<script src="facts.js?v=1.1.5" defer></script>
-<script src="lo-ultimo.js?v=1.1.5" defer></script>
-<script src="app.js?v=1.1.5" defer></script>
+<script src="facts.js?v=2.0.0" defer></script>
+<script src="lo-ultimo.js?v=2.0.0" defer></script>
+<script src="app.js?v=2.0.0" defer></script>
 
-<!-- Chatbase AI Agent Widget -->
-<script>
-(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="DlYvDU3Ab08HmFUV5mS7K";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
-</script>
+<!-- El widget de Chatbase ya NO se carga aquí: app.js lo carga solo
+     después de que el visitante acepte cookies (ver loadChatbaseWidget). -->
 
 </body>
 </html>

@@ -18,7 +18,7 @@
   # XSS Protection (legacy browsers)
   X-XSS-Protection: 1; mode=block
   # Content Security Policy – matches the meta tag but now enforced at HTTP level
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.chatbase.co; frame-src 'self' https://www.chatbase.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.chatbase.co https://*.chatbase.co https://api.web3forms.com https://qotpnbshccwyrledrorl.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.chatbase.co; frame-src 'self' https://www.chatbase.co; frame-ancestors 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.chatbase.co https://*.chatbase.co https://api.web3forms.com https://qotpnbshccwyrledrorl.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests
   # Cross-Origin policies
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: unsafe-none
@@ -26,5 +26,9 @@
 
 # ── CRM page: stricter CSP ──────────────────────────────────
 /crm.html
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://qotpnbshccwyrledrorl.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self'; frame-ancestors 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://qotpnbshccwyrledrorl.supabase.co wss://qotpnbshccwyrledrorl.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
   X-Robots-Tag: noindex, nofollow, noarchive
+
+# ── Carpeta de proveedores vendorizados: cacheable a largo plazo ───
+/assets/vendor/*
+  Cache-Control: public, max-age=31536000, immutable

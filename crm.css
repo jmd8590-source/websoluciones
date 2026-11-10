@@ -1,29 +1,31 @@
 /* ===================================================
    SOLUCIONES IA CM — CRM Admin Panel
-   Version: 1.0.0
-   Password: siacm2025  (cámbiala en crm.js → CRM_PASSWORD)
+   Version: 2.0.0
+   Acceso: Supabase Auth (ver crm.js). No hay contraseñas
+   ni hashes en el código fuente.
    =================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --bg:          #060D1A;
-  --surface:     #0F1928;
-  --card:        #172033;
-  --card-hover:  #1D2A40;
+  --bg:          #0E1812;
+  --surface:     #15211A;
+  --card:        #1C2A22;
+  --card-hover:  #243327;
   --border:      rgba(255,255,255,0.07);
   --border-light:rgba(255,255,255,0.12);
-  --text:        #F0F4FF;
-  --text-sec:    #8B9AB5;
-  --text-muted:  #4A5568;
-  --accent:      #4F46E5;
-  --accent-h:    #4338CA;
-  --success:     #10B981;
-  --warning:     #F59E0B;
-  --error:       #EF4444;
-  --info:        #3B82F6;
-  --purple:      #8B5CF6;
-  --font:        'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --text:        #F3F1E7;
+  --text-sec:    #9BAAA0;
+  --text-muted:  #5A6961;
+  --accent:      #4F8B6B;
+  --accent-h:    #3E7159;
+  --terracotta:  #C1663F;
+  --success:     #4F8B6B;
+  --warning:     #C98A3B;
+  --error:       #C1544A;
+  --info:        #5C8AA6;
+  --purple:      #8B6FA8;
+  --font:        'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --r-sm:        6px;
   --r-md:        10px;
   --r-lg:        14px;
@@ -60,8 +62,8 @@ ul { list-style: none; }
   justify-content: center;
   background: var(--bg);
   background-image:
-    radial-gradient(ellipse at 20% 30%, rgba(79,70,229,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 80%, rgba(124,58,237,0.10) 0%, transparent 60%);
+    radial-gradient(ellipse at 20% 30%, rgba(79,139,107,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(193,102,63,0.10) 0%, transparent 60%);
   padding: 20px;
 }
 
@@ -85,7 +87,7 @@ ul { list-style: none; }
 }
 .login-logo-icon {
   width: 44px; height: 44px;
-  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+  background: linear-gradient(135deg, var(--accent), var(--terracotta));
   border-radius: var(--r-md);
   display: flex;
   align-items: center;
@@ -109,12 +111,12 @@ ul { list-style: none; }
   font-size: 15px;
   transition: var(--t);
 }
-.login-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,70,229,0.15); }
+.login-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,139,107,0.15); }
 .login-input::placeholder { color: var(--text-muted); }
 
 .login-btn {
   padding: 13px;
-  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+  background: linear-gradient(135deg, var(--accent), var(--terracotta));
   color: #fff;
   border-radius: var(--r-lg);
   font-size: 15px;
@@ -122,9 +124,9 @@ ul { list-style: none; }
   cursor: pointer;
   border: none;
   transition: var(--t);
-  box-shadow: 0 4px 14px rgba(79,70,229,0.4);
+  box-shadow: 0 4px 14px rgba(79,139,107,0.4);
 }
-.login-btn:hover { box-shadow: 0 6px 20px rgba(79,70,229,0.55); transform: translateY(-1px); }
+.login-btn:hover { box-shadow: 0 6px 20px rgba(79,139,107,0.55); transform: translateY(-1px); }
 .login-error {
   background: rgba(239,68,68,0.12);
   border: 1px solid rgba(239,68,68,0.3);
@@ -135,6 +137,34 @@ ul { list-style: none; }
   display: none;
 }
 .login-error.show { display: block; }
+
+.login-forgot-link {
+  background: none;
+  border: none;
+  color: var(--text-sec);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  margin-top: -4px;
+  transition: var(--t);
+}
+.login-forgot-link:hover { color: var(--accent); }
+
+.login-forgot-msg {
+  display: none;
+  font-size: 13px;
+  color: var(--text-sec);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  line-height: 1.5;
+}
+.login-forgot-msg.show { display: block; }
+
+.login-form.busy .login-btn { opacity: 0.6; pointer-events: none; }
 
 /* ===================================================
    CRM APP SHELL
@@ -162,7 +192,7 @@ ul { list-style: none; }
 }
 .crm-header-icon {
   width: 34px; height: 34px;
-  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+  background: linear-gradient(135deg, var(--accent), var(--terracotta));
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -175,9 +205,9 @@ ul { list-style: none; }
   font-weight: 600;
   padding: 2px 8px;
   border-radius: var(--r-full);
-  background: rgba(79,70,229,0.2);
-  border: 1px solid rgba(79,70,229,0.3);
-  color: #818CF8;
+  background: rgba(79,139,107,0.2);
+  border: 1px solid rgba(79,139,107,0.3);
+  color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -350,12 +380,12 @@ ul { list-style: none; }
 }
 .toolbar-btn:hover { color: var(--text); border-color: var(--border-light); }
 .toolbar-btn.primary {
-  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+  background: linear-gradient(135deg, var(--accent), var(--terracotta));
   color: #fff;
   border-color: transparent;
-  box-shadow: 0 3px 10px rgba(79,70,229,0.35);
+  box-shadow: 0 3px 10px rgba(79,139,107,0.35);
 }
-.toolbar-btn.primary:hover { box-shadow: 0 4px 16px rgba(79,70,229,0.50); }
+.toolbar-btn.primary:hover { box-shadow: 0 4px 16px rgba(79,139,107,0.50); }
 
 /* Table */
 .table-container { flex: 1; overflow: auto; padding: 0; }
@@ -590,7 +620,7 @@ tr:hover .row-actions { opacity: 1; }
 .note-input::placeholder { color: var(--text-muted); }
 .note-save-btn {
   padding: 9px 16px;
-  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+  background: linear-gradient(135deg, var(--accent), var(--terracotta));
   color: #fff;
   border-radius: var(--r-md);
   font-size: 13px;
@@ -600,7 +630,7 @@ tr:hover .row-actions { opacity: 1; }
   white-space: nowrap;
   transition: var(--t);
 }
-.note-save-btn:hover { box-shadow: 0 3px 10px rgba(79,70,229,0.4); }
+.note-save-btn:hover { box-shadow: 0 3px 10px rgba(79,139,107,0.4); }
 
 /* Delete button */
 .panel-footer {
@@ -692,7 +722,7 @@ tr:hover .row-actions { opacity: 1; }
   font-size: 14px;
   transition: var(--t);
 }
-.modal-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,70,229,0.12); }
+.modal-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,139,107,0.12); }
 .modal-input::placeholder { color: var(--text-muted); }
 textarea.modal-input { resize: vertical; min-height: 80px; }
 
@@ -727,13 +757,13 @@ textarea.modal-input { resize: vertical; min-height: 80px; }
   font-size: 14px;
   font-weight: 600;
   color: #fff;
-  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+  background: linear-gradient(135deg, var(--accent), var(--terracotta));
   border: none;
   cursor: pointer;
   transition: var(--t);
-  box-shadow: 0 3px 10px rgba(79,70,229,0.35);
+  box-shadow: 0 3px 10px rgba(79,139,107,0.35);
 }
-.btn-save-lead:hover { box-shadow: 0 5px 16px rgba(79,70,229,0.5); }
+.btn-save-lead:hover { box-shadow: 0 5px 16px rgba(79,139,107,0.5); }
 
 /* Toast notification */
 .toast {

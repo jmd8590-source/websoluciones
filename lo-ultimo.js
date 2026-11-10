@@ -17,10 +17,17 @@
      'orange'  → Automatización, Regulación, Industria
    =================================================== */
 
+/* exported renderLoUltimo */
 'use strict';
 
+// Mes y año actuales, calculados en tiempo real (nunca quedan desactualizados)
+const LO_ULTIMO_MONTH_NAMES_ES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const LO_ULTIMO_MONTH_NAMES_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const _loUltimoNow = new Date();
+const LO_ULTIMO_MONTH    = `${LO_ULTIMO_MONTH_NAMES_ES[_loUltimoNow.getMonth()]} ${_loUltimoNow.getFullYear()}`;
+const LO_ULTIMO_MONTH_EN = `${LO_ULTIMO_MONTH_NAMES_EN[_loUltimoNow.getMonth()]} ${_loUltimoNow.getFullYear()}`;
 
-// ── 📰 NOTICIAS DEL MES ───────────────────────────────
+// ── NOTICIAS DEL MES ───────────────────────────────
 // Máximo recomendado: 4 entradas
 const NEWS_ITEMS = [
   {
