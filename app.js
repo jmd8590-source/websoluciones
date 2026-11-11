@@ -516,8 +516,8 @@ function applyTranslations() {
 
   // Update page title and meta description
   const titles = {
-    es: 'Soluciones IA CM — Automatización e IA para Negocios Locales',
-    en: 'Soluciones IA CM — AI Automation for Local Businesses',
+    es: 'Soluciones IA CM — Consultoría de IA en Cumbres Mayores, Huelva',
+    en: 'Soluciones IA CM — AI Consulting in Cumbres Mayores, Huelva',
   };
   const descs = {
     es: 'Consultoría, asistentes IA, chatbots 24/7, automatizaciones y diseño web para pequeños y medianos negocios locales.',
@@ -1317,99 +1317,91 @@ function initLangToggle() {
 
 /* ===================================================
    INIT EPHEMERIS — Efeméride del día
-   =================================================== */
+   =================================================== =
+   Pide solo el hecho de hoy a /api/efemeride (Cloudflare Pages Function)
+   en vez de cargar los 366 del año (~125 KB) en cada visita. Si esa
+   función no está disponible (p. ej. en una vista previa local sin
+   Functions), carga facts.js bajo demanda como alternativa, así la
+   sección nunca se queda vacía. */
 
-function initEphemeris() {
-  const card = document.getElementById('ephemeris-card');
-  if (!card) return;
+let _ephemerisEvent = null; // cacheado tras la primera carga, para refreshEphemeris()
 
-  const db = TECH_FACTS;
+function loadFactsScriptFallback() {
+  return new Promise((resolve, reject) => {
+    if (typeof TECH_FACTS !== 'undefined') { resolve(); return; }
+    const script = document.createElement('script');
+    script.src = 'facts.js';
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('facts.js no disponible'));
+    document.body.appendChild(script);
+  });
+}
 
-  // Build sorted list of all available keys
-  const allKeys = Object.keys(db).sort();
-
-  // Get today's MM-DD
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day   = String(now.getDate()).padStart(2, '0');
-  const todayKey = `${month}-${day}`;
-
-  // Find the event for today, or the nearest date
-  let eventKey = null;
-  if (db[todayKey]) {
-    eventKey = todayKey;
-  } else {
-    // Find nearest key by day-of-year distance
-    function dayOfYear(key) {
-      const [m, d] = key.split('-').map(Number);
-      return new Date(2024, m - 1, d).getTime();
+async function fetchTodayEvent() {
+  try {
+    const res = await fetch('/api/efemeride');
+    if (!res.ok) throw new Error('api_unavailable');
+    return await res.json();
+  } catch {
+    // Alternativa: cargar el archivo completo y elegir el día localmente
+    await loadFactsScriptFallback();
+    const db = TECH_FACTS;
+    const now = new Date();
+    const todayKey = `${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    let key = todayKey;
+    if (!db[key]) {
+      const dayOfYear = k => { const [m, d] = k.split('-').map(Number); return new Date(2024, m - 1, d).getTime(); };
+      const todayMs = dayOfYear(todayKey);
+      let minDist = Infinity;
+      Object.keys(db).forEach(k => {
+        const diff = Math.abs(dayOfYear(k) - todayMs);
+        const circular = Math.min(diff, 365 * 86400000 - diff);
+        if (circular < minDist) { minDist = circular; key = k; }
+      });
     }
-    const todayMs = new Date(2024, now.getMonth(), now.getDate()).getTime();
-    let minDist = Infinity;
-    allKeys.forEach(k => {
-      // Circular distance within the year
-      const diff = Math.abs(dayOfYear(k) - todayMs);
-      const circular = Math.min(diff, 365 * 24 * 3600 * 1000 - diff);
-      if (circular < minDist) { minDist = circular; eventKey = k; }
-    });
+    return { key, isToday: key === todayKey, ...db[key] };
   }
+}
 
-  const ev = db[eventKey];
-  if (!ev) return;
+function renderEphemerisEvent(ev) {
+  const card = document.getElementById('ephemeris-card');
+  if (!card || !ev) return;
 
-  // Resolve properties based on database schema
-  const year = ev.y !== undefined ? ev.y : ev.year;
-  const emoji = ev.i !== undefined ? ev.i : ev.emoji;
-  
   const isEs = currentLang === 'es';
-  let title = '';
-  let desc = '';
-  
-  if (ev.te !== undefined) {
-    // Schema from facts.js (te: title ES, ti: title EN, tx: description ES, txn: description EN)
-    title = isEs ? ev.te : (ev.ti || ev.te);
-    desc = isEs ? ev.tx : (ev.txn || ev.tx);
-  } else {
-    // Fallback schema from app.js (title_es, title_en, desc_es, desc_en)
-    title = isEs ? ev.title_es : ev.title_en;
-    desc = isEs ? ev.desc_es : ev.desc_en;
-  }
+  const title = isEs ? ev.te : (ev.ti || ev.te);
+  const desc = isEs ? ev.tx : (ev.txn || ev.tx);
 
-  // Format date label
   const months_es = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   const months_en = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const [em, ed] = eventKey.split('-').map(Number);
-  const dateLabel = isEs
-    ? `${ed} de ${months_es[em - 1]}`
-    : `${months_en[em - 1]} ${ed}`;
-
-  // Is it exactly today?
-  const isToday = eventKey === todayKey;
+  const [em, ed] = ev.key.split('-').map(Number);
+  const dateLabel = isEs ? `${ed} de ${months_es[em - 1]}` : `${months_en[em - 1]} ${ed}`;
   const onThisDay = t('ephemeris_on_this_day');
 
-  // Render
   const yearEl  = card.querySelector('#eph-year');
   const titleEl = card.querySelector('#eph-title');
   const descEl  = card.querySelector('#eph-desc');
   const dateEl  = card.querySelector('#eph-date');
   const tagEl   = card.querySelector('#eph-tag');
-  void emoji; // el icono del día ya no se usa: un icono fijo sustituye al emoji por día
 
-  if (yearEl)  yearEl.textContent  = year;
+  if (yearEl)  yearEl.textContent  = ev.y;
   if (titleEl) titleEl.textContent = title;
   if (descEl)  descEl.textContent  = desc;
   if (dateEl)  dateEl.textContent  = dateLabel;
-  if (tagEl)   tagEl.textContent   = isToday ? onThisDay : `${onThisDay} (${dateLabel})`;
+  if (tagEl)   tagEl.textContent   = ev.isToday ? onThisDay : `${onThisDay} (${dateLabel})`;
 
-  // Announce to screen readers
-  srAnnounce(`${onThisDay}: ${year} — ${title}`);
+  srAnnounce(`${onThisDay}: ${ev.y} — ${title}`);
 }
 
-/* Re-render ephemeris when language changes */
-function refreshEphemeris() {
+async function initEphemeris() {
   const card = document.getElementById('ephemeris-card');
   if (!card) return;
-  initEphemeris();
+  _ephemerisEvent = await fetchTodayEvent();
+  renderEphemerisEvent(_ephemerisEvent);
+}
+
+/* Re-render ephemeris when language changes (sin volver a pedir el dato) */
+function refreshEphemeris() {
+  if (_ephemerisEvent) renderEphemerisEvent(_ephemerisEvent);
 }
 
 /* ===================================================

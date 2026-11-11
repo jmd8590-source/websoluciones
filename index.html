@@ -41,15 +41,18 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
   <meta property="og:url" content="https://solucionesiacm.com/">
-  <meta property="og:image" content="https://solucionesiacm.com/assets/logo.svg">
+  <meta property="og:image" content="https://solucionesiacm.com/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Soluciones IA CM — Automatización e IA para negocios de la Sierra de Huelva">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Soluciones IA CM — IA para Negocios Locales">
   <meta name="twitter:description" content="IA, chatbots 24/7 y automatización para pequeños y medianos negocios locales en Cumbres Mayores (Huelva) y España.">
-  <meta name="twitter:image" content="https://solucionesiacm.com/assets/logo.svg">
+  <meta name="twitter:image" content="https://solucionesiacm.com/assets/og-image.png">
 
-  <title>Soluciones IA CM — Automatización e IA para Negocios Locales | Consultoría en Cumbres Mayores (Huelva)</title>
+  <title>Soluciones IA CM — Consultoría de IA en Cumbres Mayores, Huelva</title>
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
@@ -67,8 +70,11 @@
   <!-- Canonical & Alternates -->
   <link rel="canonical" href="https://solucionesiacm.com/">
   <link rel="alternate" type="text/plain" href="https://solucionesiacm.com/llms.txt" title="LLMs Context Manifest">
-  <link rel="alternate" hreflang="es" href="https://solucionesiacm.com/">
-  <link rel="alternate" hreflang="en" href="https://solucionesiacm.com/#en">
+  <!-- hreflang="en" apuntando a "#en" se ha quitado: un fragmento no es una
+       página distinta para un buscador, así que esa etiqueta nunca cumplía
+       su función. El selector de idioma sigue funcionando igual para las
+       personas; para que el inglés tenga visibilidad propia en buscadores
+       haría falta una página /en/ real, servida aparte (mejora pendiente). -->
   <link rel="alternate" hreflang="x-default" href="https://solucionesiacm.com/">
 
   <!-- Structured Data (Schema.org / JSON-LD Knowledge Graph para GEO y Google AI) -->
@@ -1239,7 +1245,9 @@
 </div>
 
 <!-- Application Script (deferred for performance) -->
-<script src="facts.js?v=2.0.0" defer></script>
+<!-- facts.js (366 efemérides, ~125 KB) ya NO se carga aquí: app.js pide solo
+     la de hoy a /api/efemeride y solo si esa función no responde, carga
+     este archivo completo como alternativa. -->
 <script src="lo-ultimo.js?v=2.0.0" defer></script>
 <script src="app.js?v=2.0.0" defer></script>
 

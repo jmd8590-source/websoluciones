@@ -3,7 +3,7 @@
 // scripts de la web; no impone un estilo de código concreto.
 export default [
   {
-    ignores: ['dist/**', 'node_modules/**', 'assets/vendor/**'],
+    ignores: ['dist/**', 'node_modules/**', 'assets/vendor/**', 'data/efemerides.js'],
   },
   {
     files: ['**/*.js'],

@@ -26,7 +26,7 @@ const STATIC_COPY = [
   '_headers', '_redirects',
   'robots.txt', 'sitemap.xml',
   'llms.txt', 'llms-full.txt',
-  'assets', 'functions',
+  'assets', 'functions', 'data',
 ];
 
 async function main() {
