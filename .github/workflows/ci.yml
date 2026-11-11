@@ -97,4 +97,4 @@ jobs:
           # igual que hoy. El build minificado/ofuscado queda disponible
           # como artefacto de este workflow para activarlo más adelante
           # cambiando este comando a "pages deploy dist".
-          command: pages deploy . --project-name=solucionesiacm --commit-dirty=true
+          command: pages deploy . --project-name=websoluciones --commit-dirty=true
