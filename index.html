@@ -1,72 +1,61 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soluciones IA CM — Automatización e IA para Negocios Locales | Cumbres Mayores (Huelva)</title>
   <meta name="description" content="Consultoría, asistentes IA, chatbots 24/7, automatizaciones y diseño web para pequeños y medianos negocios locales en Cumbres Mayores (Huelva) y toda España. Primera consulta gratuita.">
-  <meta name="keywords" content="inteligencia artificial, automatización, chatbot, consultoría IA, agentes IA, pequeña empresa, negocio local, Cumbres Mayores, Huelva, Andalucía, España">
   <meta name="author" content="Soluciones IA CM">
-  <meta name="theme-color" content="#4F46E5">
-  
-  <!-- Directivas avanzadas para rastreadores de motores de búsqueda e IA (GEO) -->
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="theme-color" content="#0C2D6B">
+  <meta name="color-scheme" content="light">
+  <meta name="format-detection" content="telephone=no">
 
-  <!-- Metadatos de Geolocalización para Búsqueda Local e IA -->
+  <!-- Indexación -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+  <!-- Geolocalización (búsqueda local) -->
   <meta name="geo.region" content="ES-H">
   <meta name="geo.placename" content="Cumbres Mayores, Huelva">
   <meta name="geo.position" content="38.0628;-6.6465">
   <meta name="ICBM" content="38.0628, -6.6465">
 
-  <!-- ================================================
-       SECURITY HEADERS (meta equivalents)
-       ================================================ -->
-  <!-- Content-Security-Policy: restrict resource origins -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.chatbase.co; frame-src 'self' https://www.chatbase.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.chatbase.co https://*.chatbase.co https://api.web3forms.com https://qotpnbshccwyrledrorl.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com;">
-  <!-- Prevent clickjacking via iframes -->
-  <meta http-equiv="X-Frame-Options" content="DENY">
-  <!-- Prevent MIME-type sniffing -->
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <!-- Restrict referrer info sent to third parties -->
+  <!-- Seguridad: la política completa se aplica también como cabecera HTTP (_headers) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.chatbase.co; frame-src 'self' https://www.chatbase.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.chatbase.co https://*.chatbase.co https://api.web3forms.com https://qotpnbshccwyrledrorl.supabase.co https://www.googleapis.com https://api.allorigins.win https://corsproxy.io; object-src 'none'; base-uri 'self'; form-action 'self';">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <!-- Disable browser features not needed -->
-  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
 
   <!-- Open Graph / Social -->
   <meta property="og:site_name" content="Soluciones IA CM">
-  <meta property="og:title" content="Soluciones IA CM — Automatización e IA para Negocios Locales">
+  <meta property="og:title" content="Soluciones IA CM — Automatización e IA para negocios locales">
   <meta property="og:description" content="Automatizamos y potenciamos tu negocio local con inteligencia artificial, chatbots 24/7 y agentes autónomos. Primera consulta gratuita.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
+  <meta property="og:locale:alternate" content="en_US">
   <meta property="og:url" content="https://solucionesiacm.com/">
-  <meta property="og:image" content="https://solucionesiacm.com/assets/logo.svg">
-
-  <!-- Twitter Card -->
+  <meta property="og:image" content="https://solucionesiacm.com/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Soluciones IA CM — Automatización e IA para negocios locales">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Soluciones IA CM — IA para Negocios Locales">
+  <meta name="twitter:title" content="Soluciones IA CM — IA para negocios locales">
   <meta name="twitter:description" content="IA, chatbots 24/7 y automatización para pequeños y medianos negocios locales en Cumbres Mayores (Huelva) y España.">
-  <meta name="twitter:image" content="https://solucionesiacm.com/assets/logo.svg">
+  <meta name="twitter:image" content="https://solucionesiacm.com/assets/og-image.png">
 
-  <title>Soluciones IA CM — Automatización e IA para Negocios Locales | Consultoría en Cumbres Mayores (Huelva)</title>
+  <!-- Iconos -->
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
-  <!-- Preconnect for performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <!-- Google Fonts: Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=1.1.6">
-
-  <!-- Canonical & Alternates -->
+  <!-- Canonical -->
   <link rel="canonical" href="https://solucionesiacm.com/">
   <link rel="alternate" type="text/plain" href="https://solucionesiacm.com/llms.txt" title="LLMs Context Manifest">
-  <link rel="alternate" hreflang="es" href="https://solucionesiacm.com/">
-  <link rel="alternate" hreflang="en" href="https://solucionesiacm.com/#en">
-  <link rel="alternate" hreflang="x-default" href="https://solucionesiacm.com/">
 
-  <!-- Structured Data (Schema.org / JSON-LD Knowledge Graph para GEO y Google AI) -->
+  <!-- Tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css?v=2.0.0">
+
+  <!-- Datos estructurados (Schema.org) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -78,7 +67,7 @@
         "alternateName": "Soluciones IA Cumbres Mayores",
         "url": "https://solucionesiacm.com/",
         "logo": "https://solucionesiacm.com/assets/logo.svg",
-        "image": "https://solucionesiacm.com/assets/logo.svg",
+        "image": "https://solucionesiacm.com/assets/og-image.png",
         "description": "Consultoría estratégica, asistentes de IA personalizados, chatbots 24/7, agentes autónomos, automatizaciones y diseño web para pymes y negocios locales en Cumbres Mayores (Huelva) y toda España.",
         "telephone": "+34605635892",
         "email": "jemendo90@gmail.com",
@@ -92,11 +81,7 @@
           "postalCode": "21380",
           "addressCountry": "ES"
         },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 38.0628,
-          "longitude": -6.6465
-        },
+        "geo": { "@type": "GeoCoordinates", "latitude": 38.0628, "longitude": -6.6465 },
         "openingHoursSpecification": [
           {
             "@type": "OpeningHoursSpecification",
@@ -115,13 +100,13 @@
           "Inteligencia Artificial para PYMEs",
           "Agentes de Inteligencia Artificial Autónomos",
           "Chatbots 24/7 para Empresas",
-          "Automatización de Procesos Empresariales (RPA)",
+          "Automatización de Procesos Empresariales",
           "Modelos de Lenguaje (LLMs)",
           "Sistemas CRM y Bases de Datos",
           "Desarrollo Web de Alta Conversión",
           "Restauración de Imágenes Antiguas con IA",
           "Generative Engine Optimization (GEO)",
-          "Digitalización e Innovación para Negocios Locales"
+          "Digitalización de Negocios Locales"
         ],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
@@ -149,70 +134,38 @@
         "inLanguage": ["es-ES", "en-US"]
       },
       {
-        "@type": "SoftwareApplication",
-        "@id": "https://solucionesiacm.com/#auditor-app",
-        "name": "Auditor Web IA",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "All modern web browsers",
-        "url": "https://solucionesiacm.com/#auditor",
-        "description": "Herramienta gratuita de auditoría web con IA para negocios locales que evalúa diseño responsive, soporte multilingüe, integraciones de chatbot, SEO, velocidad, CRM y accesibilidad.",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "EUR"
-        }
-      },
-      {
         "@type": "FAQPage",
         "@id": "https://solucionesiacm.com/#faq",
         "mainEntity": [
           {
             "@type": "Question",
             "name": "¿Cómo ayuda Soluciones IA CM a una pequeña o mediana empresa?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Soluciones IA CM ayuda a negocios locales y PYMEs automatizando tareas repetitivas (como citas, emails, facturación y atención al cliente), creando asistentes virtuales y chatbots 24/7, y desarrollando sitios web de alta velocidad y conversión. Esto permite reducir costes operativos, ahorrar más de un 50% de tiempo en tareas manuales y captar clientes sin interrupciones."
-            }
+            "acceptedAnswer": { "@type": "Answer", "text": "Automatizamos tareas manuales repetitivas (gestión de citas, facturación, atención al cliente), creamos asistentes virtuales y chatbots 24/7 personalizados, y desarrollamos páginas web rápidas orientadas a conversión. Esto permite reducir costes operativos, ahorrar más de un 50% de tiempo y captar clientes de manera continua." }
           },
           {
             "@type": "Question",
-            "name": "¿Por qué contratar consultoría de inteligencia artificial para un negocio local?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "La consultoría de IA permite a los negocios locales competir con grandes marcas sin necesidad de grandes presupuestos. Identificamos oportunidades específicas en tu sector, aplicamos tecnología probada y te acompañamos paso a paso, asegurando un retorno de inversión rápido y medible."
-            }
+            "name": "¿Por qué contratar consultoría de IA para un negocio local?",
+            "acceptedAnswer": { "@type": "Answer", "text": "La consultoría de IA permite a los negocios locales competir con grandes marcas sin costes prohibitivos. Analizamos tu operativa concreta, seleccionamos las herramientas exactas que te aportan rentabilidad y te acompañamos en la puesta en marcha con un retorno de inversión rápido." }
           },
           {
             "@type": "Question",
             "name": "¿Cuánto cuesta implementar un chatbot o una automatización?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "La primera consulta de asesoramiento y diagnóstico es 100% gratuita. Los proyectos se diseñan a medida según las necesidades de cada PYME, ofreciendo soluciones escalables y presupuestos cerrados sin costes ocultos."
-            }
+            "acceptedAnswer": { "@type": "Answer", "text": "La primera consulta de diagnóstico y asesoramiento es 100% gratuita. Cada proyecto se cotiza de forma transparente y adaptada a la escala de una PYME, con presupuestos cerrados y sin cuotas ocultas." }
           },
           {
             "@type": "Question",
-            "name": "¿Qué áreas geográficas cubre Soluciones IA CM?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Soluciones IA CM tiene sede en Cumbres Mayores (provincia de Huelva) y ofrece atención presencial y asesoría en toda la comarca y Andalucía, así como servicios de desarrollo e implementación remota para clientes de toda España."
-            }
+            "name": "¿Qué ámbito geográfico cubre Soluciones IA CM?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Tenemos sede en Cumbres Mayores (provincia de Huelva) y prestamos servicio directo y cercano en toda la comarca y Andalucía, además de ofrecer consultoría, diseño web y desarrollos de IA en modalidad online para empresas de toda España." }
           },
           {
             "@type": "Question",
-            "name": "¿Cuánto tiempo se tarda en poner en marcha un asistente o chatbot de IA?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "La puesta en marcha de un chatbot o asistente virtual estándar suele completarse en un plazo de 3 a 7 días laborables. Proyectos más complejos con integraciones de CRM y agentes autónomos toman entre 2 y 3 semanas."
-            }
+            "name": "¿Cuánto tiempo toma la puesta en marcha de un proyecto de IA?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Los chatbots y asistentes virtuales estándar se configuran y despliegan en 3 a 7 días hábiles. Soluciones a medida más avanzadas (agentes autónomos, integraciones con ERP/CRM o plataformas web completas) suelen tomar entre 2 y 3 semanas." }
           },
           {
             "@type": "Question",
-            "name": "¿Es necesario tener conocimientos técnicos para utilizar las soluciones?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No. En Soluciones IA CM nos encargamos de todo el proceso técnico (diseño, programación, pruebas y puesta en marcha) y entregamos herramientas intuitivas con formación sencilla y soporte continuo."
-            }
+            "name": "¿Se requieren conocimientos técnicos previos para empezar?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Nos encargamos de todo el desarrollo, la configuración técnica y las pruebas. Entregamos la solución lista para usar, con una formación práctica muy sencilla y soporte continuo." }
           }
         ]
       }
@@ -222,743 +175,739 @@
 </head>
 <body class="protect-content">
 
-<!-- Skip to main content (Accessibility) -->
+<!-- Iconografía (sprite SVG) -->
+<svg xmlns="http://www.w3.org/2000/svg" class="svg-sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.25"/></symbol>
+    <symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2.5"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+    <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="1.5"/><rect x="3" y="14" width="9" height="7" rx="1.5"/><rect x="16" y="14" width="5" height="7" rx="1.5"/></symbol>
+    <symbol id="i-workflow" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect x="13" y="13" width="8" height="8" rx="2"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m22 7-9 5.7a2 2 0 0 1-2 0L2 7"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-news" viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2.5"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  </defs>
+</svg>
+
 <a href="#main" class="skip-link">Saltar al contenido principal</a>
 
 <!-- ===================================================
      COOKIE BANNER
      =================================================== -->
-<div id="cookie-banner" role="alert" aria-live="polite" aria-atomic="true">
-  <p class="cookie-text" data-i18n="cookie_text">
-    Usamos cookies para mejorar tu experiencia. Al continuar, aceptas nuestra política de cookies.
+<div id="cookie-banner" role="region" aria-label="Aviso de cookies" aria-live="polite">
+  <p class="cookie-text">
+    <span data-i18n="cookie_text">Usamos almacenamiento local técnico y de preferencias para mejorar tu experiencia.</span>
+    <button type="button" class="cookie-more" data-modal="cookies" data-i18n="cookie_more">Más información</button>
   </p>
   <div class="cookie-actions">
-    <button id="cookie-accept" class="btn-cookie-accept" data-i18n="cookie_accept">Aceptar</button>
-    <button id="cookie-reject" class="btn-cookie-reject" data-i18n="cookie_reject">Solo necesarias</button>
+    <button id="cookie-accept" class="btn btn-primary btn-sm" data-i18n="cookie_accept">Aceptar</button>
+    <button id="cookie-reject" class="btn btn-ghost-light btn-sm" data-i18n="cookie_reject">Solo necesarias</button>
   </div>
 </div>
 
 <!-- ===================================================
      HEADER / NAVIGATION
      =================================================== -->
-<header id="header" role="banner">
-  <nav class="nav" role="navigation" aria-label="Navegación principal">
+<header id="header">
+  <nav class="nav" aria-label="Navegación principal">
 
-    <!-- Logo -->
     <a href="#inicio" class="logo" aria-label="Soluciones IA CM — Ir al inicio">
-      <img src="assets/logo.svg" class="logo-img" alt="" aria-hidden="true" width="40" height="38">
-      <div class="logo-text">
-        <span class="logo-name">SOLUCIONES IA CM</span>
-        <span class="logo-tag">Automatización &amp; IA</span>
-      </div>
+      <img src="assets/logo.svg" class="logo-img" alt="" width="36" height="34">
+      <span class="logo-text">
+        <span class="logo-name">Soluciones IA CM</span>
+        <span class="logo-tag" data-i18n="logo_tag">Automatización &amp; IA</span>
+      </span>
     </a>
 
-    <!-- Desktop Navigation Links -->
-    <ul class="nav-links" role="list">
-      <li><a href="#inicio"    class="nav-link active" data-i18n="nav_inicio"    aria-current="page">Inicio</a></li>
-      <li><a href="#servicios" class="nav-link"        data-i18n="nav_servicios"             >Servicios</a></li>
-      <li><a href="#auditor"   class="nav-link"        data-i18n="nav_auditor"               >Auditor Web IA</a></li>
-      <li><a href="#lo-ultimo" class="nav-link nav-link--new" data-i18n="nav_lo_ultimo"      >Lo Último</a></li>
-      <li><a href="#faq"       class="nav-link"        data-i18n="nav_faq"                   >FAQ</a></li>
-      <li><a href="#contacto"  class="nav-link"        data-i18n="nav_contacto"              >Contacto</a></li>
+    <ul class="nav-links">
+      <li><a href="#servicios" class="nav-link" data-i18n="nav_servicios">Servicios</a></li>
+      <li><a href="#auditor"   class="nav-link nav-link--featured" data-i18n="nav_auditor">Auditor Web IA</a></li>
+      <li><a href="#proceso"   class="nav-link" data-i18n="nav_proceso">Cómo trabajamos</a></li>
+      <li><a href="#lo-ultimo" class="nav-link nav-link--new" data-i18n="nav_lo_ultimo">Lo Último</a></li>
+      <li><a href="#faq"       class="nav-link" data-i18n="nav_faq">FAQ</a></li>
+      <li><a href="#contacto"  class="nav-link" data-i18n="nav_contacto">Contacto</a></li>
     </ul>
 
-    <!-- Desktop Actions -->
     <div class="nav-actions">
-      <button id="lang-toggle" class="lang-toggle" aria-label="Cambiar idioma a inglés">EN</button>
-      <a href="#contacto" class="btn btn-primary nav-cta" data-i18n="nav_cta">Solicitar Consulta</a>
-      <button
-        id="menu-toggle"
-        class="menu-toggle"
-        aria-label="Abrir menú"
-        aria-expanded="false"
-        aria-controls="mobile-nav"
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <line x1="3" y1="6"  x2="21" y2="6"/>
-          <line x1="3" y1="12" x2="21" y2="12"/>
-          <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
+      <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Cambiar idioma a inglés">EN</button>
+      <a href="#contacto" class="btn btn-primary btn-sm nav-cta" data-i18n="nav_cta">Solicitar consulta</a>
+      <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="menu-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>
       </button>
     </div>
   </nav>
 </header>
 
-<!-- Mobile Navigation Drawer -->
+<!-- Mobile Navigation -->
 <nav id="mobile-nav" class="mobile-nav" aria-label="Menú móvil">
-  <ul class="mobile-nav-links" role="list">
-    <li><a href="#inicio"    class="mobile-nav-link" data-i18n="nav_inicio">Inicio</a></li>
+  <ul class="mobile-nav-links">
     <li><a href="#servicios" class="mobile-nav-link" data-i18n="nav_servicios">Servicios</a></li>
     <li><a href="#auditor"   class="mobile-nav-link" data-i18n="nav_auditor">Auditor Web IA</a></li>
-    <li><a href="#lo-ultimo" class="mobile-nav-link nav-link--new" data-i18n="nav_lo_ultimo">Lo Último</a></li>
+    <li><a href="#proceso"   class="mobile-nav-link" data-i18n="nav_proceso">Cómo trabajamos</a></li>
+    <li><a href="#lo-ultimo" class="mobile-nav-link" data-i18n="nav_lo_ultimo">Lo Último</a></li>
     <li><a href="#faq"       class="mobile-nav-link" data-i18n="nav_faq">FAQ</a></li>
     <li><a href="#contacto"  class="mobile-nav-link" data-i18n="nav_contacto">Contacto</a></li>
   </ul>
-  <div style="display:flex;gap:12px;align-items:center;">
-    <button id="lang-toggle-mobile" class="lang-toggle" aria-label="Cambiar idioma">EN</button>
-    <a href="#contacto" class="btn btn-primary" style="flex:1;justify-content:center;" data-i18n="nav_cta">Solicitar Consulta</a>
+  <div class="mobile-nav-actions">
+    <button id="lang-toggle-mobile" class="lang-toggle" type="button" aria-label="Cambiar idioma">EN</button>
+    <a href="#contacto" class="btn btn-primary mobile-nav-cta" data-i18n="nav_cta">Solicitar consulta</a>
   </div>
 </nav>
 
-<!-- ===================================================
-     MAIN CONTENT
-     =================================================== -->
-<main id="main" aria-label="Contenido principal">
+<main id="main">
 
-<!-- Región de anuncios en vivo para lectores de pantalla -->
 <div id="sr-announcer" aria-live="polite" aria-atomic="true" class="sr-only" role="status"></div>
 
   <!-- ===============================================
-       HERO — INICIO
+       HERO
        =============================================== -->
-  <section id="inicio" class="section" aria-labelledby="hero-title">
+  <section id="inicio" class="hero" aria-labelledby="hero-title">
+    <div class="hero-bg" aria-hidden="true"></div>
 
-    <!-- Animated background -->
-    <div class="hero-bg" aria-hidden="true">
-      <div class="hero-orb hero-orb-1"></div>
-      <div class="hero-orb hero-orb-2"></div>
-      <div class="hero-orb hero-orb-3"></div>
-    </div>
-
-    <div class="container">
+    <div class="container hero-grid">
       <div class="hero-content">
-
-        <!-- Category badge -->
-        <div class="hero-badge">
-          <span class="hero-badge-dot" aria-hidden="true"></span>
+        <p class="eyebrow hero-eyebrow">
+          <span class="eyebrow-dot" aria-hidden="true"></span>
           <span data-i18n="hero_badge">Automatización con IA para empresas locales</span>
-        </div>
+        </p>
 
-        <!-- Main headline -->
         <h1 class="hero-title" id="hero-title">
-          <span data-i18n="hero_title_line1">Transforma tu negocio</span><br>
-          <span class="highlight" data-i18n="hero_title_line2">con Inteligencia Artificial</span>
+          <span data-i18n="hero_title_line1">Transforma tu negocio</span>
+          <span class="hero-title-accent" data-i18n="hero_title_line2">con Inteligencia Artificial</span>
         </h1>
 
-        <!-- Subtitle -->
         <p class="hero-subtitle" data-i18n="hero_subtitle">
           Soluciones y asesoría para pequeños y medianos negocios locales: automatizamos tareas, ahorramos tiempo y potenciamos tu empresa con la última tecnología.
         </p>
 
-        <!-- CTA buttons -->
         <div class="hero-actions">
-          <a href="#servicios" class="btn btn-primary btn-lg" id="hero-cta-primary">
-            <span data-i18n="hero_cta_primary">Ver servicios</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
+          <a href="#contacto" class="btn btn-primary btn-lg">
+            <span data-i18n="hero_cta_secondary">Hablar con nosotros</span>
+            <svg class="icon btn-icon" aria-hidden="true"><use href="#i-arrow"/></svg>
           </a>
-          <a href="#contacto" class="btn btn-secondary btn-lg" id="hero-cta-secondary" data-i18n="hero_cta_secondary">Hablar con nosotros</a>
+          <a href="#auditor" class="btn btn-auditor-hero btn-lg">
+            <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+            <span data-i18n="hero_cta_auditor">Auditar mi web gratis</span>
+          </a>
+          <a href="#servicios" class="btn btn-secondary btn-lg" data-i18n="hero_cta_primary">Ver servicios</a>
         </div>
 
-        <!-- Key stats -->
-        <div class="hero-stats" role="list" aria-label="Estadísticas clave">
-          <div class="hero-stat" role="listitem">
-            <div class="hero-stat-value" data-i18n="hero_stat_1_value">+50%</div>
-            <div class="hero-stat-label" data-i18n="hero_stat_1_label">Ahorro de tiempo</div>
+        <ul class="hero-stats" aria-label="Datos clave">
+          <li class="hero-stat">
+            <span class="hero-stat-value" data-i18n="hero_stat_1_value">+50%</span>
+            <span class="hero-stat-label" data-i18n="hero_stat_1_label">Ahorro de tiempo</span>
+          </li>
+          <li class="hero-stat">
+            <span class="hero-stat-value" data-i18n="hero_stat_2_value">24/7</span>
+            <span class="hero-stat-label" data-i18n="hero_stat_2_label">Atención a clientes</span>
+          </li>
+          <li class="hero-stat">
+            <span class="hero-stat-value" data-i18n="hero_stat_3_value">100%</span>
+            <span class="hero-stat-label" data-i18n="hero_stat_3_label">Negocio local</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Composición ilustrativa: asistente atendiendo fuera de horario -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hv-card">
+          <div class="hv-head">
+            <span class="hv-avatar"><img src="assets/logo.svg" alt="" width="20" height="19"></span>
+            <span class="hv-head-text">
+              <span class="hv-name" data-i18n="hv_name">Asistente de tu negocio</span>
+              <span class="hv-status"><span class="hv-status-dot"></span><span data-i18n="hv_status">En línea · responde al instante</span></span>
+            </span>
           </div>
-          <div class="hero-stat" role="listitem">
-            <div class="hero-stat-value" data-i18n="hero_stat_2_value">24/7</div>
-            <div class="hero-stat-label" data-i18n="hero_stat_2_label">Atención a clientes</div>
+          <div class="hv-body">
+            <p class="hv-msg hv-msg--in"  data-i18n="hv_m1">Hola, ¿tenéis hueco mañana por la mañana?</p>
+            <p class="hv-msg hv-msg--out" data-i18n="hv_m2">¡Hola! Mañana tengo libre a las 10:30 y a las 12:00. ¿Cuál te viene mejor?</p>
+            <p class="hv-msg hv-msg--in"  data-i18n="hv_m3">A las 10:30, perfecto.</p>
+            <p class="hv-msg hv-msg--out" data-i18n="hv_m4">Reservado. Te acabo de enviar la confirmación por email.</p>
           </div>
-          <div class="hero-stat" role="listitem">
-            <div class="hero-stat-value" data-i18n="hero_stat_3_value">100%</div>
-            <div class="hero-stat-label" data-i18n="hero_stat_3_label">Negocio local</div>
+          <div class="hv-foot">
+            <span class="hv-time">23:14</span>
+            <span class="hv-typing"><span></span><span></span><span></span></span>
           </div>
         </div>
 
+        <div class="hv-chip hv-chip--top">
+          <svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>
+          <span data-i18n="hv_chip2">Respuesta en 3 s</span>
+        </div>
+        <div class="hv-chip hv-chip--bottom">
+          <span class="hv-chip-check"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span>
+            <strong data-i18n="hv_chip1">Cita guardada en el CRM</strong>
+            <small data-i18n="hv_chip1_sub">Sin intervención manual</small>
+          </span>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ===============================================
-       SERVICES
+       SERVICIOS
        =============================================== -->
   <section id="servicios" class="section section--alt" aria-labelledby="services-title">
     <div class="container">
 
       <header class="section-header animate-on-scroll">
-        <div class="section-label" data-i18n="services_label">Nuestros servicios</div>
+        <p class="eyebrow" data-i18n="services_label">Nuestros servicios</p>
         <h2 class="section-title" id="services-title" data-i18n="services_title">Todo lo que necesita tu negocio</h2>
         <p class="section-subtitle" data-i18n="services_subtitle">
           Un ecosistema completo de soluciones de IA y automatización diseñado para hacer crecer tu empresa local.
         </p>
       </header>
 
-      <div class="services-grid" role="list" aria-label="Lista de servicios">
-
-        <article class="service-card animate-on-scroll delay-1" role="listitem">
-          <div class="service-icon" aria-hidden="true">🔍</div>
+      <ul class="services-grid">
+        <li class="service-card animate-on-scroll">
+          <span class="service-index" aria-hidden="true">01</span>
+          <span class="service-icon" aria-hidden="true"><svg class="icon"><use href="#i-target"/></svg></span>
           <h3 class="service-title" data-i18n="svc1_title">Consultoría Estratégica</h3>
-          <p class="service-description" data-i18n="svc1_desc">
-            Analizamos las necesidades reales de tu empresa y diseñamos un plan de acción personalizado para optimizar tiempo y recursos.
-          </p>
-        </article>
-
-        <article class="service-card animate-on-scroll delay-2" role="listitem">
-          <div class="service-icon" aria-hidden="true">🧠</div>
+          <p class="service-description" data-i18n="svc1_desc">Analizamos las necesidades reales de tu empresa y diseñamos un plan de acción personalizado para optimizar tiempo y recursos.</p>
+        </li>
+        <li class="service-card animate-on-scroll delay-1">
+          <span class="service-index" aria-hidden="true">02</span>
+          <span class="service-icon" aria-hidden="true"><svg class="icon"><use href="#i-headset"/></svg></span>
           <h3 class="service-title" data-i18n="svc2_title">Asistentes IA Personalizados</h3>
-          <p class="service-description" data-i18n="svc2_desc">
-            Desarrollamos asistentes de inteligencia artificial adaptados a tu sector y flujo de trabajo, disponibles las 24 horas.
-          </p>
-        </article>
-
-        <article class="service-card animate-on-scroll delay-3" role="listitem">
-          <div class="service-icon" aria-hidden="true">🤖</div>
+          <p class="service-description" data-i18n="svc2_desc">Desarrollamos asistentes de inteligencia artificial adaptados a tu sector y flujo de trabajo, disponibles las 24 horas.</p>
+        </li>
+        <li class="service-card animate-on-scroll delay-2">
+          <span class="service-index" aria-hidden="true">03</span>
+          <span class="service-icon" aria-hidden="true"><svg class="icon"><use href="#i-cpu"/></svg></span>
           <h3 class="service-title" data-i18n="svc3_title">Agentes IA Autónomos</h3>
-          <p class="service-description" data-i18n="svc3_desc">
-            Creamos agentes que ejecutan tareas complejas de forma autónoma: responder emails, gestionar citas, procesar pedidos y más.
-          </p>
-        </article>
-
-        <article class="service-card animate-on-scroll delay-4" role="listitem">
-          <div class="service-icon" aria-hidden="true">💬</div>
+          <p class="service-description" data-i18n="svc3_desc">Creamos agentes que ejecutan tareas complejas de forma autónoma: responder emails, gestionar citas, procesar pedidos y más.</p>
+        </li>
+        <li class="service-card animate-on-scroll">
+          <span class="service-index" aria-hidden="true">04</span>
+          <span class="service-icon" aria-hidden="true"><svg class="icon"><use href="#i-chat"/></svg></span>
           <h3 class="service-title" data-i18n="svc4_title">Chatbot 24/7 Empresarial</h3>
-          <p class="service-description" data-i18n="svc4_desc">
-            Chatbot inteligente que responde preguntas sobre tu empresa a cualquier hora, sin perder ningún cliente potencial.
-          </p>
-        </article>
-
-        <article class="service-card animate-on-scroll delay-5" role="listitem">
-          <div class="service-icon" aria-hidden="true">🌐</div>
+          <p class="service-description" data-i18n="svc4_desc">Chatbot inteligente que responde preguntas sobre tu empresa a cualquier hora, sin perder ningún cliente potencial.</p>
+        </li>
+        <li class="service-card animate-on-scroll delay-1">
+          <span class="service-index" aria-hidden="true">05</span>
+          <span class="service-icon" aria-hidden="true"><svg class="icon"><use href="#i-monitor"/></svg></span>
           <h3 class="service-title" data-i18n="svc5_title">Página Web Corporativa</h3>
-          <p class="service-description" data-i18n="svc5_desc">
-            Diseño y desarrollo de sitios web profesionales, modernos, rápidos y optimizados para SEO y conversión.
-          </p>
-        </article>
-
-        <article class="service-card animate-on-scroll delay-6" role="listitem">
-          <div class="service-icon" aria-hidden="true">🚀</div>
+          <p class="service-description" data-i18n="svc5_desc">Diseño y desarrollo de sitios web profesionales, modernos, rápidos y optimizados para SEO y conversión.</p>
+        </li>
+        <li class="service-card animate-on-scroll delay-2">
+          <span class="service-index" aria-hidden="true">06</span>
+          <span class="service-icon" aria-hidden="true"><svg class="icon"><use href="#i-layout"/></svg></span>
           <h3 class="service-title" data-i18n="svc6_title">Landing Pages de Alto Impacto</h3>
-          <p class="service-description" data-i18n="svc6_desc">
-            Páginas de aterrizaje diseñadas para convertir visitantes en clientes, con diseño premium y optimización continua.
-          </p>
-        </article>
-
-        <article class="service-card animate-on-scroll delay-7" role="listitem">
-          <div class="service-icon" aria-hidden="true">⚡</div>
+          <p class="service-description" data-i18n="svc6_desc">Páginas de aterrizaje diseñadas para convertir visitantes en clientes, con diseño cuidado y optimización continua.</p>
+        </li>
+        <li class="service-card animate-on-scroll">
+          <span class="service-index" aria-hidden="true">07</span>
+          <span class="service-icon" aria-hidden="true"><svg class="icon"><use href="#i-workflow"/></svg></span>
           <h3 class="service-title" data-i18n="svc7_title">Automatización de Procesos</h3>
-          <p class="service-description" data-i18n="svc7_desc">
-            Automatizamos tareas repetitivas: facturación, seguimiento de clientes, publicaciones en redes, notificaciones y mucho más.
-          </p>
-        </article>
-
-        <article class="service-card animate-on-scroll delay-8" role="listitem">
-          <div class="service-icon" aria-hidden="true">📊</div>
+          <p class="service-description" data-i18n="svc7_desc">Automatizamos tareas repetitivas: facturación, seguimiento de clientes, publicaciones en redes, notificaciones y mucho más.</p>
+        </li>
+        <li class="service-card animate-on-scroll delay-1">
+          <span class="service-index" aria-hidden="true">08</span>
+          <span class="service-icon" aria-hidden="true"><svg class="icon"><use href="#i-database"/></svg></span>
           <h3 class="service-title" data-i18n="svc8_title">Bases de Datos y CRM</h3>
-          <p class="service-description" data-i18n="svc8_desc">
-            Diseño e implementación de bases de datos y sistemas CRM para gestionar clientes, leads y datos empresariales de forma eficiente.
-          </p>
-        </article>
-
-        <article class="service-card animate-on-scroll delay-9" role="listitem">
-          <div class="service-icon" aria-hidden="true">🧭</div>
+          <p class="service-description" data-i18n="svc8_desc">Diseño e implementación de bases de datos y sistemas CRM para gestionar clientes, leads y datos empresariales de forma eficiente.</p>
+        </li>
+        <li class="service-card animate-on-scroll delay-2">
+          <span class="service-index" aria-hidden="true">09</span>
+          <span class="service-icon" aria-hidden="true"><svg class="icon"><use href="#i-compass"/></svg></span>
           <h3 class="service-title" data-i18n="svc9_title">Orientación Tecnológica</h3>
-          <p class="service-description" data-i18n="svc9_desc">
-            Te guiamos en la selección de las herramientas tecnológicas más adecuadas para tu negocio, sin tecnicismos innecesarios.
-          </p>
-        </article>
-
-        <article class="service-card animate-on-scroll delay-10" role="listitem">
-          <div class="service-icon" aria-hidden="true">🖼️</div>
+          <p class="service-description" data-i18n="svc9_desc">Te guiamos en la selección de las herramientas tecnológicas más adecuadas para tu negocio, sin tecnicismos innecesarios.</p>
+        </li>
+        <li class="service-card animate-on-scroll">
+          <span class="service-index" aria-hidden="true">10</span>
+          <span class="service-icon" aria-hidden="true"><svg class="icon"><use href="#i-image"/></svg></span>
           <h3 class="service-title" data-i18n="svc10_title">Restauración de Imágenes Antiguas</h3>
-          <p class="service-description" data-i18n="svc10_desc">
-            Recuperamos y mejoramos fotografías antiguas y en blanco y negro mediante IA: eliminamos deterioros, restauramos detalles y añadimos color con resultados asombrosos.
-          </p>
-        </article>
-
-        <article class="service-card animate-on-scroll delay-11" role="listitem">
-          <div class="service-icon" aria-hidden="true">🛠️</div>
-          <h3 class="service-title" data-i18n="svc11_title">Diseño de aplicaciones a medida</h3>
-          <p class="service-description" data-i18n="svc11_desc">
-            Se crean aplicaciones a medida en función de las necesidades del negocio, atendiendo a las necesidades que el cliente indique.
-          </p>
-        </article>
-
-      </div>
+          <p class="service-description" data-i18n="svc10_desc">Recuperamos y mejoramos fotografías antiguas y en blanco y negro mediante IA: eliminamos deterioros, restauramos detalles y añadimos color.</p>
+        </li>
+        <li class="service-card animate-on-scroll delay-1">
+          <span class="service-index" aria-hidden="true">11</span>
+          <span class="service-icon" aria-hidden="true"><svg class="icon"><use href="#i-code"/></svg></span>
+          <h3 class="service-title" data-i18n="svc11_title">Aplicaciones a Medida</h3>
+          <p class="service-description" data-i18n="svc11_desc">Desarrollamos aplicaciones a medida a partir de las necesidades concretas de tu negocio y de cómo trabaja tu equipo.</p>
+        </li>
+        <li class="service-card service-card--cta animate-on-scroll delay-2">
+          <h3 class="service-title" data-i18n="svc_cta_title">¿Tu idea no encaja en ninguna casilla?</h3>
+          <p class="service-description" data-i18n="svc_cta_text">Cuéntanos qué te quita tiempo cada día y te proponemos cómo resolverlo.</p>
+          <a href="#contacto" class="service-cta-link">
+            <span data-i18n="svc_cta_btn">Cuéntanoslo</span>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+        </li>
+      </ul>
     </div>
   </section>
 
   <!-- ===============================================
-       TECH EPHEMERIS — Hoy en la Historia Tech
+       AUDITOR WEB IA — DIAGNÓSTICO TÉCNICO EN TIEMPO REAL
        =============================================== -->
-  <section id="efemeride" class="section efemeride-section" aria-labelledby="ephemeris-heading">
+  <section id="auditor" class="section auditor-spotlight" aria-labelledby="auditor-title">
     <div class="container">
-      <header class="section-header animate-on-scroll">
-        <div class="section-label" data-i18n="ephemeris_label">Historia de la Informática</div>
-        <h2 class="section-title" id="ephemeris-heading" data-i18n="ephemeris_title">Hoy en la Historia Tech</h2>
-        <p class="section-subtitle" data-i18n="ephemeris_subtitle">
-          Un hecho real de la historia de la informática para cada día del año.
+
+      <header class="section-header auditor-header animate-on-scroll">
+        <div class="auditor-header-top">
+          <p class="eyebrow auditor-eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            <span data-i18n="auditor_label">Diagnóstico técnico en tiempo real · 100% gratuito</span>
+          </p>
+          <div class="auditor-engine-pills" aria-label="Motores de análisis activos">
+            <span class="auditor-engine-pill">
+              <svg class="icon" aria-hidden="true"><use href="#i-code"/></svg>
+              <span data-i18n="auditor_pill_dom">Inspección DOM en vivo</span>
+            </span>
+            <span class="auditor-engine-pill">
+              <svg class="icon" aria-hidden="true"><use href="#i-cpu"/></svg>
+              <span data-i18n="auditor_pill_psi">Google Lighthouse API</span>
+            </span>
+            <span class="auditor-engine-pill">
+              <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
+              <span data-i18n="auditor_pill_10">10 vectores de negocio e IA</span>
+            </span>
+          </div>
+        </div>
+        <h2 class="section-title auditor-main-title" id="auditor-title" data-i18n="auditor_title">Auditor Web IA en Tiempo Real</h2>
+        <p class="section-subtitle auditor-main-subtitle" data-i18n="auditor_subtitle">
+          Analiza de verdad cualquier página web: conectamos en directo con su código HTML, medimos sus Core Web Vitals y detectamos si cuenta con SEO local, agentes de IA 24/7, formularios conectados a CRM, seguridad HTTPS y accesibilidad.
         </p>
       </header>
 
-      <div id="ephemeris-card" class="ephemeris-card animate-on-scroll delay-2" aria-live="polite" aria-atomic="true">
-        <!-- Tag: "Un día como hoy" -->
-        <div class="eph-tag-wrapper">
-          <span class="eph-pulse" aria-hidden="true"></span>
-          <span id="eph-tag" class="eph-tag">Un día como hoy</span>
-        </div>
+      <div class="auditor-shell animate-on-scroll delay-1">
 
-        <!-- Year badge -->
-        <div class="eph-year-badge" aria-label="Año del evento">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <span id="eph-year">—</span>
-        </div>
+        <!-- Barra de control superior: selector de estrategia y pruebas rápidas -->
+        <div class="auditor-toolbar">
+          <div class="auditor-strategy" role="radiogroup" aria-label="Dispositivo de análisis">
+            <span class="auditor-toolbar-label" data-i18n="auditor_strategy_label">Modo de análisis:</span>
+            <button type="button" class="strategy-btn active" data-strategy="mobile" aria-pressed="true">
+              <span data-i18n="auditor_strategy_mobile">Móvil (estándar Google)</span>
+            </button>
+            <button type="button" class="strategy-btn" data-strategy="desktop" aria-pressed="false">
+              <span data-i18n="auditor_strategy_desktop">Escritorio</span>
+            </button>
+          </div>
 
-        <!-- Main content -->
-        <div class="eph-body">
-          <div class="eph-emoji" id="eph-emoji" aria-hidden="true">💡</div>
-          <div class="eph-text">
-            <h3 class="eph-title" id="eph-title">Cargando...</h3>
-            <p class="eph-desc" id="eph-desc"></p>
+          <div class="auditor-quick-samples">
+            <span class="auditor-toolbar-label" data-i18n="auditor_quick_label">Prueba rápida:</span>
+            <button type="button" class="sample-url-btn" data-sample-url="self" data-i18n="auditor_sample_self">Auditar esta misma web</button>
+            <button type="button" class="sample-url-btn" data-sample-url="https://es.wikipedia.org" data-i18n="auditor_sample_ext">es.wikipedia.org</button>
           </div>
         </div>
 
-        <!-- Bottom strip: date + source badge -->
-        <div class="eph-footer">
-          <span class="eph-date">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span id="eph-date"></span>
-          </span>
-          <span class="eph-source-badge">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            <span data-i18n="ephemeris_source">Dato histórico verificado</span>
-          </span>
+        <form id="auditor-form" class="auditor-form" role="search" novalidate>
+          <div class="auditor-input-wrapper">
+            <svg class="icon auditor-input-icon" aria-hidden="true"><use href="#i-link"/></svg>
+            <label for="auditor-url" class="sr-only" data-i18n="auditor_label_sr">URL de tu sitio web</label>
+            <input type="url" id="auditor-url" name="url" class="auditor-input"
+              data-i18n-placeholder="auditor_placeholder" placeholder="https://tuempresa.com"
+              autocomplete="url" inputmode="url" maxlength="300"
+              aria-describedby="auditor-hint" required>
+          </div>
+          <button type="submit" id="auditor-submit" class="btn btn-primary btn-lg auditor-submit-btn">
+            <span data-i18n="auditor_btn">Ejecutar auditoría real</span>
+            <svg class="icon btn-icon" aria-hidden="true"><use href="#i-search"/></svg>
+          </button>
+        </form>
+
+        <div class="auditor-meta-row">
+          <p id="auditor-hint" class="auditor-hint" data-i18n="auditor_hint">
+            Inspección técnica en vivo (HTML/DOM + Google PageSpeed Insights v5). No almacenamos la URL consultada.
+          </p>
         </div>
 
-        <!-- Decorative background orbs -->
-        <div class="eph-orb eph-orb-1" aria-hidden="true"></div>
-        <div class="eph-orb eph-orb-2" aria-hidden="true"></div>
+        <!-- Consola de progreso en tiempo real -->
+        <div id="auditor-loading" class="auditor-loading" aria-live="polite">
+          <div class="auditor-loading-top">
+            <div class="auditor-spinner" role="progressbar" aria-label="Analizando…"></div>
+            <div class="auditor-loading-info">
+              <p class="auditor-loading-title" id="auditor-live-status" data-i18n="auditor_step1">Conectando con el servidor y descargando documento HTML…</p>
+              <div class="auditor-progress-track" aria-hidden="true">
+                <div class="auditor-progress-fill" id="auditor-progress-fill"></div>
+              </div>
+            </div>
+          </div>
+          <ol class="auditor-steps">
+            <li class="auditor-step" data-i18n="auditor_step1">Conectando y midiendo respuesta HTTP/TLS…</li>
+            <li class="auditor-step" data-i18n="auditor_step2">Parseando árbol DOM, viewport e imágenes responsive…</li>
+            <li class="auditor-step" data-i18n="auditor_step3">Inspeccionando atributos de idioma, hreflang y Schema.org…</li>
+            <li class="auditor-step" data-i18n="auditor_step4">Escaneando widgets de IA, chatbots 24/7 y formularios CRM…</li>
+            <li class="auditor-step" data-i18n="auditor_step5">Consultando métricas Core Web Vitals y SEO técnico…</li>
+            <li class="auditor-step" data-i18n="auditor_step6">Compilando evidencias técnicas y plan de mejora…</li>
+          </ol>
+        </div>
+
+        <!-- Panel ejecutivo de resultados -->
+        <div id="auditor-results" class="auditor-results" aria-live="polite">
+
+          <div class="auditor-dashboard-top" role="region" aria-labelledby="auditor-score-label">
+            <div class="auditor-gauge-col">
+              <div class="auditor-gauge-wrap">
+                <svg class="auditor-gauge-svg" viewBox="0 0 140 140" aria-hidden="true">
+                  <circle class="auditor-gauge-bg" cx="70" cy="70" r="58"></circle>
+                  <circle class="auditor-gauge-arc" id="auditor-ring-progress" cx="70" cy="70" r="58" stroke-dasharray="364.4" stroke-dashoffset="364.4"></circle>
+                </svg>
+                <div class="auditor-gauge-center">
+                  <p class="auditor-score-value" id="auditor-overall-score">—</p>
+                  <span class="auditor-score-max">/ 100</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="auditor-summary-col">
+              <div class="auditor-summary-badges">
+                <span class="auditor-score-url" id="auditor-result-url"></span>
+                <span class="auditor-source-badge" id="auditor-source-badge"></span>
+              </div>
+              <h3 class="auditor-score-label" id="auditor-score-label" data-i18n="auditor_score_label">Puntuación global</h3>
+              <p class="auditor-verdict-desc" id="auditor-verdict-desc"></p>
+
+              <!-- Tira de telemetría real / Core Web Vitals -->
+              <dl class="auditor-vitals-grid" id="auditor-vitals-grid" aria-label="Telemetría técnica detectada"></dl>
+            </div>
+          </div>
+
+          <!-- Bloque de hallazgos prioritarios -->
+          <div class="auditor-priorities" id="auditor-priorities" hidden>
+            <div class="auditor-priorities-head">
+              <svg class="icon" aria-hidden="true"><use href="#i-target"/></svg>
+              <h4 class="auditor-priorities-title" data-i18n="auditor_priorities_title">Oportunidades prioritarias detectadas en tu web</h4>
+            </div>
+            <ul class="auditor-priorities-list" id="auditor-priorities-list"></ul>
+          </div>
+
+          <!-- 10 Criterios con evidencia técnica verificada -->
+          <ul id="auditor-criteria" class="auditor-criteria-grid" aria-label="Criterios evaluados"></ul>
+
+          <div class="auditor-cta">
+            <div class="auditor-cta-copy">
+              <h3 class="auditor-cta-title" data-i18n="auditor_cta_title">¿Quieres que resolvamos los puntos débiles detectados?</h3>
+              <p class="auditor-cta-subtitle" data-i18n="auditor_cta_subtitle">
+                Preparamos una propuesta técnica a medida para tu web con presupuesto cerrado. La primera sesión de diagnóstico es 100% gratuita.
+              </p>
+            </div>
+            <div class="auditor-cta-actions">
+              <a href="#contacto" id="auditor-Apply-cta" class="btn btn-primary btn-lg">
+                <span data-i18n="auditor_cta_btn">Solicitar plan de mejora gratuito</span>
+                <svg class="icon btn-icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+              </a>
+              <button id="auditor-new-btn" type="button" class="btn btn-secondary btn-lg" data-i18n="auditor_btn_new">Analizar otra web</button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
   <!-- ===============================================
-       LO ÚLTIMO — Novedades IA del mes
-       Contenido gestionado por lo-ultimo.js
+       PROCESO — CÓMO TRABAJAMOS
+       =============================================== -->
+  <section id="proceso" class="section" aria-labelledby="process-title">
+    <div class="container">
+      <header class="section-header animate-on-scroll">
+        <p class="eyebrow" data-i18n="process_label">Cómo trabajamos</p>
+        <h2 class="section-title" id="process-title" data-i18n="process_title">De la primera charla a una solución que funciona</h2>
+        <p class="section-subtitle" data-i18n="process_subtitle">Un método claro, sin sorpresas y pensado para no interrumpir el día a día de tu negocio.</p>
+      </header>
+
+      <ol class="process-grid">
+        <li class="process-step animate-on-scroll">
+          <span class="process-num" aria-hidden="true">01</span>
+          <h3 class="process-title" data-i18n="process1_title">Diagnóstico gratuito</h3>
+          <p class="process-text" data-i18n="process1_text">Analizamos tus procesos y detectamos dónde se pierde tiempo o se escapan clientes.</p>
+        </li>
+        <li class="process-step animate-on-scroll delay-1">
+          <span class="process-num" aria-hidden="true">02</span>
+          <h3 class="process-title" data-i18n="process2_title">Propuesta a medida</h3>
+          <p class="process-text" data-i18n="process2_text">Plan de acción con presupuesto cerrado y el retorno que puedes esperar.</p>
+        </li>
+        <li class="process-step animate-on-scroll delay-2">
+          <span class="process-num" aria-hidden="true">03</span>
+          <h3 class="process-title" data-i18n="process3_title">Desarrollo e integración</h3>
+          <p class="process-text" data-i18n="process3_text">Implantamos la solución por fases, conectada con las herramientas que ya usas.</p>
+        </li>
+        <li class="process-step animate-on-scroll delay-3">
+          <span class="process-num" aria-hidden="true">04</span>
+          <h3 class="process-title" data-i18n="process4_title">Formación y soporte</h3>
+          <p class="process-text" data-i18n="process4_text">Te enseñamos a sacarle partido y seguimos a tu lado cuando lo necesites.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===============================================
+       EFEMÉRIDE — Hoy en la Historia Tech
+       =============================================== -->
+  <section id="efemeride" class="section section--alt" aria-labelledby="ephemeris-heading">
+    <div class="container">
+      <header class="section-header animate-on-scroll">
+        <p class="eyebrow" data-i18n="ephemeris_label">Historia de la Informática</p>
+        <h2 class="section-title" id="ephemeris-heading" data-i18n="ephemeris_title">Hoy en la Historia Tech</h2>
+        <p class="section-subtitle" data-i18n="ephemeris_subtitle">Un hecho real de la historia de la informática para cada día del año.</p>
+      </header>
+
+      <article id="ephemeris-card" class="ephemeris-card animate-on-scroll delay-1" aria-live="polite" aria-atomic="true">
+        <div class="eph-side">
+          <span class="eph-emoji" id="eph-emoji" aria-hidden="true">💡</span>
+          <span class="eph-year" id="eph-year">—</span>
+          <span class="eph-date">
+            <svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg>
+            <span id="eph-date"></span>
+          </span>
+        </div>
+        <div class="eph-main">
+          <p class="eph-tag-wrapper">
+            <span class="eph-pulse" aria-hidden="true"></span>
+            <span id="eph-tag" class="eph-tag">Un día como hoy</span>
+          </p>
+          <h3 class="eph-title" id="eph-title">Cargando…</h3>
+          <p class="eph-desc" id="eph-desc"></p>
+          <p class="eph-source-badge">
+            <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+            <span data-i18n="ephemeris_source">Dato histórico verificado</span>
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===============================================
+       LO ÚLTIMO — contenido gestionado por lo-ultimo.js
        =============================================== -->
   <section id="lo-ultimo" class="section lo-ultimo-section" aria-labelledby="lo-ultimo-heading">
     <div class="container">
 
       <header class="section-header animate-on-scroll">
-        <div class="section-label" data-i18n="lo_ultimo_label">Actualidad</div>
+        <p class="eyebrow" data-i18n="lo_ultimo_label">Actualidad</p>
         <h2 class="section-title" id="lo-ultimo-heading" data-i18n="lo_ultimo_title">Lo Último en IA</h2>
-        <p class="section-subtitle" data-i18n="lo_ultimo_subtitle">
-          Las novedades más relevantes del mes en inteligencia artificial: modelos, herramientas, aprendizaje y comunidad.
-        </p>
+        <p class="section-subtitle" data-i18n="lo_ultimo_subtitle">Las novedades más relevantes del mes en inteligencia artificial: modelos, herramientas, aprendizaje y comunidad.</p>
       </header>
 
-      <!-- 📰 Noticias -->
-      <div class="lo-ultimo-category animate-on-scroll delay-1">
+      <div class="lo-ultimo-category animate-on-scroll">
         <h3 class="lo-ultimo-cat-title">
-          <span class="lo-ultimo-cat-icon" aria-hidden="true">📰</span>
+          <span class="lo-ultimo-cat-icon" aria-hidden="true"><svg class="icon"><use href="#i-news"/></svg></span>
           <span data-i18n="lo_ultimo_cat_news">Noticias del mes</span>
         </h3>
-        <div class="lo-ultimo-grid" id="lo-ultimo-news-grid" aria-live="polite"></div>
+        <div class="lo-ultimo-grid" id="lo-ultimo-news-grid"></div>
       </div>
 
-      <!-- 🛠️ Herramientas -->
-      <div class="lo-ultimo-category animate-on-scroll delay-2">
+      <div class="lo-ultimo-category animate-on-scroll">
         <h3 class="lo-ultimo-cat-title">
-          <span class="lo-ultimo-cat-icon" aria-hidden="true">🛠️</span>
+          <span class="lo-ultimo-cat-icon" aria-hidden="true"><svg class="icon"><use href="#i-tool"/></svg></span>
           <span data-i18n="lo_ultimo_cat_tools">Herramientas nuevas</span>
         </h3>
-        <div class="lo-ultimo-grid" id="lo-ultimo-tools-grid" aria-live="polite"></div>
+        <div class="lo-ultimo-grid" id="lo-ultimo-tools-grid"></div>
       </div>
 
-      <!-- 📚 Aprendizaje y comunidad -->
-      <div class="lo-ultimo-category animate-on-scroll delay-3">
+      <div class="lo-ultimo-category animate-on-scroll">
         <h3 class="lo-ultimo-cat-title">
-          <span class="lo-ultimo-cat-icon" aria-hidden="true">📚</span>
+          <span class="lo-ultimo-cat-icon" aria-hidden="true"><svg class="icon"><use href="#i-book"/></svg></span>
           <span data-i18n="lo_ultimo_cat_learn">Aprendizaje y comunidad</span>
         </h3>
-        <div class="lo-ultimo-grid lo-ultimo-grid--3" id="lo-ultimo-learn-grid" aria-live="polite"></div>
+        <div class="lo-ultimo-grid lo-ultimo-grid--3" id="lo-ultimo-learn-grid"></div>
       </div>
 
     </div>
   </section>
 
   <!-- ===============================================
-       AI WEB AUDITOR
+       FAQ
        =============================================== -->
-  <section id="auditor" class="section" aria-labelledby="auditor-title">
-    <div class="container">
+  <section id="faq" class="section faq-section" aria-labelledby="faq-title">
+    <div class="container faq-layout">
 
-      <header class="section-header animate-on-scroll">
-        <div class="section-label" data-i18n="auditor_label">Herramienta gratuita</div>
-        <h2 class="section-title" id="auditor-title" data-i18n="auditor_title">Auditor Web IA</h2>
-        <p class="section-subtitle" data-i18n="auditor_subtitle">
-          Introduce la URL de tu web y nuestra IA analizará sus puntos fuertes y áreas de mejora en segundos.
-        </p>
-      </header>
-
-      <div class="auditor-container animate-on-scroll delay-2">
-
-        <!-- Audit form -->
-        <form id="auditor-form" class="auditor-form" role="search" novalidate>
-          <div class="auditor-input-wrapper">
-            <span class="auditor-input-icon" aria-hidden="true">🔗</span>
-            <label for="auditor-url" class="sr-only" data-i18n="auditor_label_sr">URL de tu sitio web</label>
-            <input
-              type="url"
-              id="auditor-url"
-              name="url"
-              class="auditor-input"
-              data-i18n-placeholder="auditor_placeholder"
-              placeholder="https://tuweb.com"
-              autocomplete="url"
-              inputmode="url"
-              aria-describedby="auditor-hint"
-              aria-required="true"
-            >
-          </div>
-          <button type="submit" id="auditor-submit" class="btn btn-primary btn-lg">
-            <span data-i18n="auditor_btn">Analizar web</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-              <circle cx="11" cy="11" r="8"/>
-              <path d="m21 21-4.35-4.35"/>
-            </svg>
-          </button>
-        </form>
-        <p id="auditor-hint" class="sr-only">Introduce la URL completa de tu sitio web para obtener un análisis gratuito de IA</p>
-
-        <!-- Loading state -->
-        <div id="auditor-loading" class="auditor-loading" aria-live="polite" aria-label="Analizando tu web...">
-          <div class="auditor-spinner" role="progressbar" aria-label="Analizando..."></div>
-          <div class="auditor-steps" role="list">
-            <div class="auditor-step" role="listitem">
-              <span class="auditor-step-icon" aria-hidden="true">🌐</span>
-              <span data-i18n="auditor_step1">Accediendo a la página web...</span>
-            </div>
-            <div class="auditor-step" role="listitem">
-              <span class="auditor-step-icon" aria-hidden="true">📱</span>
-              <span data-i18n="auditor_step2">Analizando diseño responsive...</span>
-            </div>
-            <div class="auditor-step" role="listitem">
-              <span class="auditor-step-icon" aria-hidden="true">🌍</span>
-              <span data-i18n="auditor_step3">Evaluando idiomas disponibles...</span>
-            </div>
-            <div class="auditor-step" role="listitem">
-              <span class="auditor-step-icon" aria-hidden="true">🤖</span>
-              <span data-i18n="auditor_step4">Comprobando agentes y chatbots...</span>
-            </div>
-            <div class="auditor-step" role="listitem">
-              <span class="auditor-step-icon" aria-hidden="true">🔍</span>
-              <span data-i18n="auditor_step5">Analizando SEO y rendimiento...</span>
-            </div>
-            <div class="auditor-step" role="listitem">
-              <span class="auditor-step-icon" aria-hidden="true">📋</span>
-              <span data-i18n="auditor_step6">Generando informe completo...</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Results -->
-        <div id="auditor-results" class="auditor-results" aria-live="polite">
-
-          <!-- Overall score card -->
-          <div class="auditor-score-card" role="region" aria-labelledby="auditor-score-heading">
-            <p class="auditor-score-url" id="auditor-result-url" aria-label="URL analizada"></p>
-            <div class="auditor-score-value" id="auditor-overall-score" aria-labelledby="auditor-score-heading">—</div>
-            <p class="auditor-score-label" id="auditor-score-label" id="auditor-score-heading">Puntuación global</p>
-          </div>
-
-          <!-- Criteria cards (filled by JS) -->
-          <div id="auditor-criteria" class="auditor-criteria-grid" role="list" aria-label="Criterios evaluados"></div>
-
-          <!-- Post-audit CTA -->
-          <div class="auditor-cta" role="complementary">
-            <h3 class="auditor-cta-title" data-i18n="auditor_cta_title">¿Quieres mejorar estos resultados?</h3>
-            <p class="auditor-cta-subtitle" data-i18n="auditor_cta_subtitle">
-              Nuestro equipo puede ayudarte a implementar todas las mejoras. Primera consulta gratuita.
-            </p>
-            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-              <a href="#contacto" class="btn btn-primary" data-i18n="auditor_cta_btn">Solicitar consulta gratuita</a>
-              <button id="auditor-new-btn" class="btn btn-secondary" data-i18n="auditor_btn_new">Analizar otra web</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===============================================
-       FAQ — PREGUNTAS FRECUENTES (GEO & AI Search)
-       =============================================== -->
-  <section id="faq" class="section faq-section" aria-labelledby="faq-title" itemscope itemtype="https://schema.org/FAQPage">
-    <div class="container">
-
-      <header class="section-header animate-on-scroll">
-        <div class="section-label" data-i18n="faq_label">Preguntas frecuentes</div>
+      <header class="faq-header animate-on-scroll">
+        <p class="eyebrow" data-i18n="faq_label">Preguntas frecuentes</p>
         <h2 class="section-title" id="faq-title" data-i18n="faq_title">Resolvemos tus dudas sobre IA</h2>
-        <p class="section-subtitle" data-i18n="faq_subtitle">
-          Todo lo que necesitas saber sobre cómo la inteligencia artificial y la automatización impulsan tu empresa.
-        </p>
+        <p class="section-subtitle" data-i18n="faq_subtitle">Todo lo que necesitas saber sobre cómo la inteligencia artificial y la automatización impulsan tu empresa.</p>
+        <div class="faq-cta-box">
+          <p class="faq-cta-text" data-i18n="faq_cta_text">¿Tienes otra pregunta sobre cómo aplicar IA a tu negocio?</p>
+          <a href="#contacto" class="btn btn-primary" data-i18n="faq_cta_btn">Consulta gratuita sin compromiso</a>
+        </div>
       </header>
 
-      <div class="faq-accordion animate-on-scroll delay-2" role="region" aria-label="Preguntas frecuentes">
-
-        <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question" open>
+      <div class="faq-accordion animate-on-scroll delay-1">
+        <details class="faq-item" open>
           <summary class="faq-question">
-            <span class="faq-q-text" itemprop="name" data-i18n="faq1_q">¿Cómo ayuda Soluciones IA CM a una pequeña o mediana empresa?</span>
-            <span class="faq-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </span>
+            <span class="faq-q-text" data-i18n="faq1_q">¿Cómo ayuda Soluciones IA CM a una pequeña o mediana empresa?</span>
+            <span class="faq-icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span>
           </summary>
-          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-            <p itemprop="text" data-i18n="faq1_a">
-              Automatizamos tareas manuales repetitivas (gestión de citas, facturación, atención al cliente), creamos asistentes virtuales y chatbots 24/7 personalizados, y desarrollamos páginas web rápidas orientadas a conversión. Esto permite reducir costes operativos, ahorrar más de un 50% de tiempo y captar clientes de manera continua.
-            </p>
-          </div>
+          <div class="faq-answer"><p data-i18n="faq1_a">Automatizamos tareas manuales repetitivas (gestión de citas, facturación, atención al cliente), creamos asistentes virtuales y chatbots 24/7 personalizados, y desarrollamos páginas web rápidas orientadas a conversión. Esto permite reducir costes operativos, ahorrar más de un 50% de tiempo y captar clientes de manera continua.</p></div>
         </details>
 
-        <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <details class="faq-item">
           <summary class="faq-question">
-            <span class="faq-q-text" itemprop="name" data-i18n="faq2_q">¿Por qué contratar consultoría de IA para un negocio local?</span>
-            <span class="faq-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </span>
+            <span class="faq-q-text" data-i18n="faq2_q">¿Por qué contratar consultoría de IA para un negocio local?</span>
+            <span class="faq-icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span>
           </summary>
-          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-            <p itemprop="text" data-i18n="faq2_a">
-              La consultoría de IA permite a los negocios locales competir con grandes marcas sin costes prohibitivos. Analizamos tu operativa concreta, seleccionamos las herramientas exactas que te aportan rentabilidad y te acompañamos en la puesta en marcha con un retorno de inversión rápido.
-            </p>
-          </div>
+          <div class="faq-answer"><p data-i18n="faq2_a">La consultoría de IA permite a los negocios locales competir con grandes marcas sin costes prohibitivos. Analizamos tu operativa concreta, seleccionamos las herramientas exactas que te aportan rentabilidad y te acompañamos en la puesta en marcha con un retorno de inversión rápido.</p></div>
         </details>
 
-        <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <details class="faq-item">
           <summary class="faq-question">
-            <span class="faq-q-text" itemprop="name" data-i18n="faq3_q">¿Cuánto cuesta implementar un chatbot o una automatización?</span>
-            <span class="faq-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </span>
+            <span class="faq-q-text" data-i18n="faq3_q">¿Cuánto cuesta implementar un chatbot o una automatización?</span>
+            <span class="faq-icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span>
           </summary>
-          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-            <p itemprop="text" data-i18n="faq3_a">
-              La primera consulta de diagnóstico y asesoramiento es 100% gratuita. Cada proyecto se cotiza de forma transparente y adaptada a la escala de una PYME, con presupuestos cerrados y sin cuotas ocultas.
-            </p>
-          </div>
+          <div class="faq-answer"><p data-i18n="faq3_a">La primera consulta de diagnóstico y asesoramiento es 100% gratuita. Cada proyecto se cotiza de forma transparente y adaptada a la escala de una PYME, con presupuestos cerrados y sin cuotas ocultas.</p></div>
         </details>
 
-        <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <details class="faq-item">
           <summary class="faq-question">
-            <span class="faq-q-text" itemprop="name" data-i18n="faq4_q">¿Qué ámbito geográfico cubre Soluciones IA CM?</span>
-            <span class="faq-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </span>
+            <span class="faq-q-text" data-i18n="faq4_q">¿Qué ámbito geográfico cubre Soluciones IA CM?</span>
+            <span class="faq-icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span>
           </summary>
-          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-            <p itemprop="text" data-i18n="faq4_a">
-              Tenemos sede en Cumbres Mayores (provincia de Huelva) y prestamos servicio directo y cercano en toda la comarca y Andalucía, además de ofrecer consultoría, diseño web y desarrollos de IA en modalidad online para empresas de toda España.
-            </p>
-          </div>
+          <div class="faq-answer"><p data-i18n="faq4_a">Tenemos sede en Cumbres Mayores (provincia de Huelva) y prestamos servicio directo y cercano en toda la comarca y Andalucía, además de ofrecer consultoría, diseño web y desarrollos de IA en modalidad online para empresas de toda España.</p></div>
         </details>
 
-        <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <details class="faq-item">
           <summary class="faq-question">
-            <span class="faq-q-text" itemprop="name" data-i18n="faq5_q">¿Cuánto tiempo toma la puesta en marcha de un proyecto de IA?</span>
-            <span class="faq-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </span>
+            <span class="faq-q-text" data-i18n="faq5_q">¿Cuánto tiempo toma la puesta en marcha de un proyecto de IA?</span>
+            <span class="faq-icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span>
           </summary>
-          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-            <p itemprop="text" data-i18n="faq5_a">
-              Los chatbots y asistentes virtuales estándar se configuran y despliegan en 3 a 7 días hábiles. Soluciones a medida más avanzadas (agentes autónomos, integraciones con ERP/CRM o plataformas web completas) suelen tomar entre 2 y 3 semanas.
-            </p>
-          </div>
+          <div class="faq-answer"><p data-i18n="faq5_a">Los chatbots y asistentes virtuales estándar se configuran y despliegan en 3 a 7 días hábiles. Soluciones a medida más avanzadas (agentes autónomos, integraciones con ERP/CRM o plataformas web completas) suelen tomar entre 2 y 3 semanas.</p></div>
         </details>
 
-        <details class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <details class="faq-item">
           <summary class="faq-question">
-            <span class="faq-q-text" itemprop="name" data-i18n="faq6_q">¿Se requieren conocimientos técnicos previos para empezar?</span>
-            <span class="faq-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </span>
+            <span class="faq-q-text" data-i18n="faq6_q">¿Se requieren conocimientos técnicos previos para empezar?</span>
+            <span class="faq-icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span>
           </summary>
-          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-            <p itemprop="text" data-i18n="faq6_a">
-              Para nada. Nosotros nos encargamos de todo el desarrollo, configuración técnica y pruebas. Te entregamos la solución lista para usar, con una formación práctica muy sencilla y soporte continuo.
-            </p>
-          </div>
+          <div class="faq-answer"><p data-i18n="faq6_a">No. Nos encargamos de todo el desarrollo, la configuración técnica y las pruebas. Te entregamos la solución lista para usar, con una formación práctica muy sencilla y soporte continuo.</p></div>
         </details>
-
       </div>
-
-      <!-- FAQ CTA Mini Banner -->
-      <div class="faq-cta-box animate-on-scroll delay-3">
-        <p class="faq-cta-text" data-i18n="faq_cta_text">¿Tienes otra pregunta sobre cómo aplicar IA a tu negocio?</p>
-        <a href="#contacto" class="btn btn-primary" data-i18n="faq_cta_btn">Consulta gratuita sin compromiso</a>
-      </div>
-
     </div>
   </section>
 
   <!-- ===============================================
-       CONTACT
+       CONTACTO
        =============================================== -->
   <section id="contacto" class="section section--alt" aria-labelledby="contact-title">
     <div class="container">
 
-      <header class="section-header animate-on-scroll">
-        <div class="section-label" data-i18n="contact_label">Contacto</div>
-        <h2 class="section-title" id="contact-title" data-i18n="contact_title">Hablemos de tu proyecto</h2>
-        <p class="section-subtitle" data-i18n="contact_subtitle">
-          Primera consulta siempre gratuita. Cuéntanos tu reto y encontraremos la mejor solución para tu negocio.
-        </p>
-      </header>
+      <div class="contact-grid">
 
-      <div class="contact-grid animate-on-scroll delay-2">
+        <div class="contact-intro animate-on-scroll">
+          <p class="eyebrow" data-i18n="contact_label">Contacto</p>
+          <h2 class="section-title" id="contact-title" data-i18n="contact_title">Hablemos de tu proyecto</h2>
+          <p class="section-subtitle" data-i18n="contact_subtitle">Primera consulta siempre gratuita. Cuéntanos tu reto y encontraremos la mejor solución para tu negocio.</p>
 
-        <!-- Contact info -->
-        <div class="contact-info" role="complementary" aria-label="Información de contacto">
-
-          <div class="contact-item">
-            <div class="contact-item-icon" aria-hidden="true">✉️</div>
-            <div>
-              <p class="contact-item-label" data-i18n="contact_email_label">Email</p>
-              <p class="contact-item-value">
-                <a href="mailto:jemendo90@gmail.com" aria-label="Enviar correo a jemendo90@gmail.com">jemendo90@gmail.com</a>
-              </p>
-            </div>
-          </div>
-
-          <div class="contact-item">
-            <div class="contact-item-icon" aria-hidden="true">📞</div>
-            <div>
-              <p class="contact-item-label" data-i18n="contact_phone_label">Teléfono</p>
-              <p class="contact-item-value">
-                <a href="tel:+34605635892" aria-label="Llamar al 605 635 892">605 635 892</a>
-              </p>
-            </div>
-          </div>
-
-
-
-          <div class="contact-item">
-            <div class="contact-item-icon" aria-hidden="true">🕐</div>
-            <div>
-              <p class="contact-item-label" data-i18n="contact_hours_label">Disponibilidad</p>
-              <p class="contact-item-value" style="color:var(--c-text)" data-i18n="contact_hours_value">
-                Lun – Vie, 09:00 – 18:00
-              </p>
-            </div>
-          </div>
-
+          <ul class="contact-info">
+            <li class="contact-item">
+              <span class="contact-item-icon" aria-hidden="true"><svg class="icon"><use href="#i-mail"/></svg></span>
+              <span>
+                <span class="contact-item-label" data-i18n="contact_email_label">Email</span>
+                <a class="contact-item-value" href="mailto:jemendo90@gmail.com">jemendo90@gmail.com</a>
+              </span>
+            </li>
+            <li class="contact-item">
+              <span class="contact-item-icon" aria-hidden="true"><svg class="icon"><use href="#i-phone"/></svg></span>
+              <span>
+                <span class="contact-item-label" data-i18n="contact_phone_label">Teléfono</span>
+                <a class="contact-item-value" href="tel:+34605635892">+34 605 635 892</a>
+              </span>
+            </li>
+            <li class="contact-item">
+              <span class="contact-item-icon" aria-hidden="true"><svg class="icon"><use href="#i-clock"/></svg></span>
+              <span>
+                <span class="contact-item-label" data-i18n="contact_hours_label">Disponibilidad</span>
+                <span class="contact-item-value contact-item-value--plain" data-i18n="contact_hours_value">Lun – Vie, 09:00 – 18:00</span>
+              </span>
+            </li>
+            <li class="contact-item">
+              <span class="contact-item-icon" aria-hidden="true"><svg class="icon"><use href="#i-pin"/></svg></span>
+              <span>
+                <span class="contact-item-label" data-i18n="contact_area_label">Área de servicio</span>
+                <span class="contact-item-value contact-item-value--plain" data-i18n="contact_area_note">Cumbres Mayores (Huelva) · online en toda España</span>
+              </span>
+            </li>
+          </ul>
         </div>
 
-        <!-- Contact Form -->
-        <div class="contact-form-card">
+        <div class="contact-form-card animate-on-scroll delay-1">
 
           <form id="contact-form" novalidate aria-label="Formulario de contacto">
-            <!-- ====== HONEYPOT ANTI-SPAM — Do NOT remove ====== -->
-            <!-- Bots fill this hidden field; humans never see it -->
-            <input
-              type="text"
-              name="bot_field"
-              id="bot_field"
-              autocomplete="off"
-              tabindex="-1"
-              aria-hidden="true"
-              style="position:absolute;left:-9999px;opacity:0;height:0;width:0;border:none;padding:0;"
-            >
-            <!-- ================================================ -->
+            <!-- Honeypot anti-spam: los humanos no lo ven -->
+            <div class="hp-field" aria-hidden="true">
+              <label for="bot_field">No rellenar</label>
+              <input type="text" name="bot_field" id="bot_field" autocomplete="off" tabindex="-1">
+            </div>
+
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label" for="form-name" data-i18n="contact_form_name" data-required>Nombre</label>
-                <input
-                  type="text"
-                  id="form-name"
-                  class="form-input"
-                  autocomplete="name"
-                  required
-                  aria-required="true"
-                  aria-describedby="form-name-error"
-                  aria-invalid="false"
-                  data-i18n-placeholder="contact_form_name"
-                  placeholder="Nombre"
-                >
-                <p id="form-name-error" class="field-error" role="alert" aria-live="assertive" style="display:none;"></p>
+                <label class="form-label" for="form-name"><span data-i18n="contact_form_name">Nombre</span> <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="form-name" class="form-input" autocomplete="name" maxlength="120" required aria-describedby="form-name-error" aria-invalid="false">
+                <p id="form-name-error" class="field-error" hidden></p>
               </div>
               <div class="form-group">
-                <label class="form-label" for="form-email" data-i18n="contact_form_email" data-required>Email</label>
-                <input
-                  type="email"
-                  id="form-email"
-                  class="form-input"
-                  autocomplete="email"
-                  required
-                  aria-required="true"
-                  aria-describedby="form-email-error"
-                  aria-invalid="false"
-                  data-i18n-placeholder="contact_form_email"
-                  placeholder="Email"
-                >
-                <p id="form-email-error" class="field-error" role="alert" aria-live="assertive" style="display:none;"></p>
+                <label class="form-label" for="form-email"><span data-i18n="contact_form_email">Email</span> <span class="req" aria-hidden="true">*</span></label>
+                <input type="email" id="form-email" class="form-input" autocomplete="email" maxlength="200" required aria-describedby="form-email-error" aria-invalid="false">
+                <p id="form-email-error" class="field-error" hidden></p>
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label" for="form-company" data-i18n="contact_form_company">Empresa</label>
-                <input
-                  type="text"
-                  id="form-company"
-                  class="form-input"
-                  autocomplete="organization"
-                  data-i18n-placeholder="contact_form_company"
-                  placeholder="Empresa"
-                >
+                <input type="text" id="form-company" class="form-input" autocomplete="organization" maxlength="160">
               </div>
               <div class="form-group">
                 <label class="form-label" for="form-phone" data-i18n="contact_form_phone">Teléfono</label>
-                <input
-                  type="tel"
-                  id="form-phone"
-                  class="form-input"
-                  autocomplete="tel"
-                  data-i18n-placeholder="contact_form_phone"
-                  placeholder="Teléfono"
-                >
+                <input type="tel" id="form-phone" class="form-input" autocomplete="tel" maxlength="40">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="form-message" data-i18n="contact_form_message" data-required>Cuéntanos tu proyecto</label>
-              <textarea
-                id="form-message"
-                class="form-input"
-                rows="5"
-                required
-                aria-required="true"
-                aria-describedby="form-message-error"
-                aria-invalid="false"
-                data-i18n-placeholder="contact_form_message"
-                placeholder="Cuéntanos tu proyecto o necesidad..."
-              ></textarea>
-              <p id="form-message-error" class="field-error" role="alert" aria-live="assertive" style="display:none;"></p>
+              <label class="form-label" for="form-message"><span data-i18n="contact_form_message">Cuéntanos tu proyecto</span> <span class="req" aria-hidden="true">*</span></label>
+              <textarea id="form-message" class="form-input" rows="5" maxlength="4000" required
+                aria-describedby="form-message-error" aria-invalid="false"
+                data-i18n-placeholder="contact_form_message_ph" placeholder="¿Qué te gustaría automatizar o mejorar?"></textarea>
+              <p id="form-message-error" class="field-error" hidden></p>
             </div>
 
-            <!-- Nota para lectores de pantalla: campos obligatorios -->
-            <p class="sr-only" id="form-required-note">
-              Los campos marcados con asterisco (*) son obligatorios.
-            </p>
+            <div class="form-group form-consent">
+              <input type="checkbox" id="form-consent" class="form-check" required aria-describedby="form-consent-error" aria-invalid="false">
+              <label for="form-consent" class="form-consent-label">
+                <span data-i18n="contact_consent_pre">He leído y acepto la</span>
+                <button type="button" class="link-inline" data-modal="privacidad" data-i18n="contact_consent_link">política de privacidad</button>.
+              </label>
+              <p id="form-consent-error" class="field-error" hidden></p>
+            </div>
 
-            <button type="submit" class="btn btn-primary btn-lg" id="form-submit" style="width:100%;" aria-describedby="form-required-note">
+            <p class="sr-only" id="form-required-note" data-i18n="form_required_note">Los campos marcados con asterisco son obligatorios.</p>
+
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="form-submit" aria-describedby="form-required-note">
               <span data-i18n="contact_form_submit">Enviar mensaje</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 19-7z"/>
-              </svg>
+              <svg class="icon btn-icon" aria-hidden="true"><use href="#i-send"/></svg>
             </button>
+            <p class="form-error-global" id="form-error-global" role="alert" hidden></p>
+            <p class="form-note">
+              <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
+              <span data-i18n="contact_form_note">Respondemos en menos de 24 horas laborables. Tus datos no se ceden a terceros.</span>
+            </p>
           </form>
 
-          <!-- Success message -->
-          <div id="contact-success" class="form-success" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="form-success-icon" aria-hidden="true">✅</div>
+          <div id="contact-success" class="form-success" role="status" aria-live="polite">
+            <span class="form-success-icon" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>
             <h3 class="form-success-title" data-i18n="contact_success_title" tabindex="-1">¡Mensaje enviado!</h3>
-            <p class="form-success-text" data-i18n="contact_success_text">
-              Gracias por contactarnos. Te responderemos en menos de 24 horas.
-            </p>
+            <p class="form-success-text" data-i18n="contact_success_text">Gracias por contactarnos. Te responderemos en menos de 24 horas.</p>
           </div>
 
         </div>
@@ -971,39 +920,42 @@
 <!-- ===================================================
      FOOTER
      =================================================== -->
-<footer id="footer" role="contentinfo">
+<footer id="footer">
   <div class="container">
     <div class="footer-grid">
 
-      <!-- Brand column -->
       <div class="footer-brand">
-        <div class="footer-logo" aria-label="Soluciones IA CM">
-          <img src="assets/logo.svg" class="footer-logo-img" alt="" aria-hidden="true" width="36" height="34">
-          <span class="footer-logo-name">SOLUCIONES IA CM</span>
-        </div>
-        <p class="footer-description" data-i18n="footer_description">
-          Soluciones de inteligencia artificial y automatización para pequeños y medianos negocios locales.
-        </p>
+        <a href="#inicio" class="footer-logo" aria-label="Soluciones IA CM — Ir al inicio">
+          <svg class="footer-logo-img" viewBox="0 0 80 76" aria-hidden="true">
+            <rect x="2" y="2" width="34" height="10" rx="2.5" fill="currentColor"/>
+            <rect x="2" y="2" width="10" height="34" rx="2.5" fill="currentColor"/>
+            <rect x="2" y="28" width="34" height="10" rx="2.5" fill="currentColor"/>
+            <rect x="26" y="28" width="10" height="36" rx="2.5" fill="currentColor"/>
+            <rect x="2" y="54" width="34" height="10" rx="2.5" fill="currentColor"/>
+            <rect x="50" y="20" width="10" height="54" rx="2.5" fill="currentColor"/>
+            <polygon points="47,19 77,8 70,34" fill="#3A8DD6"/>
+          </svg>
+          <span class="footer-logo-name">Soluciones IA CM</span>
+        </a>
+        <p class="footer-description" data-i18n="footer_description">Soluciones de inteligencia artificial y automatización para pequeños y medianos negocios locales.</p>
 
-        <!-- Tech stack badges -->
         <div class="footer-tech">
-          <p class="footer-tech-label" data-i18n="footer_tech_label">Arquitectura tecnológica</p>
-          <div class="footer-tech-stack" role="list" aria-label="Tecnologías utilizadas">
-            <span class="footer-tech-badge" role="listitem">Next.js</span>
-            <span class="footer-tech-badge" role="listitem">TypeScript</span>
-            <span class="footer-tech-badge" role="listitem">Tailwind</span>
-            <span class="footer-tech-badge" role="listitem">Supabase</span>
-            <span class="footer-tech-badge" role="listitem">FastAPI</span>
-            <span class="footer-tech-badge" role="listitem">Docker</span>
-            <span class="footer-tech-badge" role="listitem">Cloudflare</span>
-          </div>
+          <p class="footer-tech-label" data-i18n="footer_tech_label">Tecnologías con las que trabajamos</p>
+          <ul class="footer-tech-stack">
+            <li class="footer-tech-badge">Next.js</li>
+            <li class="footer-tech-badge">TypeScript</li>
+            <li class="footer-tech-badge">Tailwind</li>
+            <li class="footer-tech-badge">Supabase</li>
+            <li class="footer-tech-badge">FastAPI</li>
+            <li class="footer-tech-badge">Docker</li>
+            <li class="footer-tech-badge">Cloudflare</li>
+          </ul>
         </div>
       </div>
 
-      <!-- Services column -->
       <div>
-        <h4 class="footer-col-title" data-i18n="footer_col_services">Servicios</h4>
-        <ul class="footer-links" role="list">
+        <h2 class="footer-col-title" data-i18n="footer_col_services">Servicios</h2>
+        <ul class="footer-links">
           <li><a href="#servicios" class="footer-link" data-i18n="footer_link_consulting">Consultoría</a></li>
           <li><a href="#servicios" class="footer-link" data-i18n="footer_link_agents">Agentes IA</a></li>
           <li><a href="#servicios" class="footer-link" data-i18n="footer_link_chatbot">Chatbot 24/7</a></li>
@@ -1013,48 +965,31 @@
         </ul>
       </div>
 
-      <!-- Company column -->
       <div>
-        <h4 class="footer-col-title" data-i18n="footer_col_company">Empresa</h4>
-        <ul class="footer-links" role="list">
-          <li><a href="#contacto" class="footer-link" data-i18n="footer_link_contact">Contacto</a></li>
+        <h2 class="footer-col-title" data-i18n="footer_col_company">Empresa</h2>
+        <ul class="footer-links">
+          <li><a href="#proceso"  class="footer-link" data-i18n="nav_proceso">Cómo trabajamos</a></li>
           <li><a href="#auditor"  class="footer-link" data-i18n="footer_link_auditor">Auditor Web</a></li>
           <li><a href="#faq"      class="footer-link" data-i18n="footer_link_faq">Preguntas Frecuentes</a></li>
-          <li>
-            <a href="mailto:jemendo90@gmail.com" class="footer-link" aria-label="Enviar email">
-              jemendo90@gmail.com
-            </a>
-          </li>
-          <li>
-            <a href="tel:+34605635892" class="footer-link" aria-label="Llamar al 605 635 892">
-              605 635 892
-            </a>
-          </li>
+          <li><a href="#contacto" class="footer-link" data-i18n="footer_link_contact">Contacto</a></li>
+          <li><a href="mailto:jemendo90@gmail.com" class="footer-link footer-link--contact">jemendo90@gmail.com</a></li>
+          <li><a href="tel:+34605635892" class="footer-link footer-link--contact">+34 605 635 892</a></li>
         </ul>
       </div>
 
-      <!-- Legal column -->
       <div>
-        <h4 class="footer-col-title" data-i18n="footer_col_legal">Legal</h4>
-        <ul class="footer-links" role="list">
-          <li><button class="footer-link" data-modal="legal"      data-i18n="footer_link_legal">Aviso Legal</button></li>
-          <li><button class="footer-link" data-modal="privacidad" data-i18n="footer_link_privacy">Política de Privacidad</button></li>
-          <li><button class="footer-link" data-modal="cookies"    data-i18n="footer_link_cookies">Política de Cookies</button></li>
+        <h2 class="footer-col-title" data-i18n="footer_col_legal">Legal</h2>
+        <ul class="footer-links">
+          <li><button type="button" class="footer-link" data-modal="legal"      data-i18n="footer_link_legal">Aviso Legal</button></li>
+          <li><button type="button" class="footer-link" data-modal="privacidad" data-i18n="footer_link_privacy">Política de Privacidad</button></li>
+          <li><button type="button" class="footer-link" data-modal="cookies"    data-i18n="footer_link_cookies">Política de Cookies</button></li>
         </ul>
       </div>
-
     </div>
 
-    <!-- Bottom bar -->
     <div class="footer-bottom">
-      <p class="footer-copyright" data-i18n="footer_copyright">
-        © 2025 Soluciones IA CM. Todos los derechos reservados.
-      </p>
-      <nav class="footer-legal-links" aria-label="Avisos legales">
-        <button class="footer-legal-link" data-modal="legal"      data-i18n="footer_link_legal">Aviso Legal</button>
-        <button class="footer-legal-link" data-modal="privacidad" data-i18n="footer_link_privacy">Privacidad</button>
-        <button class="footer-legal-link" data-modal="cookies"    data-i18n="footer_link_cookies">Cookies</button>
-      </nav>
+      <p class="footer-copyright">© <span id="footer-year">2026</span> Soluciones IA CM. <span data-i18n="footer_rights">Todos los derechos reservados.</span></p>
+      <p class="footer-made" data-i18n="footer_made">Hecho en Cumbres Mayores, Huelva</p>
     </div>
   </div>
 </footer>
@@ -1062,32 +997,31 @@
 <!-- ===================================================
      MODAL — AVISO LEGAL
      =================================================== -->
-<div id="modal-legal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-legal-title">
-  <div class="modal" tabindex="-1">
+<div id="modal-legal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-legal-title" aria-hidden="true">
+  <div class="modal">
     <div class="modal-header">
       <h2 class="modal-title" id="modal-legal-title" data-i18n="modal_legal_title">Aviso Legal</h2>
-      <button class="modal-close" aria-label="Cerrar aviso legal">×</button>
+      <button type="button" class="modal-close" aria-label="Cerrar">
+        <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+      </button>
     </div>
     <div class="modal-content">
       <p>En cumplimiento del artículo 10 de la Ley 34/2002 de Servicios de la Sociedad de la Información (LSSI-CE), se informa al usuario de los datos del titular del sitio web.</p>
-
       <h3>Titular del sitio web</h3>
       <p>
         <strong>Denominación:</strong> Soluciones IA CM<br>
         <strong>Email:</strong> jemendo90@gmail.com<br>
-        <strong>Teléfono:</strong> 605 635 892<br>
+        <strong>Teléfono:</strong> +34 605 635 892<br>
         <strong>Ámbito geográfico:</strong> Cumbres Mayores (Huelva), España
       </p>
-
       <h3>Objeto y ámbito de aplicación</h3>
       <p>El presente aviso legal regula el uso del sitio web de Soluciones IA CM. El acceso y uso de este sitio web implica la aceptación plena de los términos y condiciones aquí establecidos.</p>
-
       <h3>Propiedad intelectual e industrial</h3>
       <p>Todos los contenidos del sitio web —textos, imágenes, logotipos, código fuente y diseño gráfico— son propiedad de Soluciones IA CM o de terceros que han autorizado su uso, y están protegidos por la legislación española e internacional de propiedad intelectual e industrial. Queda prohibida su reproducción total o parcial sin autorización expresa.</p>
-
+      <h3>Herramientas orientativas</h3>
+      <p>Los resultados del Auditor Web IA tienen carácter orientativo y divulgativo, y no sustituyen a una auditoría técnica profesional.</p>
       <h3>Exoneración de responsabilidad</h3>
       <p>Soluciones IA CM no garantiza la ausencia de virus u otros elementos en los contenidos que puedan producir alteraciones en el sistema informático del usuario. El titular no será responsable de los daños y perjuicios de cualquier naturaleza derivados del uso del sitio web.</p>
-
       <h3>Legislación aplicable y jurisdicción</h3>
       <p>La relación entre el titular y el usuario se rige por la normativa española vigente. Para la resolución de disputas, las partes se someten a los juzgados y tribunales de Huelva, salvo que la ley disponga otra cosa.</p>
     </div>
@@ -1097,39 +1031,34 @@
 <!-- ===================================================
      MODAL — POLÍTICA DE PRIVACIDAD
      =================================================== -->
-<div id="modal-privacidad" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-privacidad-title">
-  <div class="modal" tabindex="-1">
+<div id="modal-privacidad" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-privacidad-title" aria-hidden="true">
+  <div class="modal">
     <div class="modal-header">
       <h2 class="modal-title" id="modal-privacidad-title" data-i18n="modal_privacy_title">Política de Privacidad</h2>
-      <button class="modal-close" aria-label="Cerrar política de privacidad">×</button>
+      <button type="button" class="modal-close" aria-label="Cerrar">
+        <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+      </button>
     </div>
     <div class="modal-content">
       <p>De conformidad con el Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), le informamos sobre el tratamiento de sus datos personales.</p>
-
       <h3>Responsable del tratamiento</h3>
       <p>
         <strong>Identidad:</strong> Soluciones IA CM<br>
         <strong>Email de contacto:</strong> jemendo90@gmail.com<br>
-        <strong>Teléfono:</strong> 605 635 892
+        <strong>Teléfono:</strong> +34 605 635 892
       </p>
-
       <h3>Finalidad del tratamiento</h3>
-      <p>Los datos personales facilitados a través del formulario de contacto se tratan para: gestionar su solicitud de información, enviar comunicaciones sobre nuestros servicios (si lo autoriza) y mantener la relación comercial.</p>
-
+      <p>Los datos facilitados a través del formulario de contacto se tratan para gestionar su solicitud de información, elaborar presupuestos y mantener la relación comercial. Solo le enviaremos comunicaciones comerciales si nos da su autorización expresa.</p>
       <h3>Base legitimadora</h3>
-      <p>El tratamiento se basa en el consentimiento del interesado (art. 6.1.a RGPD) y en la ejecución de medidas precontractuales a petición del interesado (art. 6.1.b RGPD).</p>
-
+      <p>El tratamiento se basa en el consentimiento del interesado (art. 6.1.a RGPD) y en la aplicación de medidas precontractuales a petición del interesado (art. 6.1.b RGPD).</p>
       <h3>Conservación de datos</h3>
       <p>Los datos se conservarán mientras dure la relación comercial y durante los plazos legales aplicables, o hasta que el interesado solicite su supresión.</p>
-
-      <h3>Destinatarios</h3>
-      <p>Los datos no se cederán a terceros salvo obligación legal. No se realizan transferencias internacionales de datos.</p>
-
+      <h3>Destinatarios y encargados del tratamiento</h3>
+      <p>Los datos no se ceden a terceros salvo obligación legal. Para prestar el servicio utilizamos proveedores que actúan como encargados del tratamiento con garantías adecuadas conforme al RGPD: alojamiento de base de datos (Supabase), envío de notificaciones del formulario (Web3Forms) y asistente de chat (Chatbase).</p>
       <h3>Derechos del interesado</h3>
-      <p>Puede ejercer sus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad enviando un email a <a href="mailto:jemendo90@gmail.com" style="color:var(--c-primary)">jemendo90@gmail.com</a>. Asimismo, tiene derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).</p>
-
+      <p>Puede ejercer sus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad enviando un email a <a href="mailto:jemendo90@gmail.com">jemendo90@gmail.com</a>. Asimismo, tiene derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).</p>
       <h3>Seguridad</h3>
-      <p>Aplicamos medidas técnicas y organizativas adecuadas para garantizar un nivel de seguridad apropiado al riesgo, conforme al artículo 32 del RGPD.</p>
+      <p>Aplicamos medidas técnicas y organizativas adecuadas para garantizar un nivel de seguridad apropiado al riesgo, conforme al artículo 32 del RGPD: cifrado en tránsito, control de acceso con doble factor y políticas de acceso mínimo a la base de datos.</p>
     </div>
   </div>
 </div>
@@ -1137,50 +1066,45 @@
 <!-- ===================================================
      MODAL — POLÍTICA DE COOKIES
      =================================================== -->
-<div id="modal-cookies" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-cookies-title">
-  <div class="modal" tabindex="-1">
+<div id="modal-cookies" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-cookies-title" aria-hidden="true">
+  <div class="modal">
     <div class="modal-header">
       <h2 class="modal-title" id="modal-cookies-title" data-i18n="modal_cookies_title">Política de Cookies</h2>
-      <button class="modal-close" aria-label="Cerrar política de cookies">×</button>
+      <button type="button" class="modal-close" aria-label="Cerrar">
+        <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+      </button>
     </div>
     <div class="modal-content">
-      <p>Una cookie es un archivo que se descarga en su dispositivo al acceder a determinadas páginas web. Las cookies permiten almacenar y recuperar información sobre sus hábitos de navegación.</p>
-
-      <h3>Cookies que utilizamos</h3>
-      <p><strong>Cookies técnicas (necesarias):</strong> Imprescindibles para el funcionamiento del sitio. No requieren consentimiento.</p>
-      <p><strong>Cookies de preferencias (opcionales):</strong> Almacenan las preferencias del usuario para personalizar la experiencia.</p>
-
-      <h3>Listado de cookies propias</h3>
+      <p>Una cookie (o tecnología similar, como el almacenamiento local del navegador) es un archivo que se guarda en su dispositivo al acceder a determinadas páginas web y permite recordar información sobre su visita.</p>
+      <h3>Qué utilizamos</h3>
+      <p><strong>Técnicas (necesarias):</strong> imprescindibles para el funcionamiento del sitio. No requieren consentimiento.</p>
+      <p><strong>De preferencias (opcionales):</strong> recuerdan opciones como el idioma.</p>
+      <h3>Listado de elementos propios</h3>
       <p>
-        • <code>lang</code> — Preferencia de idioma (ES/EN). Duración: 1 año. Tipo: preferencia.<br>
-        • <code>cookies-accepted</code> — Registro de aceptación de cookies. Duración: 1 año. Tipo: técnica.
+        • <code>lang</code> — Preferencia de idioma (ES/EN). Almacenamiento local. Tipo: preferencia.<br>
+        • <code>cookies-accepted</code> — Registro de su elección sobre cookies. Almacenamiento local. Tipo: técnica.
       </p>
-
+      <h3>Terceros</h3>
+      <p>El asistente de chat (Chatbase) puede utilizar almacenamiento técnico propio para mantener la conversación abierta.</p>
       <h3>Gestión y desactivación</h3>
-      <p>Puede configurar o deshabilitar las cookies a través de la configuración de su navegador. Tenga en cuenta que deshabilitar ciertas cookies puede afectar al funcionamiento del sitio.</p>
+      <p>Puede configurar o eliminar estos datos desde la configuración de su navegador. Deshabilitarlos puede afectar al funcionamiento del sitio.</p>
       <p>
-        Instrucciones para los principales navegadores:<br>
         • <strong>Chrome:</strong> Configuración › Privacidad y seguridad › Cookies<br>
-        • <strong>Firefox:</strong> Opciones › Privacidad y seguridad<br>
-        • <strong>Safari:</strong> Preferencias › Privacidad<br>
+        • <strong>Firefox:</strong> Ajustes › Privacidad y seguridad<br>
+        • <strong>Safari:</strong> Ajustes › Privacidad<br>
         • <strong>Edge:</strong> Configuración › Cookies y permisos del sitio
       </p>
-
       <h3>Más información</h3>
-      <p>Para cualquier consulta sobre nuestra política de cookies, puede contactarnos en <a href="mailto:jemendo90@gmail.com" style="color:var(--c-primary)">jemendo90@gmail.com</a>.</p>
+      <p>Para cualquier consulta sobre esta política puede escribirnos a <a href="mailto:jemendo90@gmail.com">jemendo90@gmail.com</a>.</p>
     </div>
   </div>
 </div>
 
-<!-- Application Script (deferred for performance) -->
-<script src="facts.js?v=1.1.5" defer></script>
-<script src="lo-ultimo.js?v=1.1.5" defer></script>
-<script src="app.js?v=1.1.5" defer></script>
-
-<!-- Chatbase AI Agent Widget -->
-<script>
-(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="DlYvDU3Ab08HmFUV5mS7K";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
-</script>
+<script src="config.js?v=2.0.0" defer></script>
+<script src="facts.js?v=2.0.0" defer></script>
+<script src="lo-ultimo.js?v=2.0.0" defer></script>
+<script src="app.js?v=2.0.0" defer></script>
+<script src="chatbase.js?v=2.0.0" defer></script>
 
 </body>
 </html>

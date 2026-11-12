@@ -1,27 +1,14 @@
 /* ===================================================
    LO ÚLTIMO EN IA — Datos mensuales de novedades
    Soluciones IA CM
-
-   ✅ INSTRUCCIONES DE ACTUALIZACIÓN MENSUAL
-   ────────────────────────────────────────────────────
-   1. Cambia LO_ULTIMO_MONTH (español) y LO_ULTIMO_MONTH_EN (inglés)
-   Este archivo es actualizado mensualmente por el equipo.
-   Cada mes se reemplazan las entradas de NEWS_ITEMS,
-   TOOLS_ITEMS y LEARN_ITEMS con las novedades más
-   relevantes. No es necesario tocar HTML ni CSS.
-
-   TIPOS DE TAG disponibles (campo tagType):
-     'purple'  → Agentes, Modelos, IA Generativa
-     'blue'    → Herramientas, Modelos, Productividad
-     'green'   → Gratis, Open Source, Aprendizaje
-     'orange'  → Automatización, Regulación, Industria
    =================================================== */
 
 'use strict';
 
+const LO_ULTIMO_MONTH    = 'Noviembre 2026';
+const LO_ULTIMO_MONTH_EN = 'November 2026';
 
-// ── 📰 NOTICIAS DEL MES ───────────────────────────────
-// Máximo recomendado: 4 entradas
+// ── NOTICIAS DEL MES (máximo recomendado: 4 entradas) ──
 const NEWS_ITEMS = [
   {
     source:   'OpenAI',
@@ -48,8 +35,8 @@ const NEWS_ITEMS = [
     tag:      'Regulación UE',   tag_en: 'EU Regulation',
     tagType:  'orange',
     url:      'https://digital-strategy.ec.europa.eu/en/policies/artificial-intelligence',
-    title:    'Reglamento Ómnibus Digital IA entra en vigor el 27 de julio',
-    title_en: 'EU AI Omnibus Regulation enters into force on July 27',
+    title:    'Reglamento Ómnibus Digital IA para pymes europeas',
+    title_en: 'EU AI Omnibus Regulation for European SMBs',
     desc:     'La UE simplifica el cumplimiento del Reglamento de IA para pymes y aplaza requisitos de alto riesgo hasta 2027-2028.',
     desc_en:  'The EU simplifies AI Act compliance for SMBs and postpones high-risk requirements to 2027-2028.',
   },
@@ -58,16 +45,14 @@ const NEWS_ITEMS = [
     tag:      'Modelos',         tag_en: 'Models',
     tagType:  'purple',
     url:      'https://www.anthropic.com/claude',
-    title:    'Claude Opus 5: razonamiento avanzado y 500K de contexto',
-    title_en: 'Claude Opus 5: advanced reasoning and 500K context',
-    desc:     'Anthropic presenta su modelo más potente con capacidades de automatización de escritorio y ventana de contexto de 500.000 tokens.',
-    desc_en:  'Anthropic presents its most powerful model with desktop automation and a 500,000-token context window.',
+    title:    'Claude Opus: razonamiento avanzado y automatización',
+    title_en: 'Claude Opus: advanced reasoning and automation',
+    desc:     'Anthropic presenta su modelo más potente con capacidades de automatización de escritorio y ventana de contexto ampliada.',
+    desc_en:  'Anthropic presents its most powerful model with desktop automation and an extended context window.',
   },
 ];
 
-
-// ── 🛠️ HERRAMIENTAS NUEVAS ───────────────────────────
-// Máximo recomendado: 4 entradas
+// ── HERRAMIENTAS NUEVAS (máximo recomendado: 4 entradas) ──
 const TOOLS_ITEMS = [
   {
     source:   'Perplexity',
@@ -84,10 +69,10 @@ const TOOLS_ITEMS = [
     tag:      'Creación',        tag_en: 'Creation',
     tagType:  'green',
     url:      'https://www.canva.com/code',
-    title:    'Canva Code 2.0: crea webs con lenguaje natural',
-    title_en: 'Canva Code 2.0: create websites with natural language',
-    desc:     'Describe lo que quieres y Canva genera tu web o experiencia interactiva. Sin código, con edición visual posterior.',
-    desc_en:  'Describe what you want and Canva generates your website or interactive experience. No code, with visual editing.',
+    title:    'Canva Code 2.0: experiencias interactivas con lenguaje natural',
+    title_en: 'Canva Code 2.0: interactive experiences with natural language',
+    desc:     'Describe lo que quieres y Canva genera tu recurso interactivo sin código, con edición visual posterior.',
+    desc_en:  'Describe what you want and Canva generates your interactive resource with no code and visual editing.',
   },
   {
     source:   'Zapier',
@@ -96,8 +81,8 @@ const TOOLS_ITEMS = [
     url:      'https://zapier.com/ai-agents',
     title:    'Zapier AI Agents: automatizaciones en lenguaje natural',
     title_en: 'Zapier AI Agents: automation in natural language',
-    desc:     'Crea agentes de automatización complejos y multipasos describiendo lo que necesitas. Ya disponible para todos.',
-    desc_en:  'Create complex multi-step automation agents by describing what you need. Now available for everyone.',
+    desc:     'Crea agentes de automatización complejos y multipasos describiendo lo que necesitas.',
+    desc_en:  'Create complex multi-step automation agents by describing what you need.',
   },
   {
     source:   'Notion',
@@ -106,14 +91,12 @@ const TOOLS_ITEMS = [
     url:      'https://www.notion.com/product/ai',
     title:    'Notion AI 2.5: pregunta a todo tu espacio de trabajo',
     title_en: 'Notion AI 2.5: query your entire workspace',
-    desc:     'El nuevo Workspace Mode permite consultar información de todos tus documentos, bases de datos y calendario con una sola pregunta.',
-    desc_en:  'New Workspace Mode lets you query information across all your documents, databases and calendar with a single question.',
+    desc:     'Consulta información de todos tus documentos, bases de datos y calendario con una sola pregunta.',
+    desc_en:  'Query information across all your documents, databases and calendar with a single question.',
   },
 ];
 
-
-// ── 📚 APRENDIZAJE Y COMUNIDADES ─────────────────────
-// Máximo recomendado: 3 entradas
+// ── APRENDIZAJE Y COMUNIDADES (máximo recomendado: 3 entradas) ──
 const LEARN_ITEMS = [
   {
     source:   'Anthropic Academy',
@@ -132,8 +115,8 @@ const LEARN_ITEMS = [
     url:      'https://ai.google/education/',
     title:    'Google AI Learning: desde fundamentos hasta ML avanzado',
     title_en: 'Google AI Learning: from fundamentals to advanced ML',
-    desc:     'Rutas de aprendizaje estructuradas, desde qué es la IA generativa hasta cómo construir tus propios flujos de trabajo con ML.',
-    desc_en:  'Structured learning paths from what generative AI is to how to build your own ML workflows.',
+    desc:     'Rutas de aprendizaje estructuradas, desde qué es la IA generativa hasta cómo construir tus propios flujos.',
+    desc_en:  'Structured learning paths from what generative AI is to how to build your own workflows.',
   },
   {
     source:   'Global AI Community',
@@ -142,13 +125,10 @@ const LEARN_ITEMS = [
     url:      'https://www.globalai.community',
     title:    'Global AI Community: eventos, meetups y Agentic Nights',
     title_en: 'Global AI Community: events, meetups and Agentic Nights',
-    desc:     'Red global de profesionales de IA con eventos presenciales y online. Especialmente recomendado para negocios que exploran agentes.',
-    desc_en:  'Global network of AI professionals with in-person and online events. Recommended for businesses exploring agents.',
+    desc:     'Red global de profesionales de IA con eventos presenciales y online para negocios que exploran agentes.',
+    desc_en:  'Global network of AI professionals with in-person and online events for businesses exploring agents.',
   },
 ];
-
-
-// ── Motor de renderizado (no tocar) ──────────────────
 
 function _esc(str) {
   return String(str)
@@ -160,16 +140,16 @@ function _esc(str) {
 
 function _buildCard(item, lang, ctaLabel) {
   const isEs  = lang === 'es';
-  const title = isEs ? item.title   : (item.title_en || item.title);
-  const desc  = isEs ? item.desc    : (item.desc_en  || item.desc);
-  const tag   = isEs ? item.tag     : (item.tag_en   || item.tag);
+  const title = isEs ? item.title : (item.title_en || item.title);
+  const desc  = isEs ? item.desc  : (item.desc_en  || item.desc);
+  const tag   = isEs ? item.tag   : (item.tag_en   || item.tag);
 
   const a = document.createElement('a');
   a.href      = item.url;
   a.target    = '_blank';
   a.rel       = 'noopener noreferrer';
   a.className = 'lo-ultimo-card';
-  a.setAttribute('aria-label', `${_esc(item.source)}: ${_esc(title)}`);
+  a.setAttribute('aria-label', `${item.source}: ${title}`);
 
   a.innerHTML = `
     <div class="lo-ultimo-card-header">
@@ -178,21 +158,18 @@ function _buildCard(item, lang, ctaLabel) {
     </div>
     <h4 class="lo-ultimo-card-title">${_esc(title)}</h4>
     <p class="lo-ultimo-card-desc">${_esc(desc)}</p>
-    <span class="lo-ultimo-link" aria-hidden="true">${_esc(ctaLabel)} →</span>
+    <span class="lo-ultimo-link" aria-hidden="true">
+      <span>${_esc(ctaLabel)}</span>
+      <svg class="icon"><use href="#i-arrow-up-right"/></svg>
+    </span>
   `;
   return a;
 }
 
-/**
- * Renderiza (o re-renderiza) las tarjetas de Lo Último.
- * Llamado automáticamente al cargar la página y al cambiar el idioma.
- * @param {string} lang - 'es' o 'en'
- */
 function renderLoUltimo(lang) {
   lang = lang || localStorage.getItem('lang') || 'es';
   const isEs = lang === 'es';
 
-  // Actualizar el badge de mes
   const monthEl = document.getElementById('lo-ultimo-month');
   if (monthEl) {
     monthEl.textContent = isEs
@@ -200,8 +177,8 @@ function renderLoUltimo(lang) {
       : `Updated: ${LO_ULTIMO_MONTH_EN}`;
   }
 
-  const readMore = isEs ? 'Leer más'        : 'Read more';
-  const seeTool  = isEs ? 'Ver herramienta' : 'See tool';
+  const readMore = isEs ? 'Leer artículo'   : 'Read article';
+  const seeTool  = isEs ? 'Ver herramienta' : 'Explore tool';
   const access   = isEs ? 'Acceder'         : 'Access';
 
   const grids = [
@@ -218,7 +195,6 @@ function renderLoUltimo(lang) {
   });
 }
 
-// Inicialización automática al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
   renderLoUltimo(localStorage.getItem('lang') || 'es');
 });

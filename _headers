@@ -1,30 +1,28 @@
 # =============================================================
-# Cloudflare Pages – Security Headers
-# Docs: https://developers.cloudflare.com/pages/configuration/headers/
+# Cabeceras HTTP de Seguridad (Cloudflare Pages / Netlify)
 # =============================================================
 
-# ── Global: apply to every page ──────────────────────────────
 /*
-  # Prevent clickjacking
   X-Frame-Options: DENY
-  # Stop MIME-type sniffing
   X-Content-Type-Options: nosniff
-  # Referrer policy
   Referrer-Policy: strict-origin-when-cross-origin
-  # Permissions / Feature policy
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
-  # Strict Transport Security (HSTS) – 1 year, include subdomains, preload-ready
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  # XSS Protection (legacy browsers)
   X-XSS-Protection: 1; mode=block
-  # Content Security Policy – matches the meta tag but now enforced at HTTP level
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.chatbase.co; frame-src 'self' https://www.chatbase.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.chatbase.co https://*.chatbase.co https://api.web3forms.com https://qotpnbshccwyrledrorl.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests
-  # Cross-Origin policies
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.chatbase.co; frame-src 'self' https://www.chatbase.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.chatbase.co https://*.chatbase.co https://api.web3forms.com https://qotpnbshccwyrledrorl.supabase.co https://www.googleapis.com https://api.allorigins.win https://corsproxy.io; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: unsafe-none
   Cross-Origin-Resource-Policy: same-origin
 
-# ── CRM page: stricter CSP ──────────────────────────────────
 /crm.html
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://qotpnbshccwyrledrorl.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Cache-Control: no-store, no-cache, must-revalidate
+  Referrer-Policy: no-referrer
+
+/crm.js
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Cache-Control: no-store, no-cache, must-revalidate
+
+/crm.css
   X-Robots-Tag: noindex, nofollow, noarchive

@@ -1,0 +1,37 @@
+# Variables de entorno y secretos (NUNCA subir al repositorio)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*service_role*
+secrets.*
+config.local.js
+
+# Dependencias y compilaciones
+node_modules/
+dist/
+build/
+.next/
+out/
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs y temporales
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+tmp/
+temp/
+
