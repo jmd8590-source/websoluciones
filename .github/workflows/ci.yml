@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+
+  test:
+    name: Tests de humo (Playwright)
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+  build:
+    name: Build (minificación y ofuscación JS/CSS)
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 14
+
+  # ─────────────────────────────────────────────────────────────────
+  # Despliegue automático a Cloudflare Pages — SOLO si lint + tests +
+  # build han pasado, y SOLO en push a main (nunca en pull requests).
+  #
+  # Requiere el token en Settings → Secrets and variables → Actions,
+  # pestaña "Secrets" (CLOUDFLARE_API_TOKEN), nunca escrito en este archivo
+  # ni en ningún otro del código. El Account ID no es un dato sensible
+  # (es un identificador, no una credencial), así que se acepta tanto si
+  # se guardó como secreto (CLOUDFLARE_ACCOUNT_ID) como si se guardó en la
+  # pestaña "Variables" (vars.CLOUDFLARE_ACCOUNT_ID) — es un error muy
+  # común confundir esas dos pestañas, que están una al lado de la otra.
+  # Si falta el token, este job se omite solo (no rompe el resto del CI).
+  # ─────────────────────────────────────────────────────────────────
+  deploy:
+    name: Desplegar a Cloudflare Pages
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: production
+    env:
+      CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Comprobar que el token y el Account ID de Cloudflare existen
+        id: check
+        run: |
+          if [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] && [ -n "$CF_ACCOUNT_ID" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Despliegue omitido: falta CLOUDFLARE_API_TOKEN (Secrets) o CLOUDFLARE_ACCOUNT_ID (Secrets o Variables) en este repositorio."
+          fi
+      - name: Deploy (wrangler pages deploy)
+        if: steps.check.outputs.ready == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ env.CF_ACCOUNT_ID }}
+          # Despliega el código fuente legible de la raíz (sin minificar),
+          # igual que hoy. El build minificado/ofuscado queda disponible
+          # como artefacto de este workflow para activarlo más adelante
+          # cambiando este comando a "pages deploy dist".
+          command: pages deploy . --project-name=solucionesiacm-web --commit-dirty=true

@@ -848,6 +848,31 @@ async function fetchLiveHtml(targetUrl) {
     } catch {}
   }
 
+  // 0) Función edge propia en Cloudflare Pages (/api/audit) — sin límites CORS
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 6500);
+    const tStart = performance.now();
+    const res = await fetch(`/api/audit?url=${encodeURIComponent(targetUrl)}`, {
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.ok && typeof data.html === 'string' && data.html.length > 80) {
+        return {
+          ok: true,
+          html: data.html,
+          finalUrl: data.analyzedUrl || targetUrl,
+          responseTimeMs: Math.round(data.responseTimeMs || (performance.now() - tStart)),
+          contentLength: data.contentLength || data.html.length,
+          edgeScores: data.scores || null,
+          via: 'edge',
+        };
+      }
+    }
+  } catch {}
+
   // 1) Intento primario: AllOrigins JSON wrapper (devuelve status, content_type, http_code y contents)
   try {
     const controller = new AbortController();
