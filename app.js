@@ -16,10 +16,19 @@ function getPublicConfig() {
   };
 }
 
-/* Envía aviso por correo mediante Web3Forms */
+/* Envía aviso por correo mediante Web3Forms (incluye enlace de sincronización directa al CRM) */
 async function sendEmailNotification(lead) {
   const { WEB3FORMS_KEY } = getPublicConfig();
   if (!WEB3FORMS_KEY) return;
+  let crmSyncUrl = '';
+  try {
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(lead))));
+    const base = location.origin && location.origin.startsWith('http')
+      ? location.origin
+      : 'https://solucionesiacm.com';
+    crmSyncUrl = `${base}/crm.html#import=${encodeURIComponent(encoded)}`;
+  } catch {}
+
   try {
     await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
@@ -43,18 +52,56 @@ async function sendEmailNotification(lead) {
           lead.message,
           '',
           `Recibido: ${new Date().toLocaleString('es-ES')}`,
-        ].join('\n'),
+          crmSyncUrl ? `\nAbrir directamente en el CRM:\n${crmSyncUrl}` : '',
+        ].filter(Boolean).join('\n'),
       }),
     });
   } catch {
-    // Fallo silencioso: el lead queda registrado en Supabase
+    // Fallo silencioso: el lead queda registrado en el CRM
   }
 }
 
-/* Guarda el lead en Supabase (RPC submit_lead si existe, o INSERT directo con política anon) */
+/* Sincronización local inmediata (localStorage + BroadcastChannel en tiempo real entre pestañas) */
+function saveLeadLocallyAndBroadcast(lead) {
+  const KEYS = ['crm_leads', 'siacm_crm_leads_cache'];
+  for (const key of KEYS) {
+    try {
+      const existing = JSON.parse(localStorage.getItem(key) || '[]');
+      const list = Array.isArray(existing) ? existing.filter(l => l && l.id !== lead.id) : [];
+      list.unshift(lead);
+      localStorage.setItem(key, JSON.stringify(list.slice(0, 1000)));
+    } catch {}
+  }
+  try {
+    sessionStorage.setItem('siacm_crm_leads_cache', localStorage.getItem('crm_leads') || '[]');
+  } catch {}
+  try {
+    if (typeof BroadcastChannel !== 'undefined') {
+      const bc = new BroadcastChannel('siacm_crm_sync');
+      bc.postMessage({ type: 'lead_created', lead });
+      bc.close();
+    }
+  } catch {}
+}
+
+/* Guarda el lead en el endpoint Edge propio (/api/leads en Cloudflare Pages o servidor local) */
+async function saveLeadToEdgeApi(lead) {
+  try {
+    const res = await fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(lead),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+/* Guarda el lead en Supabase (INSERT directo + fallback de columnas + fallback RPC submit_lead) */
 async function saveLeadToSupabase(lead) {
   const { SUPABASE_URL, SUPABASE_ANON_KEY } = getPublicConfig();
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return false;
 
   const headers = {
     'apikey': SUPABASE_ANON_KEY,
@@ -69,24 +116,42 @@ async function saveLeadToSupabase(lead) {
       headers,
       body: JSON.stringify(lead),
     });
-    if (!res.ok) {
-      // Fallback a función RPC segura submit_lead si la tabla tiene inserción directa cerrada
-      await fetch(`${SUPABASE_URL}/rest/v1/rpc/submit_lead`, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          p_id:      lead.id,
-          p_name:    lead.name,
-          p_email:   lead.email,
-          p_company: lead.company,
-          p_phone:   lead.phone,
-          p_message: lead.message,
-          p_source:  lead.source,
-        }),
-      });
-    }
+    if (res.ok) return true;
+
+    // Fallback 1: esquema con nombres básicos sin createdAt/updatedAt camelCase
+    const resBasic = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        id:      lead.id,
+        name:    lead.name,
+        email:   lead.email,
+        company: lead.company,
+        phone:   lead.phone,
+        message: lead.message,
+        status:  lead.status,
+        source:  lead.source,
+      }),
+    });
+    if (resBasic.ok) return true;
+
+    // Fallback 2: función RPC segura submit_lead
+    const resRpc = await fetch(`${SUPABASE_URL}/rest/v1/rpc/submit_lead`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        p_id:      lead.id,
+        p_name:    lead.name,
+        p_email:   lead.email,
+        p_company: lead.company,
+        p_phone:   lead.phone,
+        p_message: lead.message,
+        p_source:  lead.source,
+      }),
+    });
+    return resRpc.ok;
   } catch {
-    // Silencioso en cliente
+    return false;
   }
 }
 
@@ -1628,7 +1693,7 @@ function initContactForm() {
       return;
     }
 
-    // 3. Construcción del lead (sin guardar PII en localStorage del navegador público)
+    // 3. Construcción del lead y sincronización inmediata con el CRM (local + Edge API + Supabase + Email)
     const lead = {
       id:        'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
       createdAt: new Date().toISOString(),
@@ -1649,10 +1714,14 @@ function initContactForm() {
       labelSpan.textContent = currentLang === 'es' ? 'Enviando…' : 'Sending…';
     }
 
+    // Guardado síncrono local + emisión en vivo al CRM abierto en el navegador
+    saveLeadLocallyAndBroadcast(lead);
+
     await Promise.allSettled([
+      saveLeadToEdgeApi(lead),
       saveLeadToSupabase(lead),
       sendEmailNotification(lead),
-      pause(700),
+      pause(600),
     ]);
 
     form.hidden = true;

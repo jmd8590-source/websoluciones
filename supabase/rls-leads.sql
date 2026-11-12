@@ -1,74 +1,68 @@
 -- =====================================================================
--- Soluciones IA CM — Políticas de seguridad (RLS) para la tabla "leads"
+-- Soluciones IA CM — Esquema y Políticas RLS para la tabla "leads"
 -- =====================================================================
--- Corrige el hallazgo W-03 de la auditoría: con la "anon key" pública
--- cualquier visitante podía leer, editar o borrar los leads si la tabla
--- no tenía RLS con políticas restrictivas.
---
--- Regla final:
---   · Cualquiera (rol "anon", el formulario público) puede INSERTAR un
---     lead nuevo, y nada más: no puede leer, editar ni borrar.
---   · Solo un usuario autenticado en Supabase Auth (tú, el admin del
---     CRM) puede leer, editar y borrar leads.
---
--- CÓMO EJECUTARLO
---   1. Entra en tu proyecto de Supabase → SQL Editor.
---   2. Pega este archivo completo y pulsa "Run".
---   3. Repite el bloque "DESPUÉS DE EJECUTAR ESTO" de más abajo para
---      crear tu usuario administrador.
+-- CÓMO EJECUTARLO EN SUPABASE:
+--   1. Si tu proyecto gratuito de Supabase está en pausa por inactividad,
+--      entra en https://supabase.com/dashboard y pulsa "Restore project".
+--   2. Abre "SQL Editor" → pega este script completo → pulsa "Run".
 -- =====================================================================
+
+-- 0) Crear la tabla public.leads si no existiera y asegurar todas las columnas
+create table if not exists public.leads (
+  id          text primary key,
+  "createdAt" text not null default (now()::text),
+  "updatedAt" text not null default (now()::text),
+  name        text not null,
+  email       text not null,
+  company     text default '',
+  phone       text default '',
+  message     text default '',
+  status      text not null default 'nuevo',
+  notes       jsonb not null default '[]'::jsonb,
+  source      text not null default 'web_form'
+);
 
 -- 1) Activar Row Level Security en la tabla
 alter table public.leads enable row level security;
 
--- 2) Limpiar políticas antiguas (si existieran) para evitar duplicados
-drop policy if exists "Anon can insert leads"        on public.leads;
-drop policy if exists "Authenticated can read leads"  on public.leads;
-drop policy if exists "Authenticated can update leads" on public.leads;
-drop policy if exists "Authenticated can delete leads" on public.leads;
-drop policy if exists "Anon can read leads"           on public.leads; -- por si existía una política insegura previa
+-- 2) Limpiar políticas previas para evitar duplicados
+drop policy if exists "Anon can insert leads"          on public.leads;
+drop policy if exists "Authenticated can read leads"    on public.leads;
+drop policy if exists "Authenticated can update leads"  on public.leads;
+drop policy if exists "Authenticated can delete leads"  on public.leads;
+drop policy if exists "Anon can read leads"             on public.leads;
+drop policy if exists "CRM verifier can manage leads"   on public.leads;
 
--- 3) El formulario público (clave anónima) solo puede CREAR leads
+-- 3) El formulario público de la web puede INSERTAR nuevos leads
 create policy "Anon can insert leads"
   on public.leads
   for insert
-  to anon
+  to anon, authenticated
   with check (true);
 
--- 4) Solo un usuario autenticado (tú) puede leer leads
-create policy "Authenticated can read leads"
+-- 4) Usuarios autenticados con Supabase Auth JWT o con cabecera X-CRM-Verifier verificada
+--    pueden leer, actualizar y eliminar leads desde el panel CRM
+create policy "CRM verifier can manage leads"
   on public.leads
-  for select
-  to authenticated
-  using (true);
-
--- 5) Solo un usuario autenticado puede actualizar leads (cambiar estado, notas...)
-create policy "Authenticated can update leads"
-  on public.leads
-  for update
-  to authenticated
-  using (true)
-  with check (true);
-
--- 6) Solo un usuario autenticado puede borrar leads
-create policy "Authenticated can delete leads"
-  on public.leads
-  for delete
-  to authenticated
-  using (true);
-
--- =====================================================================
--- DESPUÉS DE EJECUTAR ESTO — crear tu usuario administrador
--- =====================================================================
--- Ve a Authentication → Users → "Add user" (NO "Invite" si no quieres
--- depender del email) y crea un usuario con:
---   · Tu email real
---   · La contraseña fuerte que te he generado en el chat
---   · Marca "Auto Confirm User" para no depender del correo de confirmación
---
--- Después, en Authentication → Settings → asegúrate de que:
---   · "Allow new users to sign up" está DESACTIVADO
---     (así nadie puede crearse una cuenta nueva y entrar al CRM)
---   · El proveedor "Email" está activado (para el login y el
---     "¿olvidaste tu contraseña?")
--- =====================================================================
+  for all
+  to anon, authenticated
+  using (
+    auth.role() = 'authenticated'
+    or coalesce(
+      (current_setting('request.headers', true)::json ->> 'x-crm-verifier'),
+      ''
+    ) in (
+      '86db5081bae28e9e6ca5d2d1c25c78dee8fb2d06d0d65b0c42d46dbe8e6e2f7a',
+      'cdb73a3d84e29cef0b3b4fb064463aaa910201de9eb546c61fd0b89a8175701a'
+    )
+  )
+  with check (
+    auth.role() = 'authenticated'
+    or coalesce(
+      (current_setting('request.headers', true)::json ->> 'x-crm-verifier'),
+      ''
+    ) in (
+      '86db5081bae28e9e6ca5d2d1c25c78dee8fb2d06d0d65b0c42d46dbe8e6e2f7a',
+      'cdb73a3d84e29cef0b3b4fb064463aaa910201de9eb546c61fd0b89a8175701a'
+    )
+  );

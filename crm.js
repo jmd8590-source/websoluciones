@@ -260,10 +260,14 @@ async function login(username, password) {
   ]);
 
   let matched = false;
+  let matchedVerifier = null;
   for (const entry of ADMIN_VERIFIERS) {
     const uOk = timingSafeEqualHex(userHash, entry.userSha256);
     const pOk = timingSafeEqualHex(derived, entry.verifier);
-    if (uOk && pOk) matched = true;
+    if (uOk && pOk) {
+      matched = true;
+      matchedVerifier = entry.verifier;
+    }
   }
 
   if (matched) {
@@ -271,6 +275,7 @@ async function login(username, password) {
     setSession({
       mode: 'pbkdf2_verified',
       accessToken: null,
+      verifier: matchedVerifier,
       userEmail: cleanUser,
     });
     showCRM();
@@ -284,7 +289,6 @@ async function login(username, password) {
 function logout(reasonMsg) {
   clearTimeout(idleTimer);
   sessionStorage.removeItem(SESSION_KEY);
-  sessionStorage.removeItem(CACHE_KEY);
   leads = [];
   filteredLeads = [];
 
@@ -315,46 +319,131 @@ function showCRM() {
   }
 
   resetIdleTimer();
+  checkUrlHashImport();
   leads = getCachedLeads();
   refreshAll();
   syncWithSupabase().catch(() => {});
 }
 
 /* ===================================================
-   ALMACENAMIENTO DE SESIÓN Y CONEXIÓN A SUPABASE
+   SINCRONIZACIÓN MULTICAPA (Local + Edge API + Supabase)
    =================================================== */
-function getCachedLeads() {
+const DELETED_IDS_KEY = 'siacm_crm_deleted_ids';
+
+function getDeletedIds() {
   try {
-    return JSON.parse(sessionStorage.getItem(CACHE_KEY) || '[]');
+    const raw = JSON.parse(localStorage.getItem(DELETED_IDS_KEY) || '[]');
+    return new Set(Array.isArray(raw) ? raw : []);
   } catch {
-    return [];
+    return new Set();
   }
 }
 
-function saveCachedLeads(data) {
+function markIdDeleted(id) {
   try {
-    sessionStorage.setItem(CACHE_KEY, JSON.stringify(data));
+    const set = getDeletedIds();
+    set.add(id);
+    localStorage.setItem(DELETED_IDS_KEY, JSON.stringify(Array.from(set).slice(-500)));
   } catch {}
+}
+
+function normalizeLead(raw) {
+  if (!raw || typeof raw !== 'object') return null;
+  const now = new Date().toISOString();
+  let parsedNotes = [];
+  if (Array.isArray(raw.notes)) parsedNotes = raw.notes;
+  else if (typeof raw.notes === 'string' && raw.notes.trim().startsWith('[')) {
+    try { parsedNotes = JSON.parse(raw.notes); } catch { parsedNotes = []; }
+  }
+  return {
+    id:        String(raw.id || ('lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8))),
+    createdAt: String(raw.createdAt || raw.created_at || now),
+    updatedAt: String(raw.updatedAt || raw.updated_at || raw.createdAt || raw.created_at || now),
+    name:      String(raw.name || '').trim(),
+    email:     String(raw.email || '').trim(),
+    company:   String(raw.company || '').trim(),
+    phone:     String(raw.phone || '').trim(),
+    message:   String(raw.message || '').trim(),
+    status:    STATUS[raw.status] ? raw.status : 'nuevo',
+    notes:     parsedNotes,
+    source:    String(raw.source || 'web_form'),
+  };
+}
+
+function mergeLeadLists(...lists) {
+  const deleted = getDeletedIds();
+  const map = new Map();
+  for (const list of lists) {
+    if (!Array.isArray(list)) continue;
+    for (const item of list) {
+      const norm = normalizeLead(item);
+      if (!norm || !norm.id || !norm.email || deleted.has(norm.id)) continue;
+      const existing = map.get(norm.id);
+      if (!existing || new Date(norm.updatedAt) >= new Date(existing.updatedAt)) {
+        map.set(norm.id, norm);
+      }
+    }
+  }
+  return Array.from(map.values()).sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+}
+
+function getCachedLeads() {
+  let l1 = [], l2 = [], s1 = [];
+  try { l1 = JSON.parse(localStorage.getItem('crm_leads') || '[]'); } catch {}
+  try { l2 = JSON.parse(localStorage.getItem(CACHE_KEY) || '[]'); } catch {}
+  try { s1 = JSON.parse(sessionStorage.getItem(CACHE_KEY) || '[]'); } catch {}
+  return mergeLeadLists(l1, l2, s1);
+}
+
+function saveCachedLeads(data) {
+  const clean = mergeLeadLists(data);
+  const str = JSON.stringify(clean);
+  try { localStorage.setItem('crm_leads', str); } catch {}
+  try { localStorage.setItem(CACHE_KEY, str); } catch {}
+  try { sessionStorage.setItem(CACHE_KEY, str); } catch {}
 }
 
 function getAuthHeaders(extra = {}) {
   const { anonKey } = getSupabaseConfig();
   const sess = getSession();
   const bearer = sess?.accessToken || anonKey;
+  const verifier = sess?.verifier || ADMIN_VERIFIERS[0].verifier;
   return {
     'apikey': anonKey,
     'Authorization': `Bearer ${bearer}`,
+    'X-CRM-Verifier': verifier,
     ...extra,
   };
+}
+
+async function fetchLeadsFromEdgeApi() {
+  try {
+    const res = await fetch('/api/leads', {
+      headers: getAuthHeaders({ 'Accept': 'application/json' }),
+      cache: 'no-store',
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data && Array.isArray(data.leads) ? data.leads : null;
+  } catch {
+    return null;
+  }
 }
 
 async function fetchLeadsFromSupabase() {
   const { url, anonKey } = getSupabaseConfig();
   if (!url || !anonKey) return null;
   try {
-    const response = await fetch(`${url}/rest/v1/leads?select=*&order=createdAt.desc`, {
+    let response = await fetch(`${url}/rest/v1/leads?select=*&order=createdAt.desc`, {
       headers: getAuthHeaders(),
     });
+    if (!response.ok) {
+      response = await fetch(`${url}/rest/v1/leads?select=*`, {
+        headers: getAuthHeaders(),
+      });
+    }
     if (!response.ok) throw new Error('HTTP ' + response.status);
     return await response.json();
   } catch {
@@ -363,30 +452,108 @@ async function fetchLeadsFromSupabase() {
 }
 
 async function syncWithSupabase(notify = false) {
-  const supabaseLeads = await fetchLeadsFromSupabase();
-  if (Array.isArray(supabaseLeads)) {
-    saveCachedLeads(supabaseLeads);
-    refreshAll();
-    if (notify) showToast('✓', 'Sincronizado con Supabase');
-  } else if (notify) {
-    showToast('!', 'Sin conexión con Supabase (mostrando caché de sesión)');
+  const [edgeLeads, supabaseLeads] = await Promise.all([
+    fetchLeadsFromEdgeApi(),
+    fetchLeadsFromSupabase(),
+  ]);
+
+  const localLeads = getCachedLeads();
+  leads = mergeLeadLists(
+    leads,
+    localLeads,
+    Array.isArray(edgeLeads) ? edgeLeads : [],
+    Array.isArray(supabaseLeads) ? supabaseLeads : []
+  );
+  saveCachedLeads(leads);
+  refreshAll();
+
+  if (notify) {
+    showToast('✓', `CRM sincronizado (${leads.length} consulta${leads.length === 1 ? '' : 's'})`);
   }
 }
 
+/* Importación directa desde enlace mágico del correo (#import=...) */
+function checkUrlHashImport() {
+  if (!location.hash || !location.hash.includes('import=')) return;
+  try {
+    const params = new URLSearchParams(location.hash.replace(/^#/, ''));
+    const encoded = params.get('import');
+    if (!encoded) return;
+    const jsonStr = decodeURIComponent(escape(atob(decodeURIComponent(encoded))));
+    const imported = normalizeLead(JSON.parse(jsonStr));
+    if (imported && imported.email) {
+      leads = mergeLeadLists([imported], getCachedLeads(), leads);
+      saveCachedLeads(leads);
+      history.replaceState(null, '', location.pathname + location.search);
+      setTimeout(() => showToast('✓', `Consulta de ${imported.name} importada al CRM`), 150);
+    }
+  } catch {}
+}
+
+/* Escucha en tiempo real las consultas enviadas desde la landing en el mismo navegador */
+function initRealtimeSync() {
+  const onIncomingLead = (rawLead) => {
+    const norm = normalizeLead(rawLead);
+    if (!norm || !norm.email) return;
+    leads = mergeLeadLists([norm], leads, getCachedLeads());
+    saveCachedLeads(leads);
+    if (getSession()) {
+      refreshAll();
+      showToast('✓', `Nueva consulta en vivo: ${norm.name}`);
+    }
+  };
+
+  try {
+    if (typeof BroadcastChannel !== 'undefined') {
+      const bc = new BroadcastChannel('siacm_crm_sync');
+      bc.addEventListener('message', (ev) => {
+        if (ev.data && ev.data.type === 'lead_created' && ev.data.lead) {
+          onIncomingLead(ev.data.lead);
+        }
+      });
+    }
+  } catch {}
+
+  window.addEventListener('storage', (ev) => {
+    if (ev.key === 'crm_leads' || ev.key === CACHE_KEY) {
+      leads = mergeLeadLists(leads, getCachedLeads());
+      if (getSession()) refreshAll();
+    }
+  });
+
+  window.addEventListener('hashchange', () => {
+    checkUrlHashImport();
+    if (getSession()) refreshAll();
+  });
+
+  // Sincronización periódica automática cada 25 s cuando el CRM está abierto
+  setInterval(() => {
+    if (getSession() && document.visibilityState === 'visible') {
+      syncWithSupabase(false).catch(() => {});
+    }
+  }, 25000);
+}
+
 async function addLead(lead) {
-  leads.unshift(lead);
+  const norm = normalizeLead(lead);
+  leads = mergeLeadLists([norm], leads);
   saveCachedLeads(leads);
   refreshAll();
   showToast('✓', 'Lead guardado correctamente');
 
   const { url } = getSupabaseConfig();
-  try {
-    await fetch(`${url}/rest/v1/leads`, {
+  await Promise.allSettled([
+    fetch('/api/leads', {
       method: 'POST',
       headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify(lead),
-    });
-  } catch {}
+      body: JSON.stringify(norm),
+    }),
+    fetch(`${url}/rest/v1/leads`, {
+      method: 'POST',
+      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(norm),
+    }),
+  ]);
 }
 
 async function updateLead(id, updates) {
@@ -398,16 +565,22 @@ async function updateLead(id, updates) {
   refreshAll();
 
   const { url } = getSupabaseConfig();
-  try {
-    await fetch(`${url}/rest/v1/leads?id=eq.${encodeURIComponent(id)}`, {
+  await Promise.allSettled([
+    fetch(`/api/leads?id=${encodeURIComponent(id)}`, {
       method: 'PATCH',
       headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
       body: JSON.stringify(payload),
-    });
-  } catch {}
+    }),
+    fetch(`${url}/rest/v1/leads?id=eq.${encodeURIComponent(id)}`, {
+      method: 'PATCH',
+      headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(payload),
+    }),
+  ]);
 }
 
 async function deleteLead(id) {
+  markIdDeleted(id);
   leads = leads.filter(l => l.id !== id);
   saveCachedLeads(leads);
   refreshAll();
@@ -415,12 +588,16 @@ async function deleteLead(id) {
   showToast('✓', 'Lead eliminado');
 
   const { url } = getSupabaseConfig();
-  try {
-    await fetch(`${url}/rest/v1/leads?id=eq.${encodeURIComponent(id)}`, {
+  await Promise.allSettled([
+    fetch(`/api/leads?id=${encodeURIComponent(id)}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
-    });
-  } catch {}
+    }),
+    fetch(`${url}/rest/v1/leads?id=eq.${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    }),
+  ]);
 }
 
 /* ===================================================
@@ -827,6 +1004,9 @@ function formatDateLong(iso) {
    INICIALIZACIÓN
    =================================================== */
 document.addEventListener('DOMContentLoaded', () => {
+  checkUrlHashImport();
+  initRealtimeSync();
+
   if (getSession()) {
     showCRM();
   }

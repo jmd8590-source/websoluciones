@@ -48,13 +48,37 @@ test.describe('Landing pública', () => {
   });
 });
 
-test.describe('CRM — acceso seguro', () => {
+test.describe('CRM — acceso seguro y sincronización con el formulario web', () => {
   test('sin sesión, muestra el formulario de login con usuario/email y contraseña', async ({ page }) => {
     await page.goto('/crm.html');
     await expect(page.locator('#login-screen')).toBeVisible();
     await expect(page.locator('#login-username')).toBeVisible();
     await expect(page.locator('#login-password')).toBeVisible();
     await expect(page.locator('#crm-app')).not.toHaveClass(/visible/);
+  });
+
+  test('cuando un cliente rellena el formulario de contacto, la consulta se sincroniza con el CRM', async ({ page }) => {
+    // 1. El cliente rellena el formulario en index.html
+    await page.goto('/index.html#contacto');
+    await page.fill('#form-name', 'Cliente Prueba Sincronización');
+    await page.fill('#form-email', 'cliente.sync@empresa.es');
+    await page.fill('#form-company', ' Panadería Sierra');
+    await page.fill('#form-phone', '600123456');
+    await page.fill('#form-message', 'Necesito automatizar pedidos y sincronizar con el CRM.');
+    await page.check('#form-consent');
+    await page.click('#form-submit');
+
+    await expect(page.locator('#contact-success')).toHaveClass(/active/, { timeout: 8000 });
+
+    // 2. El administrador entra en crm.html y ve el lead sincronizado
+    await page.goto('/crm.html');
+    await page.fill('#login-username', 'jemendo90@gmail.com');
+    await page.fill('#login-password', 'SiaCM!2026#Cumbres90$Admin');
+    await page.click('#login-submit-btn');
+
+    await expect(page.locator('#crm-app')).toHaveClass(/visible/, { timeout: 8000 });
+    await expect(page.locator('#leads-tbody')).toContainText('Cliente Prueba Sincronización');
+    await expect(page.locator('#leads-tbody')).toContainText('cliente.sync@empresa.es');
   });
 
   test('no hay ninguna contraseña en texto plano ni hash SHA-256 antiguo servido al navegador', async ({ page }) => {
