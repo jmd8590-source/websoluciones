@@ -14,6 +14,12 @@
   Cross-Origin-Embedder-Policy: unsafe-none
   Cross-Origin-Resource-Policy: same-origin
 
+/crm
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://qotpnbshccwyrledrorl.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Cache-Control: no-store, no-cache, must-revalidate
+  Referrer-Policy: no-referrer
+
 /crm.html
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://qotpnbshccwyrledrorl.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
   X-Robots-Tag: noindex, nofollow, noarchive
