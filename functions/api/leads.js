@@ -1,14 +1,14 @@
 /**
- * Soluciones IA CM — Endpoint Edge de sincronización de Leads para el CRM
+ * Soluciones IA CM â€” Endpoint Edge de sincronizaciÃ³n de Leads para el CRM
  * Cloudflare Pages Function: /api/leads (GET, POST, PATCH, DELETE)
  *
- * Garantiza que todas las consultas enviadas desde el formulario público
+ * Garantiza que todas las consultas enviadas desde el formulario pÃºblico
  * se sincronicen con el CRM incluso si el proyecto gratuito de Supabase
  * entra en pausa por inactividad, combinando:
- *   1. Cloudflare KV (si está vinculado como CRM_LEADS_KV)
- *   2. Cloudflare Edge Cache API (caches.default, persistente en el nodo Edge sin configuración extra)
+ *   1. Cloudflare KV (si estÃ¡ vinculado como CRM_LEADS_KV)
+ *   2. Cloudflare Edge Cache API (caches.default, persistente en el nodo Edge sin configuraciÃ³n extra)
  *   3. Memoria del worker (globalThis.__SIACM_LEADS_MEM__)
- *   4. Reenvío en segundo plano a Supabase REST (/rest/v1/leads)
+ *   4. ReenvÃ­o en segundo plano a Supabase REST (/rest/v1/leads)
  */
 
 const CACHE_STORE_URL = 'https://internal-crm-store.solucionesiacm.com/v1/leads.json';
@@ -17,11 +17,10 @@ const KV_KEY = 'siacm_crm_leads_v2';
 const DEFAULT_SUPABASE_URL = 'https://qotpnbshccwyrledrorl.supabase.co';
 const DEFAULT_SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvdHBuYnNoY2N3eXJsZWRyb3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0NjM0MjcsImV4cCI6MjEwMjAzOTQyN30.ToLVuYZiEq4hNOTn2JcxU5GaaODFQIQ0zu2uE34QQ2M';
 
-// Verificadores PBKDF2-HMAC-SHA256 autorizados del administrador del CRM
-const VALID_ADMIN_VERIFIERS = new Set([
-  '86db5081bae28e9e6ca5d2d1c25c78dee8fb2d06d0d65b0c42d46dbe8e6e2f7a',
-  'cdb73a3d84e29cef0b3b4fb064463aaa910201de9eb546c61fd0b89a8175701a',
-]);
+// Lectura/ediciÃ³n/borrado SOLO para el administrador, verificado en servidor:
+//   a) JWT real de Supabase Auth (validado contra /auth/v1/user), o
+//   b) secreto CRM_API_TOKEN configurado en Cloudflare (Settings â†’ Variables â†’ Secret).
+// Nunca se aceptan valores que estÃ©n publicados en el cÃ³digo del navegador.
 
 function jsonResponse(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -181,18 +180,45 @@ async function pushLeadToSupabase(env, lead) {
   return false;
 }
 
-function isAdminAuthorized(request) {
-  const verifier = (request.headers.get('X-CRM-Verifier') || '').trim();
-  if (VALID_ADMIN_VERIFIERS.has(verifier)) return true;
-  const auth = (request.headers.get('Authorization') || '').trim();
-  if (auth.startsWith('Bearer ') && auth.length > 40) return true;
-  return false;
+function timingSafeEqualStr(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
 }
 
-// GET /api/leads — Devuelve todos los leads sincronizados al CRM
+async function isAdminAuthorized(request, env) {
+  // b) Secreto propio configurado en Cloudflare
+  const crmToken = (request.headers.get('X-CRM-Token') || '').trim();
+  if (env && env.CRM_API_TOKEN && crmToken && timingSafeEqualStr(crmToken, env.CRM_API_TOKEN)) {
+    return true;
+  }
+
+  // a) JWT de Supabase Auth validado por el propio Supabase (descarta la anon key)
+  const bearer = (request.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '').trim();
+  const sbKey = (env && env.SUPABASE_ANON_KEY) || DEFAULT_SUPABASE_ANON;
+  if (!bearer || bearer === sbKey) return false;
+  const sbUrl = (env && env.SUPABASE_URL) || DEFAULT_SUPABASE_URL;
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 3500);
+    const res = await fetch(`${sbUrl}/auth/v1/user`, {
+      headers: { 'apikey': sbKey, 'Authorization': `Bearer ${bearer}` },
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
+    if (!res.ok) return false;
+    const user = await res.json();
+    return Boolean(user && user.id && user.role === 'authenticated');
+  } catch {
+    return false;
+  }
+}
+
+// GET /api/leads â€” Devuelve todos los leads sincronizados al CRM
 export async function onRequestGet(context) {
   const { request, env } = context;
-  if (!isAdminAuthorized(request)) {
+  if (!(await isAdminAuthorized(request, env))) {
     return jsonResponse({ error: 'unauthorized', message: 'No autorizado' }, 401);
   }
 
@@ -206,7 +232,7 @@ export async function onRequestGet(context) {
   return jsonResponse({ ok: true, leads: combined });
 }
 
-// POST /api/leads — Guarda un nuevo lead desde el formulario público o desde el CRM
+// POST /api/leads â€” Guarda un nuevo lead desde el formulario pÃºblico o desde el CRM
 export async function onRequestPost(context) {
   const { request, env } = context;
   let body;
@@ -228,10 +254,10 @@ export async function onRequestPost(context) {
   return jsonResponse({ ok: true, lead, total: updated.length }, 201);
 }
 
-// PATCH /api/leads?id=... — Actualiza estado o notas de un lead desde el CRM
+// PATCH /api/leads?id=... â€” Actualiza estado o notas de un lead desde el CRM
 export async function onRequestPatch(context) {
   const { request, env } = context;
-  if (!isAdminAuthorized(request)) {
+  if (!(await isAdminAuthorized(request, env))) {
     return jsonResponse({ error: 'unauthorized' }, 401);
   }
 
@@ -258,7 +284,7 @@ export async function onRequestPatch(context) {
     await writeEdgeLeads(env, current);
   }
 
-  // Reenviar actualización a Supabase si está activo
+  // Reenviar actualizaciÃ³n a Supabase si estÃ¡ activo
   const sbUrl = (env && env.SUPABASE_URL) || DEFAULT_SUPABASE_URL;
   const sbKey = (env && (env.SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_ANON_KEY)) || DEFAULT_SUPABASE_ANON;
   try {
@@ -276,10 +302,10 @@ export async function onRequestPatch(context) {
   return jsonResponse({ ok: true });
 }
 
-// DELETE /api/leads?id=... — Elimina un lead desde el CRM
+// DELETE /api/leads?id=... â€” Elimina un lead desde el CRM
 export async function onRequestDelete(context) {
   const { request, env } = context;
-  if (!isAdminAuthorized(request)) {
+  if (!(await isAdminAuthorized(request, env))) {
     return jsonResponse({ error: 'unauthorized' }, 401);
   }
 
@@ -305,3 +331,4 @@ export async function onRequestDelete(context) {
 
   return jsonResponse({ ok: true });
 }
+

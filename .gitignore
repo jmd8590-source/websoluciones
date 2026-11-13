@@ -34,4 +34,7 @@ yarn-debug.log*
 yarn-error.log*
 tmp/
 temp/
+.wrangler/
+test-results/
+playwright-report/
 

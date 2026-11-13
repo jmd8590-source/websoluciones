@@ -1,8 +1,8 @@
-// @ts-check
+﻿// @ts-check
 import { test, expect } from '@playwright/test';
 
-test.describe('Landing pública', () => {
-  test('carga, tiene título correcto y sin errores de consola', async ({ page }) => {
+test.describe('Landing pÃºblica', () => {
+  test('carga, tiene tÃ­tulo correcto y sin errores de consola', async ({ page }) => {
     const consoleErrors = [];
     page.on('console', msg => { if (msg.type() === 'error') consoleErrors.push(msg.text()); });
 
@@ -28,7 +28,7 @@ test.describe('Landing pública', () => {
     await expect(page.locator('#cookie-reject')).toBeVisible();
   });
 
-  test('el menú móvil se abre y permanece abierto tras el clic', async ({ page }) => {
+  test('el menÃº mÃ³vil se abre y permanece abierto tras el clic', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/index.html');
     await page.locator('#menu-toggle').click();
@@ -36,7 +36,7 @@ test.describe('Landing pública', () => {
     await expect(page.locator('#mobile-nav')).toHaveClass(/open/);
   });
 
-  test('el Auditor Web IA tiene protagonismo y ejecuta auditoría real con evidencias técnicas', async ({ page }) => {
+  test('el Auditor Web IA tiene protagonismo y ejecuta auditorÃ­a real con evidencias tÃ©cnicas', async ({ page }) => {
     await page.goto('/index.html');
     await expect(page.locator('#auditor')).toBeVisible();
     await page.locator('button[data-sample-url="self"]').click();
@@ -48,8 +48,8 @@ test.describe('Landing pública', () => {
   });
 });
 
-test.describe('CRM — acceso seguro y sincronización con el formulario web', () => {
-  test('sin sesión, muestra el formulario de login con usuario/email y contraseña', async ({ page }) => {
+test.describe('CRM â€” acceso seguro y sincronizaciÃ³n con el formulario web', () => {
+  test('sin sesiÃ³n, muestra el formulario de login con usuario/email y contraseÃ±a', async ({ page }) => {
     await page.goto('/crm.html');
     await expect(page.locator('#login-screen')).toBeVisible();
     await expect(page.locator('#login-username')).toBeVisible();
@@ -60,9 +60,9 @@ test.describe('CRM — acceso seguro y sincronización con el formulario web', (
   test('cuando un cliente rellena el formulario de contacto, la consulta se sincroniza con el CRM', async ({ page }) => {
     // 1. El cliente rellena el formulario en index.html
     await page.goto('/index.html#contacto');
-    await page.fill('#form-name', 'Cliente Prueba Sincronización');
+    await page.fill('#form-name', 'Cliente Prueba SincronizaciÃ³n');
     await page.fill('#form-email', 'cliente.sync@empresa.es');
-    await page.fill('#form-company', ' Panadería Sierra');
+    await page.fill('#form-company', ' PanaderÃ­a Sierra');
     await page.fill('#form-phone', '600123456');
     await page.fill('#form-message', 'Necesito automatizar pedidos y sincronizar con el CRM.');
     await page.check('#form-consent');
@@ -77,11 +77,11 @@ test.describe('CRM — acceso seguro y sincronización con el formulario web', (
     await page.click('#login-submit-btn');
 
     await expect(page.locator('#crm-app')).toHaveClass(/visible/, { timeout: 8000 });
-    await expect(page.locator('#leads-tbody')).toContainText('Cliente Prueba Sincronización');
-    await expect(page.locator('#leads-tbody')).toContainText('cliente.sync@empresa.es');
+    await expect(page.locator('#crm-tbody')).toContainText('Cliente Prueba SincronizaciÃ³n');
+    await expect(page.locator('#crm-tbody')).toContainText('cliente.sync@empresa.es');
   });
 
-  test('no hay ninguna contraseña en texto plano ni hash SHA-256 antiguo servido al navegador', async ({ page }) => {
+  test('no hay ninguna contraseÃ±a en texto plano ni hash SHA-256 antiguo servido al navegador', async ({ page }) => {
     const response = await page.goto('/crm.js');
     const body = await response?.text();
     expect(body).not.toMatch(/siacm2025/i);

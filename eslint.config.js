@@ -43,8 +43,6 @@ export default [
         performance: 'readonly',
         DOMParser: 'readonly',
         TextEncoder: 'readonly',
-        TECH_FACTS: 'readonly',
-        renderLoUltimo: 'readonly',
       },
     },
     rules: {
@@ -56,6 +54,13 @@ export default [
     },
   },
   {
+    // app.js consume globals que declaran facts.js y lo-ultimo.js (scripts clásicos)
+    files: ['app.js'],
+    languageOptions: {
+      globals: { TECH_FACTS: 'readonly', renderLoUltimo: 'readonly' },
+    },
+  },
+  {
     files: ['build/**/*.mjs', 'playwright.config.js', 'tests/**/*.js', 'eslint.config.js'],
     languageOptions: {
       ecmaVersion: 2022,
@@ -64,8 +69,8 @@ export default [
     },
   },
   {
-    // Cloudflare Pages Functions: módulos ES con las globals del runtime Workers
-    files: ['functions/**/*.js'],
+    // Cloudflare Pages Functions y Worker entrypoint: módulos ES con globals del runtime Workers
+    files: ['functions/**/*.js', 'worker.js'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',

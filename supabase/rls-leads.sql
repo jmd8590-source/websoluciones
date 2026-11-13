@@ -40,29 +40,19 @@ create policy "Anon can insert leads"
   to anon, authenticated
   with check (true);
 
--- 4) Usuarios autenticados con Supabase Auth JWT o con cabecera X-CRM-Verifier verificada
---    pueden leer, actualizar y eliminar leads desde el panel CRM
-create policy "CRM verifier can manage leads"
-  on public.leads
-  for all
-  to anon, authenticated
-  using (
-    auth.role() = 'authenticated'
-    or coalesce(
-      (current_setting('request.headers', true)::json ->> 'x-crm-verifier'),
-      ''
-    ) in (
-      '86db5081bae28e9e6ca5d2d1c25c78dee8fb2d06d0d65b0c42d46dbe8e6e2f7a',
-      'cdb73a3d84e29cef0b3b4fb064463aaa910201de9eb546c61fd0b89a8175701a'
-    )
-  )
-  with check (
-    auth.role() = 'authenticated'
-    or coalesce(
-      (current_setting('request.headers', true)::json ->> 'x-crm-verifier'),
-      ''
-    ) in (
-      '86db5081bae28e9e6ca5d2d1c25c78dee8fb2d06d0d65b0c42d46dbe8e6e2f7a',
-      'cdb73a3d84e29cef0b3b4fb064463aaa910201de9eb546c61fd0b89a8175701a'
-    )
-  );
+-- 4) Solo un usuario autenticado con Supabase Auth (tú, desde el CRM) puede
+--    leer, actualizar y eliminar leads. La clave anónima pública NO puede.
+create policy "Authenticated can read leads"
+  on public.leads for select to authenticated using (true);
+
+create policy "Authenticated can update leads"
+  on public.leads for update to authenticated using (true) with check (true);
+
+create policy "Authenticated can delete leads"
+  on public.leads for delete to authenticated using (true);
+
+-- =====================================================================
+-- DESPUÉS: Authentication → Users → "Add user" con tu email y contraseña
+-- del CRM (marca "Auto Confirm User"), y en Authentication → Settings
+-- desactiva "Allow new users to sign up".
+-- =====================================================================

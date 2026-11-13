@@ -1,16 +1,7 @@
 # =============================================================
-# Control de acceso y bloqueo de rutas sensibles
+# Redirecciones y compatibilidad Cloudflare Workers / Pages
+# Los archivos sensibles e internos (.git, .env, *.sql, README.md,
+# package.json, functions, worker.js, etc.) se excluyen del paquete
+# mediante .assetsignore y devuelven 404 desde worker.js.
+# (Cloudflare Workers Assets no permite el codigo 404 en _redirects.)
 # =============================================================
-
-/.git/*             /index.html    404
-/.gitignore         /index.html    404
-/.gitmodules        /index.html    404
-/.env               /index.html    404
-/.env.local         /index.html    404
-/.env.production    /index.html    404
-/.htaccess          /index.html    404
-/.htpasswd          /index.html    404
-/wp-config.php      /index.html    404
-/web.config         /index.html    404
-/README.md          /index.html    404
-/*.sql              /index.html    404
